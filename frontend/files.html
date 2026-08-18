@@ -1,21 +1,28 @@
-/* 文件界面：上传 / 列表 / 解析结果（契约端点：POST /api/files/upload、GET /api/files）。 */
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>P.A.L.M · 文件</title>
+<link rel="stylesheet" href="./ui/theme.css" />
+<link rel="stylesheet" href="./ui/base.css" />
+</head>
+<body>
+<div class="main" style="padding:20px 24px;max-width:1080px">
+  <h1>文件</h1>
+  <div class="sub">上传 · 列表 · 解析结果（契约：POST /api/files/upload、GET /api/files）</div>
+  <div class="panel">
+    <div class="p-title">上传</div>
+    <input type="file" id="file-input" class="txt" />
+    <button class="btn" id="file-upload" style="margin-left:8px">上传</button>
+    <div id="file-msg" class="sub" style="margin-top:8px"></div>
+  </div>
+  <div id="file-list"><div class="sub">加载中…</div></div>
+</div>
 
-import { get } from "../../ui/api.js";
-import { escapeHtml, errorBox } from "../../ui/dom.js";
-
-export const title = "文件";
-
-export function mount(root, ctx) {
-  root.innerHTML = `
-    <h1>文件</h1>
-    <div class="sub">上传 · 解析 · 读取（契约端点 POST /api/files/upload、GET /api/files）</div>
-    <div class="panel">
-      <div class="p-title">上传</div>
-      <input type="file" id="file-input" class="txt" />
-      <button class="btn" id="file-upload" style="margin-left:8px">上传</button>
-      <div id="file-msg" class="sub" style="margin-top:8px"></div>
-    </div>
-    <div id="file-list"><div class="sub">加载中…</div></div>`;
+<script type="module">
+  import { get } from "./ui/api.js";
+  import { escapeHtml, errorBox } from "./ui/dom.js";
 
   const list = document.getElementById("file-list");
   const msg = document.getElementById("file-msg");
@@ -26,7 +33,7 @@ export function mount(root, ctx) {
     const fd = new FormData();
     fd.append("files", file);
     try {
-      const r = await fetch(ctx.base + "/api/files/upload", { method: "POST", body: fd });
+      const r = await fetch("/api/files/upload", { method: "POST", body: fd });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       const j = await r.json();
       msg.textContent = `已上传 ${(j.files || []).length} 个文件`;
@@ -50,4 +57,6 @@ export function mount(root, ctx) {
     }
   }
   loadList();
-}
+</script>
+</body>
+</html>

@@ -1,22 +1,28 @@
-/* Token 用量界面：台账 / 配额（契约端点：GET /api/token-usage）。 */
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>P.A.L.M · Token 用量</title>
+<link rel="stylesheet" href="./ui/theme.css" />
+<link rel="stylesheet" href="./ui/base.css" />
+</head>
+<body>
+<div class="main" style="padding:20px 24px;max-width:1080px">
+  <h1>Token 用量</h1>
+  <div class="sub">用量台账 · 配额状态（契约：GET /api/token-usage）</div>
+  <div id="usage-body"><div class="sub">加载中…</div></div>
+</div>
 
-import { get } from "../../ui/api.js";
-import { escapeHtml, errorBox } from "../../ui/dom.js";
-
-export const title = "Token 用量";
-
-export function mount(root, ctx) {
-  root.innerHTML = `
-    <h1>Token 用量</h1>
-    <div class="sub">用量台账 · 配额状态（契约端点 GET /api/token-usage）</div>
-    <div id="usage-body"><div class="sub">加载中…</div></div>`;
+<script type="module">
+  import { get } from "./ui/api.js";
+  import { escapeHtml, errorBox } from "./ui/dom.js";
 
   const body = document.getElementById("usage-body");
   (async () => {
     let j;
-    try {
-      j = await get("/api/token-usage");
-    } catch (exc) {
+    try { j = await get("/api/token-usage"); }
+    catch (exc) {
       body.innerHTML = `<div class="panel">${errorBox(exc)}</div>` +
         `<div class="sub">契约：GET /api/token-usage → {today, month, total, records: [...]}</div>`;
       return;
@@ -34,4 +40,6 @@ export function mount(root, ctx) {
         </table>
       </div>`;
   })();
-}
+</script>
+</body>
+</html>

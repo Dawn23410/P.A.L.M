@@ -1,24 +1,31 @@
-/* 定时任务界面：任务列表 / 创建 / 启停（契约端点：GET /api/scheduler/jobs 等）。 */
-
-import { get, post } from "../../ui/api.js";
-import { escapeHtml, errorBox } from "../../ui/dom.js";
-
-export const title = "定时任务";
-
-export function mount(root, ctx) {
-  root.innerHTML = `
-    <h1>定时任务</h1>
-    <div class="sub">任务列表 · 创建 · 启停（契约端点 GET /api/scheduler/jobs）</div>
-    <div class="panel">
-      <div class="p-title">新建任务</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <input class="txt" id="job-name" placeholder="任务名" style="flex:1;min-width:140px" />
-        <input class="txt" id="job-cron" placeholder="cron 表达式（如 0 9 * * *）" style="flex:1;min-width:180px" />
-        <button class="btn" id="job-create">创建</button>
-      </div>
-      <div id="job-msg" class="sub" style="margin-top:8px"></div>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>P.A.L.M · 定时任务</title>
+<link rel="stylesheet" href="./ui/theme.css" />
+<link rel="stylesheet" href="./ui/base.css" />
+</head>
+<body>
+<div class="main" style="padding:20px 24px;max-width:1080px">
+  <h1>定时任务</h1>
+  <div class="sub">任务列表 · 创建 · 启停（契约：GET/POST /api/scheduler/jobs）</div>
+  <div class="panel">
+    <div class="p-title">新建任务</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <input class="txt" id="job-name" placeholder="任务名" style="flex:1;min-width:140px" />
+      <input class="txt" id="job-cron" placeholder="cron 表达式（如 0 9 * * *）" style="flex:1;min-width:180px" />
+      <button class="btn" id="job-create">创建</button>
     </div>
-    <div id="job-list"><div class="sub">加载中…</div></div>`;
+    <div id="job-msg" class="sub" style="margin-top:8px"></div>
+  </div>
+  <div id="job-list"><div class="sub">加载中…</div></div>
+</div>
+
+<script type="module">
+  import { get, post } from "./ui/api.js";
+  import { escapeHtml, errorBox } from "./ui/dom.js";
 
   const list = document.getElementById("job-list");
   const msg = document.getElementById("job-msg");
@@ -50,4 +57,6 @@ export function mount(root, ctx) {
     }
   }
   loadList();
-}
+</script>
+</body>
+</html>

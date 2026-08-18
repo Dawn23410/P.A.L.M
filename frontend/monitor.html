@@ -1,22 +1,28 @@
-/* 运行监控界面：进程检测 / 模式解析（契约端点：GET /api/monitor/status）。 */
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>P.A.L.M · 运行监控</title>
+<link rel="stylesheet" href="./ui/theme.css" />
+<link rel="stylesheet" href="./ui/base.css" />
+</head>
+<body>
+<div class="main" style="padding:20px 24px;max-width:1080px">
+  <h1>运行监控</h1>
+  <div class="sub">游戏/专注进程检测 · 运行模式解析（契约：GET /api/monitor/status）</div>
+  <div id="mon-body"><div class="sub">加载中…</div></div>
+</div>
 
-import { get } from "../../ui/api.js";
-import { escapeHtml, errorBox, stateChip } from "../../ui/dom.js";
-
-export const title = "运行监控";
-
-export function mount(root, ctx) {
-  root.innerHTML = `
-    <h1>运行监控</h1>
-    <div class="sub">游戏/专注进程检测 · 运行模式解析（契约端点 GET /api/monitor/status）</div>
-    <div id="mon-body"><div class="sub">加载中…</div></div>`;
+<script type="module">
+  import { get } from "./ui/api.js";
+  import { escapeHtml, errorBox, stateChip } from "./ui/dom.js";
 
   const body = document.getElementById("mon-body");
   (async () => {
     let j;
-    try {
-      j = await get("/api/monitor/status");
-    } catch (exc) {
+    try { j = await get("/api/monitor/status"); }
+    catch (exc) {
       body.innerHTML = `<div class="panel">${errorBox(exc)}</div>` +
         `<div class="sub">契约：GET /api/monitor/status → {mode, game_running, processes: [...]}</div>`;
       return;
@@ -32,4 +38,6 @@ export function mount(root, ctx) {
         </table>
       </div>`;
   })();
-}
+</script>
+</body>
+</html>

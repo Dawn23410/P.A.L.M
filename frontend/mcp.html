@@ -1,22 +1,28 @@
-/* MCP 工具台界面：工具列表 / 调用（契约端点：GET /api/mcp/tools、POST /api/mcp/call）。 */
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>P.A.L.M · MCP 工具台</title>
+<link rel="stylesheet" href="./ui/theme.css" />
+<link rel="stylesheet" href="./ui/base.css" />
+</head>
+<body>
+<div class="main" style="padding:20px 24px;max-width:1080px">
+  <h1>MCP 工具台</h1>
+  <div class="sub">已连接 MCP 工具 · 调用（契约：GET /api/mcp/tools）</div>
+  <div id="mcp-body"><div class="sub">加载中…</div></div>
+</div>
 
-import { get, post } from "../../ui/api.js";
-import { escapeHtml, errorBox } from "../../ui/dom.js";
-
-export const title = "MCP 工具台";
-
-export function mount(root, ctx) {
-  root.innerHTML = `
-    <h1>MCP 工具台</h1>
-    <div class="sub">已连接 MCP 工具 · 调用（契约端点 GET /api/mcp/tools）</div>
-    <div id="mcp-body"><div class="sub">加载中…</div></div>`;
+<script type="module">
+  import { get } from "./ui/api.js";
+  import { escapeHtml, errorBox } from "./ui/dom.js";
 
   const body = document.getElementById("mcp-body");
   (async () => {
     let j;
-    try {
-      j = await get("/api/mcp/tools");
-    } catch (exc) {
+    try { j = await get("/api/mcp/tools"); }
+    catch (exc) {
       body.innerHTML = `<div class="panel">${errorBox(exc)}</div>` +
         `<div class="sub">契约：GET /api/mcp/tools → {tools: [{name, description, server}]}</div>`;
       return;
@@ -27,4 +33,6 @@ export function mount(root, ctx) {
       ${tools.map((t) => `<tr><td class="mono">${escapeHtml(t.name)}</td><td>${escapeHtml(t.server || "—")}</td><td>${escapeHtml(t.description || "")}</td></tr>`).join("") || `<tr><td colspan="3" class="sub">无已连接 MCP 工具</td></tr>`}
       </table></div>`;
   })();
-}
+</script>
+</body>
+</html>
