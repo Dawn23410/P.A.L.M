@@ -15,7 +15,7 @@ import time
 from dataclasses import dataclass
 from pathlib import Path
 
-from palm_sdk.bricks._shared.paths import resolve_storage
+from palm._core.paths import resolve_storage
 from typing import Any, Iterable
 
 _LOGGER = logging.getLogger(__name__)

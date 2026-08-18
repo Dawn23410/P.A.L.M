@@ -13,7 +13,7 @@ import os
 import shutil
 from pathlib import Path
 
-from palm_sdk.core.config import settings
+from palm._core.config import settings
 from ..tool_base import Tool
 
 # 用户主目录（路径白名单根）：文件工具只允许操作用户主目录内的文件，
@@ -27,8 +27,8 @@ def _send_to_recycle_bin(path: str) -> None:
     砖缺失时抛 RuntimeError 而非裸删降级：删除兜底是本工具的安全前提，
     守卫不可用时宁可让工具失败，也不允许绕过硬删。
     """
-    from palm_sdk.bricks.base import registry
-    brick = registry.get("storage")
+    from palm._core.container import registry
+    brick = container.get("storage")
     recycle_fn = brick.capabilities.get("recycle_bin") if brick else None
     if recycle_fn is None:
         raise RuntimeError("存储砖未注册，文件删除守卫不可用")

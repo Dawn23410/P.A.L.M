@@ -27,7 +27,7 @@ _NOISE_NAME = {"设置", "系统", "最小化", "最大化", "关闭", "搜索�
 def _storage_cap(name):
     """惰性取 storage 砖 capability；砖未就绪时返回 None（fail-soft）。"""
     try:
-        from palm_sdk.bricks.storage import brick as storage_brick
+        from palm._core.container import brick as storage_brick
     except Exception:
         return None
     return getattr(storage_brick, "capabilities", {}).get(name)

@@ -19,7 +19,7 @@ from ..prompt_templates import (
 )
 from .dual_runner import _sanitize_tool_text
 from ..tool_matcher import get_matcher
-from palm_sdk.bricks._shared.interop import get_roleplay_api
+from palm._core.interop import get_roleplay_api
 
 _LOGGER = logging.getLogger(__name__)
 

@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import time
 
-from palm_sdk.bricks._shared.eventbus import STORAGE_QUOTA_EXCEEDED, emit
+from palm._core.eventbus import STORAGE_QUOTA_EXCEEDED, emit
 from ..controller.audit import record_event
 from ..state import PoolStore
 

@@ -26,7 +26,7 @@ from .intent_router import (
 )
 from ..tool_base import ToolRegistry, get_registry
 from ..schemas import AgentEvent
-from palm_sdk.bricks._shared.interop import get_memory_api
+from palm._core.interop import get_memory_api
 from .professional_memory import (
     get_default_professional_memory,
     schedule_trace_digest,

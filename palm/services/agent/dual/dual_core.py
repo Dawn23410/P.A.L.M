@@ -20,7 +20,7 @@ from palm.adapters.model.model_router import select_model
 from ..completion_gate import get_default_gate
 from ..persona import create_persona_provider
 from .dual_runner import run_native as _run_native_impl
-from palm_sdk.bricks._shared.interop import get_memory_api
+from palm._core.interop import get_memory_api
 
 from ..protocols import (
     MemoryProtocol,
@@ -204,7 +204,7 @@ class Agent(PromptMixin, ExecutionMixin, ReactMixin):
         # 情绪正则检测：基于用户原始消息检测一次，结果供 prompt 注入复用。
         # 仅用户原始情绪有意义——规划模式下 _user_message 会被子目标覆盖，但情绪信号不随之变。
         try:
-            from palm_sdk.bricks._shared.emotion import detect, build_emotion_hint
+            from palm._core.emotion import detect, build_emotion_hint
             self._emotion_hint = build_emotion_hint(detect(message))
             # 同步到persona_provider
             if hasattr(self.persona_provider, "emotion_hint"):

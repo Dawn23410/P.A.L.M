@@ -10,7 +10,7 @@ import re
 import socket
 from urllib.parse import quote, urlparse
 
-from palm_sdk.net import arequest, NetResponse
+from palm._core.net import arequest, NetResponse
 
 from ..tool_base import Tool
 

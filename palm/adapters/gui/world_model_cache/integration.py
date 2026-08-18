@@ -37,7 +37,7 @@ def _entry_brief(entry):
 def _try_llm_synthesis(entry):
     """复杂/冲突时尝试拉 LLM 整合概览（软依赖，失败返回 None）。"""
     try:
-        from palm_sdk.bricks.llm import brick as llm_brick
+        from palm._core.container import brick as llm_brick
     except Exception:
         return None
     cap = None

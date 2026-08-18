@@ -10,10 +10,10 @@ import subprocess
 import tempfile
 import threading
 
-from palm_sdk.core.config import settings
-from palm_sdk.bricks.base import registry
+from palm._core.config import settings
+from palm._core.container import registry
 from ..tool_base import Tool, ToolSpec, agent_conversation_id, agent_model, agent_is_wakeup
-from palm_sdk.bricks._shared.interop import get_evolution_api
+from palm._core.interop import get_evolution_api
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -33,7 +33,7 @@ def _ensure_sandbox():
     global _sandbox_run, _sandbox_net, _sandbox_honeypot
     if _sandbox_run is not None:
         return
-    brick = registry.get("sandbox")
+    brick = container.get("sandbox")
     engine_fn = brick.capabilities.get("sandbox_engine") if brick else None
     if engine_fn is None:
         _LOGGER.warning("沙箱砖未注册或引擎能力缺失")
@@ -49,7 +49,7 @@ def _ensure_sandbox():
 
 def _restore_module():
     """惰性取沙箱砖还原点模块；砖/能力缺失时返回 None（铁律：缺失降级）。"""
-    brick = registry.get("sandbox")
+    brick = container.get("sandbox")
     restore_fn = brick.capabilities.get("restore_point") if brick else None
     return restore_fn() if restore_fn else None
 
@@ -98,7 +98,7 @@ class RunCodeTool(Tool):
     async def execute(self, code: str, language: str = "auto", timeout: int = 15,
                       need_elevation: bool = False) -> str:
         # 离线护栏：离线模式下禁止代码中的外网访问（沙箱子进程不走 httpx 拦截）
-        from palm_sdk.core.gateway import is_offline
+        from palm._core.gateway import is_offline
         if is_offline():
             _net_hints = ("http://", "https://", "curl", "wget", "requests",
                           "urllib", "socket", "ftp", "smtp", "aiohttp",
@@ -266,7 +266,7 @@ class RunCodeTool(Tool):
 
     def _index_artifact(self, filename: str, disk_path: str) -> None:
         # 把已落盘的产物登记进存储池索引，使其可被统计/删除/GC 追踪，避免成为无索引孤儿。
-        brick = registry.get("storage")
+        brick = container.get("storage")
         if not brick:
             return
         fn = (getattr(brick, "capabilities", {}) or {}).get("index_existing_file")

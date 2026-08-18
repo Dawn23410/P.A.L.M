@@ -4,7 +4,7 @@ from __future__ import annotations
 import json, logging, os, time
 from ..tool_base import Tool
 
-from palm_sdk.net import arequest
+from palm._core.net import arequest
 
 _LOGGER = logging.getLogger(__name__)
 

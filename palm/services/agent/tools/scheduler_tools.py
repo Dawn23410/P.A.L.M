@@ -12,11 +12,11 @@ from ..tool_base import (
     agent_conversation_id,
     agent_model,
 )
-from palm_sdk.base import registry
+from palm._core.container import registry
 
 
 def _scheduler_create():
-    sched = registry.get("scheduler")
+    sched = container.get("scheduler")
     if not sched:
         return None
     return (getattr(sched, "capabilities", {}) or {}).get("create_job")
