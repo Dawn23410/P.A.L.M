@@ -421,7 +421,7 @@ async def _digest_trace(
 
 def _select_trivial_model(model: str) -> str:
     try:
-        from ..model_router import select_model
+        from palm.adapters.model.model_router import select_model
         return select_model("trivial", model)
     except Exception:  # noqa: BLE001
         return model

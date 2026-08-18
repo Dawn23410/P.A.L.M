@@ -16,7 +16,7 @@ from ..tool_base import (
     agent_conversation_id, agent_model, agent_is_wakeup, agent_character_id,
 )
 from ..tool_matcher import get_matcher
-from ..model_router import select_model
+from palm.adapters.model.model_router import select_model
 from ..completion_gate import get_default_gate
 from ..persona import create_persona_provider
 from .dual_runner import run_native as _run_native_impl

@@ -19,7 +19,7 @@ from .dual_planner import (
     Plan, PlanStep, Planner,
 )
 from ..schemas import AgentEvent
-from ..model_router import select_model
+from palm.adapters.model.model_router import select_model
 
 _LOGGER = logging.getLogger(__name__)
 

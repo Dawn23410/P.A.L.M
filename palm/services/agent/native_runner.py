@@ -15,7 +15,7 @@ from pathlib import Path
 import re
 from .schemas import AgentEvent
 from ._native_execution import _execute_tool_round, _parse_tool_arguments
-from .model_router import select_model
+from palm.adapters.model.model_router import select_model
 from palm._core.paths import resolve_storage
 from .native_parse import _normalize_native_chunk, _should_reflect
 _LOGGER = logging.getLogger(__name__)

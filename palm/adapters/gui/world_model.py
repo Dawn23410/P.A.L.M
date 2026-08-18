@@ -25,7 +25,7 @@ from dataclasses import dataclass, field
 import pyautogui
 from PIL import Image, ImageDraw, ImageFont
 from .desktop_control import ocr_boxes, find_window
-from .world_geometry import _area, _contains, _norm_text, _center, _iter_nodes, _walk_confirmed
+from .world_geometry import _area, _contains, _norm_text, _center, _iter_nodes, _walk_confirme, _point_owned_by, _load_font
 _LOGGER = logging.getLogger(__name__)
 MAX_DEPTH = 12
 MAX_NODES = 1500
@@ -112,25 +112,6 @@ def _name_match(ocr_text: str, node_name: str) -> bool:
     if not a or not b:
         return False
     return a in b or b in a
-
-def _point_owned_by(hwnd_target: int, cx: float, cy: float) -> bool:
-    """像素所有权测试：坐标 (cx,cy) 处的真实顶层窗口是否为目标窗口或其子窗口。
-
-    用以区分"目标窗口自身的文本"与"叠在目标之上、且不透明的别窗文本"——
-    后者几何上也落在目标矩形内，但那一点真正可见的窗口是别窗，绝不应认领为目标内容。
-    """
-    if not hwnd_target:
-        return False
-    _user32 = ctypes.windll.user32
-
-    class _POINT(ctypes.Structure):
-        _fields_ = [('x', ctypes.c_long), ('y', ctypes.c_long)]
-    top = _user32.WindowFromPoint(_POINT(int(cx), int(cy)))
-    if not top:
-        return False
-    if top == hwnd_target:
-        return True
-    return bool(_user32.IsChild(hwnd_target, top))
 
 def find_control(model: dict, name: str | None=None, automation_id: str | None=None, control_type: str | None=None):
     """在实时世界模型的 UIA 树里按名称/automation_id/控件类型定位最佳节点。
@@ -274,17 +255,6 @@ def fuse(uia_result: dict, ocr_items: list, target_hwnd: int, root_rect: tuple) 
     structure_only = _collect_structure_only(flat)
     visible_layer = _build_visible_layer(ocr_items, root_rect)
     return {'visible_layer': visible_layer, 'ocr_matched': matched, 'image_only': image_only, 'structure_only': structure_only}
-
-def _load_font(size: int):
-    """优先加载系统中文字体，失败回退默认。"""
-    candidates = ['C:/Windows/Fonts/msyh.ttc', 'C:/Windows/Fonts/simhei.ttf', 'C:/Windows/Fonts/msyhbd.ttc']
-    for path in candidates:
-        if os.path.exists(path):
-            try:
-                return ImageFont.truetype(path, size)
-            except Exception:
-                continue
-    return ImageFont.load_default()
 
 def render_world_model(model: dict, screenshot_path: str, out_png: str, window_rect: tuple) -> str:
     """在截图上叠加包围盒与标签，输出标注图。
