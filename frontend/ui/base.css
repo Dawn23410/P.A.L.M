@@ -1,0 +1,78 @@
+/* 基础布局：外壳侧边栏 + 内容区；面板/表格/状态徽章等通用样式。 */
+* { box-sizing: border-box; }
+body {
+  margin: 0; font-family: var(--font); background: var(--bg); color: var(--text);
+}
+.shell { display: flex; min-height: 100vh; }
+.nav {
+  width: 180px; flex-shrink: 0; background: var(--bg-panel);
+  border-right: 1px solid var(--border); padding: 16px 10px;
+}
+.nav .logo { font-size: 16px; font-weight: 700; padding: 0 8px 14px; }
+.nav a {
+  display: block; padding: 8px 10px; border-radius: 8px; color: var(--text);
+  text-decoration: none; font-size: 13px;
+}
+.nav a:hover { background: var(--bg-hover); }
+.nav a.active { background: var(--accent); color: #fff; }
+.main { flex: 1; padding: 20px 24px; min-width: 0; }
+.main h1 { font-size: 18px; margin: 0 0 4px; }
+.main .sub { color: var(--text-sub); font-size: 13px; margin-bottom: 16px; }
+
+/* 面板 */
+.panel {
+  background: var(--bg-panel); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px; margin-bottom: 12px;
+}
+.panel .p-title { font-weight: 600; font-size: 13px; margin-bottom: 10px; }
+
+/* 卡片网格 */
+.grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+.card {
+  background: var(--bg-panel); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px; transition: border-color .15s;
+}
+.card:hover { border-color: var(--border-hover); }
+.card .name { font-weight: 600; font-size: 14px; }
+.card .title { color: var(--text-sub); font-size: 12px; margin-top: 4px; min-height: 16px; }
+
+/* 状态徽章 */
+.chip {
+  display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 6px;
+  background: var(--chip-bg); color: var(--chip-text);
+}
+.chip.ok { background: #14301f; color: var(--ok); }
+.chip.err { background: #3a1f1f; color: var(--err); }
+.pill {
+  background: var(--bg-hover); border: 1px solid var(--border); border-radius: 999px;
+  padding: 6px 14px; font-size: 13px;
+}
+.pill b { color: var(--ok); }
+.pill b.err { color: var(--err); }
+
+/* 表格 */
+table.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+.tbl th, .tbl td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+.tbl th { color: var(--text-sub); font-weight: 500; }
+
+/* 按钮 */
+button.btn {
+  background: var(--accent); color: #fff; border: none; border-radius: 8px;
+  padding: 8px 16px; cursor: pointer; font-size: 13px;
+}
+button.btn:hover { background: var(--accent-hover); }
+button.btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+
+/* 表单 */
+input.txt, textarea.txt, select.sel {
+  background: var(--bg); color: var(--text); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 10px; font-size: 13px; font-family: var(--font);
+}
+input.txt:focus, textarea.txt:focus { outline: none; border-color: var(--border-hover); }
+
+.err { color: var(--err); }
+.sub { color: var(--text-sub); font-size: 13px; }
+.mono { font-family: Consolas, "Courier New", monospace; font-size: 12px; }

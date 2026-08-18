@@ -1,0 +1,54 @@
+/* 总览界面：健康检测 + 库装配服务清单（替代旧 masterboard/bios/bricks 三界面）。 */
+
+import { get } from "../../ui/api.js";
+import { escapeHtml, stateChip, errorBox } from "../../ui/dom.js";
+
+export const title = "总览";
+
+export function mount(root, ctx) {
+  root.innerHTML = `
+    <h1>总览</h1>
+    <div class="sub">palm 库装配状态 · 服务注册清单（契约端点：GET /health、GET /api/services）</div>
+    <div class="bar" style="display:flex;gap:12px;align-items:center;margin-bottom:14px">
+      <button class="btn" id="ov-refresh">刷新</button>
+      <span class="pill" id="ov-health">健康：<b>检测中…</b></span>
+    </div>
+    <div id="ov-body"><div class="sub">加载中…</div></div>`;
+
+  async function load() {
+    const body = document.getElementById("ov-body");
+    const healthEl = document.getElementById("ov-health");
+    let health, services;
+    try {
+      health = await get("/health");
+      healthEl.innerHTML = `健康：<b>${escapeHtml(health.status === "ok" ? "正常" : health.status)}</b>`;
+    } catch (exc) {
+      healthEl.innerHTML = `健康：<b class="err">不可达</b>`;
+    }
+    try {
+      services = await get("/api/services");
+    } catch (_) { /* 契约未就绪：走降级展示 */ }
+    if (!services?.services?.length) {
+      body.innerHTML = `
+        <div class="panel">${errorBox(new Error("后端 HTTP 适配层未就绪（契约：GET /api/services 返回 {services: [...]}）"))}</div>
+        <div class="sub">库内服务（bootstrap 装配，共 14 个）：storage · settings · crypto · models · usage · usage_ledger · scheduler · conversations · game · affinity · roleplay · memory · evolution · agent</div>`;
+      return;
+    }
+    body.innerHTML = `
+      <div class="panel">
+        <div class="p-title">已装配服务（${services.services.length}）</div>
+        <table class="tbl">
+          <tr><th>服务名</th><th>状态</th><th>能力数</th></tr>
+          ${services.services.map((s) => `
+            <tr>
+              <td class="mono">${escapeHtml(s.name)}</td>
+              <td>${stateChip(s.available)}</td>
+              <td>${escapeHtml(String(s.capabilities ?? 0))}</td>
+            </tr>`).join("")}
+        </table>
+      </div>`;
+  }
+
+  document.getElementById("ov-refresh").addEventListener("click", load);
+  load();
+}

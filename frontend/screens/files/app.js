@@ -1,0 +1,53 @@
+/* 文件界面：上传 / 列表 / 解析结果（契约端点：POST /api/files/upload、GET /api/files）。 */
+
+import { get } from "../../ui/api.js";
+import { escapeHtml, errorBox } from "../../ui/dom.js";
+
+export const title = "文件";
+
+export function mount(root, ctx) {
+  root.innerHTML = `
+    <h1>文件</h1>
+    <div class="sub">上传 · 解析 · 读取（契约端点 POST /api/files/upload、GET /api/files）</div>
+    <div class="panel">
+      <div class="p-title">上传</div>
+      <input type="file" id="file-input" class="txt" />
+      <button class="btn" id="file-upload" style="margin-left:8px">上传</button>
+      <div id="file-msg" class="sub" style="margin-top:8px"></div>
+    </div>
+    <div id="file-list"><div class="sub">加载中…</div></div>`;
+
+  const list = document.getElementById("file-list");
+  const msg = document.getElementById("file-msg");
+
+  document.getElementById("file-upload").addEventListener("click", async () => {
+    const file = document.getElementById("file-input").files[0];
+    if (!file) { msg.textContent = "请先选择文件"; return; }
+    const fd = new FormData();
+    fd.append("files", file);
+    try {
+      const r = await fetch(ctx.base + "/api/files/upload", { method: "POST", body: fd });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const j = await r.json();
+      msg.textContent = `已上传 ${(j.files || []).length} 个文件`;
+      loadList();
+    } catch (exc) {
+      msg.textContent = "上传失败：" + exc.message;
+    }
+  });
+
+  async function loadList() {
+    try {
+      const j = await get("/api/files");
+      const files = j.files || j || [];
+      if (!files.length) { list.innerHTML = `<div class="panel"><div class="sub">暂无文件。</div></div>`; return; }
+      list.innerHTML = `<div class="panel"><div class="p-title">文件清单（${files.length}）</div>
+        <table class="tbl"><tr><th>名称</th><th>分类</th><th>大小</th></tr>
+        ${files.map((f) => `<tr><td>${escapeHtml(f.name || f.id)}</td><td>${escapeHtml(f.category || "—")}</td><td>${escapeHtml(String(f.size ?? "—"))}</td></tr>`).join("")}
+        </table></div>`;
+    } catch (exc) {
+      list.innerHTML = `<div class="panel">${errorBox(exc)}</div>`;
+    }
+  }
+  loadList();
+}

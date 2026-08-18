@@ -1,0 +1,53 @@
+/* 定时任务界面：任务列表 / 创建 / 启停（契约端点：GET /api/scheduler/jobs 等）。 */
+
+import { get, post } from "../../ui/api.js";
+import { escapeHtml, errorBox } from "../../ui/dom.js";
+
+export const title = "定时任务";
+
+export function mount(root, ctx) {
+  root.innerHTML = `
+    <h1>定时任务</h1>
+    <div class="sub">任务列表 · 创建 · 启停（契约端点 GET /api/scheduler/jobs）</div>
+    <div class="panel">
+      <div class="p-title">新建任务</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <input class="txt" id="job-name" placeholder="任务名" style="flex:1;min-width:140px" />
+        <input class="txt" id="job-cron" placeholder="cron 表达式（如 0 9 * * *）" style="flex:1;min-width:180px" />
+        <button class="btn" id="job-create">创建</button>
+      </div>
+      <div id="job-msg" class="sub" style="margin-top:8px"></div>
+    </div>
+    <div id="job-list"><div class="sub">加载中…</div></div>`;
+
+  const list = document.getElementById("job-list");
+  const msg = document.getElementById("job-msg");
+
+  document.getElementById("job-create").addEventListener("click", async () => {
+    const name = document.getElementById("job-name").value.trim();
+    const cron = document.getElementById("job-cron").value.trim();
+    if (!name || !cron) { msg.textContent = "任务名与 cron 表达式必填"; return; }
+    try {
+      await post("/api/scheduler/jobs", { name, cron });
+      msg.textContent = "已创建";
+      loadList();
+    } catch (exc) {
+      msg.textContent = "创建失败：" + exc.message;
+    }
+  });
+
+  async function loadList() {
+    try {
+      const j = await get("/api/scheduler/jobs");
+      const jobs = j.jobs || j || [];
+      if (!jobs.length) { list.innerHTML = `<div class="panel"><div class="sub">暂无定时任务。</div></div>`; return; }
+      list.innerHTML = `<div class="panel"><div class="p-title">任务清单（${jobs.length}）</div>
+        <table class="tbl"><tr><th>名称</th><th>cron</th><th>状态</th></tr>
+        ${jobs.map((job) => `<tr><td>${escapeHtml(job.name || job.id)}</td><td class="mono">${escapeHtml(job.cron || "—")}</td><td>${escapeHtml(job.enabled ? "运行中" : "已暂停")}</td></tr>`).join("")}
+        </table></div>`;
+    } catch (exc) {
+      list.innerHTML = `<div class="panel">${errorBox(exc)}</div>`;
+    }
+  }
+  loadList();
+}
