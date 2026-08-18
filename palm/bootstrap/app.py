@@ -47,11 +47,12 @@ def build_app() -> ContainerProxy:
 
     try:
         from palm.adapters.crypto import keystore
+        from palm.adapters.crypto import operations as _crypto_ops
         keystore.boot()  # 指纹采集失败仅置禁用，不阻断装配
         _register("crypto", keystore, {
             "is_enabled": keystore.is_enabled,
-            "encrypt_bytes": getattr(keystore, "encrypt_bytes", None),
-            "decrypt_bytes": getattr(keystore, "decrypt_bytes", None),
+            "encrypt_bytes": getattr(_crypto_ops, "encrypt_data", None),
+            "decrypt_bytes": getattr(_crypto_ops, "decrypt_data", None),
         })
     except Exception as exc:  # noqa: BLE001
         print(f"[bootstrap] crypto 注册失败（降级）: {exc}")
@@ -102,7 +103,7 @@ def build_app() -> ContainerProxy:
     from palm.domain.roleplay import affinity_engine as _affinity
     _register("affinity", _affinity)
 
-    from palm.domain.roleplay import character_card as _roleplay
+    from palm.domain.roleplay import character as _roleplay
     _register("roleplay", _roleplay, {"roleplay_api": _roleplay})
 
     try:
@@ -114,7 +115,7 @@ def build_app() -> ContainerProxy:
     from palm.services.evolution import registry as _evo_registry
     _register("evolution", _evo_registry, {"evolution_api": _evo_registry})
 
-    from palm.services.agent import agent_core as _agent
+    from palm.services.agent import core as _agent
     _register("agent", _agent)
 
     return ContainerProxy(container)
