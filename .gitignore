@@ -1,0 +1,217 @@
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+# 虚拟环境体积数百 MB，应由 requirements.txt 重建，不入库
+.venv/
+venv/
+
+# ---------- Node / 前端构建产物 ----------
+# 前端依赖由 package-lock.json 重建（CI 即 npm ci），不入库
+node_modules/
+# Vite 构建产物可由 npm run build / build:standalone 重建，CI 已留存 artifact
+dist/
+dist_new/
+dist_old/
+.build_*/
+dist-standalone/
+frontend/test-standalone.html
+# tsc / vite 增量构建缓存
+*.tsbuildinfo
+# Vite 临时增量文件
+*.timestamp-*.mjs
+
+# ---------- 环境与密钥 ----------
+# 本地环境变量可能含密钥，仅保留示例模板
+.env
+.env.*
+!.env.example
+
+# ---------- 运行期日志 ----------
+# webview_debug.log / error.log 等非源码产物
+*.log
+
+# ---------- 工具/记忆目录 ----------
+# 本机 agent 记忆与配置，含个人数据，不入库
+.workbuddy/
+
+# ---------- 系统杂项 ----------
+.DS_Store
+Thumbs.db
+# 临时清理脚本（会话中自动生成，不入库）
+.tmp_*
+# 测试遗留产物（自动生成不被跟踪）
+tool_test_output.txt
+*.moved
+# shell 适用性测试 runner 每次重跑重新生成的结果摘要，非源码
+shell_test_report_brief.json
+# 工具测试落盘输出目录
+tool_test_dir/
+# pytest 运行缓存
+.pytest_cache/
+# uiautomation 控件查找超时探测日志（运行期自动生成，非源码）
+@AutomationLog.txt
+
+# ---------- 上传文件落盘目录 ----------
+# 运行时用户上传的文件，不入库
+backend/uploads/
+
+# ---------- 本地启动脚本（用户自定义，不入库） ----------
+run.bat
+test.bat
+
+# ---------- parse 砖块运行期工作区 ----------
+# 解析任务的中间产物（落盘文件、挑出的图片），不入库
+backend/parse_workspace/
+
+# ---------- Ollama 砖块运行期工作区 ----------
+# 向导下载/上传的 GGUF 与 Modelfile，不入库（实际路径在 backend/app/ollama_workspace）
+backend/app/ollama_workspace/
+# llama.cpp 转换脚本（以子模块方式放置在 backend/llama.cpp，不入库；见 convert.py）
+backend/llama.cpp/
+
+# ---------- 加密砖块：密钥与状态（含主密钥，绝不入库） ----------
+# 主密钥库、加密总开关状态、恢复密钥校验码均为本机敏感数据
+backend/.crypto_keystore
+backend/.crypto_state.json
+backend/.recovery_checksum
+
+# ---------- 存储池运行期数据（用户文件落盘，不入库） ----------
+# 统一分类存储池目录（旧 backend/storage_pool 已废弃，新默认 Data/）
+backend/storage_pool/
+Data/
+
+# ---------- 安全沙箱运行期数据（蜜罐/诱饵文件，含伪装凭据，绝不入库） ----------
+# 沙箱引擎运行时生成的 decoys（.ssh/id_rsa / .aws/credentials 等伪装凭据）
+# 与 .sandbox_user_pass，仅用于诱捕外泄检测，属本机敏感运行期产物。
+backend/sandbox_runtime/
+
+# ---------- Ollama catalog 运行期数据 ----------
+# 模型目录清单缓存（运行时生成）
+backend/app/bricks/ollama/catalog_data.py
+
+# ---------- Windows 保留设备名残留垃圾文件 ----------
+# frontend/nul 为误生成的 0 字节游离文件（Windows 设备名，无法入回收站），非源码，屏蔽
+frontend/nul
+nul
+CON
+PRN
+AUX
+
+# ---------- 会话调试/跑分临时脚本与产物 ----------
+# 下划线前缀的临时探针/冒烟/端到端/跑分脚本，以及 benchmark 跑分产物，均自动生成不入库
+_bench_agent.py
+_smoke*.py
+_debug_stream.py
+_e2e*.py
+_e2e*.json
+_llm_probe.py
+_netcheck.py
+_ollama_*.py
+_scan_models.py
+_test_*.py
+_tokenhub_retry.py
+_tool_probe.py
+benchmark_results*.json
+benchmark_report_*.md
+agent_refactor_assessment.md
+
+# ---------- GPT-SoVITS 砖块自带发行包（解包产物，体积大，由 install.py 生成）----------
+backend/app/bricks/tts_sovits/gpt_sovits/
+# TTS 合成音频缓存
+Data/tts_cache/
+backend/app/bricks/tts_sovits/install.log
+
+# 解包临时暂存目录（install 中途产物）
+backend/app/bricks/tts_sovits/_stage/
+# 一次性验证脚本（不入库）
+sandbox_runtime/
+
+
+# ---------- 语音子系统运行时（2026-08-09）----------
+# 独立推理 venv（GSV/qwen-tts/stt 各一套，GB 级，绝不入库）
+.venv-*/
+# 根目录临时脚本与调试产物（_ 前缀；含 API 密钥的基准脚本等）
+/_*.py
+/_*.json
+/_*.md
+/_*.txt
+/_*.log
+/_*.out
+/_*.pid
+/_*.wav
+/_*.ogg
+/_*.bin
+# 根目录测试音频与一次性脚本
+/qwen_*.wav
+/qwen_final.wav
+/sovits_test.ogg
+/setup_qwen_venv.py
+/.mem_check.txt
+# GSV 大模型与运行时数据（2.4GB，由部署脚本解包）
+/plugins/tts_sovits/gpt_sovits/GPT_SoVITS/
+/plugins/tts_sovits/gpt_sovits/ref_audio.wav
+/plugins/tts_sovits/gpt_sovits/__pycache__/
+# 后端进程标记文件（pid/探测输出）
+/backend/*.pid
+/backend/gsv_cpu.txt
+/backend/gsv_procs.txt
+/backend/kill_marker.txt
+/backend/port8000_proc.txt
+/backend/stop_marker.txt
+# logs 下测试音频与报告产物
+/logs/*.ogg
+/logs/*.html
+# 根目录 GSV/qwen 测试音频与一次性 pip 脚本
+/gsv_*.ogg
+/gsv_*.wav
+/vd_*.wav
+/fix_pip.py
+/get-pip.py
+
+# ---------- 根目录游离文件与 Trae IDE 工作产物（不入库） ----------
+# 本机 ollama 模型定义（DeepSeek 7B Q4，本机运行期配置，非源码）
+/Modelfile.gpu
+# 会话界面截图（根目录游离）
+/screenshot*.png
+# Trae IDE 工作目录（技能/HTML 分享包/基准运行时中间产物）
+.trae/
+.trae-html-share-packages/
+.bench_runtime/
+
+# ---------- 正式基准资产白名单（架构对比论证材料，须入库；与上面 /_*. 规则例外） ----------
+!/_bench_bricks.py
+!/_bench_bricks.json
+!/_bench_memory_decay.py
+!/_bench_memory_decay.json
+!/_mem_decay_data.py
+
+# ---------- 统一本地归档（测试产物/历史验证脚本/评估报告，不入库，本地留存） ----------
+archive/
+
+# ---------- 独立砖块目录：虚拟环境与模型权重（GB 级，绝不入库） ----------
+# 每块砖自带 .venv/.venv-*；声卡 pcie 下含 20+GB 模型与 torch dll
+**/.venv*/
+**/pretrained_models/
+**/cosyvoice_model/
+**/checkpoints/
+**/speaker_models/
+# 模型权重/推理图格式（由部署脚本恢复，非源码）
+*.pth
+*.pt
+*.safetensors
+*.ckpt
+*.onnx
+*.gguf
+# 权重二进制（huggingface pytorch_model.bin 等）
+*.bin
+
+# ---------- 本机杂物目录（不入库） ----------
+桌面归档/
+垃圾/
+ollama_workspace/
+
+# ---------- 2026-08-18 重建仓库时追加 ----------
+# WorkBuddy 会话记录归档（运行期日志，非源码，本地保留）
+docs/记录归档/
+# GPT-SoVITS 自带发行包（vendored 依赖，可经 install 重建；含嵌套重复副本）
+P.A.L.M_砖块/pcie/声卡/语音合成 (GPT-SoVITS)/src/gpt_sovits/

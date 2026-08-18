@@ -1,0 +1,12 @@
+{
+  "id": "audio_bars",
+  "name": "音频律动",
+  "version": "1.0",
+  "width": 320,
+  "height": 140,
+  "tier": "rich",
+  "clickThrough": true,
+  "permissions": ["audio"],
+  "x": 40,
+  "y": 360
+}

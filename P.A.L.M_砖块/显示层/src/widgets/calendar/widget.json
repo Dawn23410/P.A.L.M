@@ -1,0 +1,12 @@
+{
+  "id": "calendar",
+  "name": "日历",
+  "version": "1.0",
+  "width": 300,
+  "height": 280,
+  "tier": "lite",
+  "clickThrough": false,
+  "permissions": ["time"],
+  "x": 720,
+  "y": 40
+}

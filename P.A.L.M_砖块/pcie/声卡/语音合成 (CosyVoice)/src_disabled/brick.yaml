@@ -1,0 +1,56 @@
+# brick.yaml — cosyvoice 砖块清单
+# 声明砖块元信息、运行时需求、依赖与模型，供初始化程序与砖块加载器读取。
+
+# ── 砖块元信息 ──
+name: cosyvoice
+title: "音色创造 (CosyVoice2)"
+description: >
+  基于 CosyVoice2 的音色创造砖块（完整砖，进程内持有模型，非薄代理）。
+  用自然语言描述 + 基底参考音频，产出可克隆的参考音频（.wav + .txt），
+  供 GSV（GPT-SoVITS）经 refer_wav_path 克隆做实时合成。
+  推理在砖进程内直接进行，不经任何外部 HTTP 服务；cosyvoice 依赖懒导入、模型懒加载。
+is_core: false
+bus_type: pcie
+can_accept_files: false
+enabled: true
+# 完整砖：模型在砖进程内直接推理，不走隔离子进程 / HTTP 代理。
+isolation: inproc
+endpoint: inproc://
+
+# ── 运行时环境 ──
+runtime:
+  # 完整砖：依赖装入运行 P.A.L.M 的同一环境（由 install.py 装到当前 python）。
+  # 不再使用独立 venv；device 决定 cuda / cpu 推理。
+  isolation: inproc
+  device: cuda
+  # 模型权重的落盘/加载目录（由 COSY_MODEL_DIR 配置，默认砖内 cosyvoice_model）。
+  model_dir: "cosyvoice_model"
+
+# ── 依赖清单 ──
+dependencies:
+  requirements_file: "requirements.txt"
+  # 关键约束（版本冲突时优先满足）。cosyvoice 会拉入 torch>=2.0 等。
+  constraints:
+    - "torch>=2.0"
+    - "cosyvoice>=2.0"
+
+# ── 预训练模型 ──
+# 模型不随源码分发，由 install.py 提示用户下载或手动放置。
+models:
+  - name: "CosyVoice2-0.5B"
+    path: "cosyvoice_model"
+    required: true
+
+# ── 上游来源 ──
+upstream:
+  project: "CosyVoice"
+  repo: "https://github.com/FunAudioLLM/CosyVoice"
+  version: "2.0"
+  license: "Apache-2.0"
+  license_file: ""
+
+# ── Agent 工具 ──
+tools:
+  - name: "create_voice"
+    permission: "cosyvoice.create_voice"
+    description: "用自然语言描述创造一个新音色（参考音频），供 GSV 克隆。"

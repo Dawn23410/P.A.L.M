@@ -1,0 +1,35 @@
+# 声纹识别砖配置（元数据 + 运行参数；运行时从环境变量读取，带默认值）
+name: speaker
+title: 声纹识别
+description: 基于 CAM++（sherpa-onnx）的本地说话人识别砖块，嵌入提取与声纹库跑在独立子进程。
+bus_type: cpu
+
+# 运行参数（对应 src/launcher.py 读取的环境变量，未设则用默认值）
+config:
+  SPEAKER_API_HOST: "127.0.0.1"
+  SPEAKER_API_PORT: "19510"
+  SPEAKER_MODEL_PATH: "src/speaker_models/campplus_zh_en_fp16.onnx"
+  SPEAKER_STORE_PATH: "data/speakers.json"
+  SPEAKER_SAMPLE_RATE: "16000"
+  SPEAKER_THRESHOLD: "0.31"          # CAM++ 默认验证阈值，可由准确性测试重新调优
+  SPEAKER_AUTO_LAUNCH: "true"
+  SPEAKER_VENV_PYTHON: ""            # 显式指定 venv 解释器时填（默认自动探测 .venv-speaker）
+
+# 自带依赖与权重（内聚于砖目录，不软链）
+dependencies:
+  venv: ".venv-speaker"
+  packages: [sherpa-onnx, onnxruntime, sounddevice, numpy, httpx]
+  model: "src/speaker_models/campplus_zh_en_fp16.onnx"
+
+# 对外能力（capabilities）
+capabilities: [is_speaker_available, enroll_speaker, identify_speaker, verify_speaker, list_speakers]
+
+# 权限（中风险：声纹库写入属持久化操作）
+permissions:
+  - key: speaker.enroll
+    title: 声纹注册
+    risk: medium
+
+# 事件总线输出
+emits:
+  - voice.speaker        # {speaker, similarity, match}

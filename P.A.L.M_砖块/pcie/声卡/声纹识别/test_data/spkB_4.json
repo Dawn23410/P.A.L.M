@@ -1,0 +1,13 @@
+{
+  "voice_id": "spkB_4",
+  "mode": "zero_shot",
+  "description": "",
+  "sample_text": "请把这份文件发送到我的邮箱，谢谢。",
+  "wav_path": "C:\\Users\\24459\\Desktop\\P.A.L.M\\声纹识别\\test_data\\spkB_4.wav",
+  "text_path": "C:\\Users\\24459\\Desktop\\P.A.L.M\\声纹识别\\test_data\\spkB_4.txt",
+  "gsv_refer_wav_path": "C:\\Users\\24459\\Desktop\\P.A.L.M\\声纹识别\\test_data\\spkB_4.wav",
+  "gsv_prompt_text": "请把这份文件发送到我的邮箱，谢谢。",
+  "gsv_prompt_language": "zh",
+  "device": "cuda",
+  "created_at": "2026-08-16 14:35:34"
+}

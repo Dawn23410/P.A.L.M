@@ -1,0 +1,12 @@
+{
+  "id": "battery",
+  "name": "电池",
+  "version": "1.0",
+  "width": 150,
+  "height": 150,
+  "tier": "lite",
+  "clickThrough": false,
+  "permissions": ["battery"],
+  "x": 400,
+  "y": 200
+}

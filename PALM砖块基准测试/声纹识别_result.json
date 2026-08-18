@@ -1,0 +1,16 @@
+{
+  "brick": "声纹识别",
+  "name": "speaker",
+  "device": "cpu",
+  "vram": "N/A",
+  "disk_kb": 190694.6,
+  "disk_bytes": 195271269,
+  "model": "campplus_zh_en_fp16.onnx",
+  "smoke": {
+    "ok": true,
+    "dim": 192,
+    "load_ms": 1482.5,
+    "embed_ms": 210.9
+  },
+  "measured_at": "2026-08-16 14:46:18"
+}

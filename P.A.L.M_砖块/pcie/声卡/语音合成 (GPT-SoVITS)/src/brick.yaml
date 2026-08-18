@@ -1,0 +1,76 @@
+# brick.yaml — tts_sovits 砖块清单
+# 声明砖块元信息、运行时需求、依赖与模型，供初始化程序与砖块加载器读取。
+
+# ── 砖块元信息 ──
+name: tts_sovits
+title: "语音合成 (GPT-SoVITS)"
+description: >
+  基于 GPT-SoVITS 的语音合成砖块。源码随砖块分发，运行时使用独立 venv
+  隔离重依赖（PyTorch/Transformers），通过 HTTP 接口提供合成能力。
+  支持 Agent 工具调用与流式合成。
+is_core: false
+bus_type: pcie
+can_accept_files: false
+enabled: true
+# 显式声明请求地址：隔离子进程（与 runtime.isolation: subprocess 呼应）。
+# 配合砖内暴露的 subprocess_spec 能力，BrickHandle 据此建 SubprocessTransport，
+# 落实「每砖管理芯片 + 自定义请求地址」。放置调度器在 manifest 为空时也会据此决策。
+endpoint: ipc://
+
+# ── 运行时环境 ──
+runtime:
+  # GSV 受 transformers<=4.50 + numpy<2.0 约束，需 Python 3.11。
+  python_version: "3.11"
+  # 独立 venv 名称（相对于项目根），install.py 创建。
+  venv_dir: ".venv-gsv"
+  # GSV 源码目录（相对于砖块根）。
+  source_dir: "gpt_sovits"
+  # 独立进程运行，不污染 P.A.L.M 主进程。
+  isolation: subprocess
+  # API 服务端口。
+  api_port: 9880
+  # 推理设备：cuda | cpu。
+  device: cuda
+
+# ── 依赖清单 ──
+dependencies:
+  # GSV 官方 requirements.txt（pip install 引用）。
+  requirements_file: "gpt_sovits/requirements.txt"
+  # 额外依赖（ASR 转写用）。
+  extra_requirements_file: "gpt_sovits/extra-req.txt"
+  # 关键约束（版本冲突时优先满足）。
+  constraints:
+    - "numpy<2.0"
+    - "transformers>=4.43,<=4.50"
+    - "librosa==0.10.2"
+
+# ── 预训练模型 ──
+# 模型不随源码分发，由 install.py 按需下载或用户手动放置。
+models:
+  # GPT-SoVITS v2 默认底模
+  - name: "gsv-v2final-pretrained (s2G)"
+    path: "GPT_SoVITS/pretrained_models/gsv-v2final-pretrained/s2G2333k.pth"
+    required: true
+  - name: "gsv-v2final-pretrained (s1bert)"
+    path: "GPT_SoVITS/pretrained_models/gsv-v2final-pretrained/s1bert25hz-5kh-longer-epoch=12-step=369668.ckpt"
+    required: true
+  - name: "chinese-hubert-base"
+    path: "GPT_SoVITS/pretrained_models/chinese-hubert-base"
+    required: true
+  - name: "chinese-roberta-wwm-ext-large"
+    path: "GPT_SoVITS/pretrained_models/chinese-roberta-wwm-ext-large"
+    required: true
+
+# ── 上游来源 ──
+upstream:
+  project: "GPT-SoVITS"
+  repo: "https://github.com/RVC-Boss/GPT-SoVITS"
+  version: "1007-cu128"
+  license: "MIT"
+  license_file: "gpt_sovits/LICENSE"
+
+# ── Agent 工具 ──
+tools:
+  - name: "text_to_speech"
+    permission: "tts.speak"
+    description: "将文字合成为语音，可选指定参考音频进行音色克隆。"

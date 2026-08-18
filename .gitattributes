@@ -1,0 +1,2 @@
+# 批处理文件必须用 CRLF 换行，否则 cmd.exe 会把行当成命令执行（dev.bat/run.bat 曾因此报错）
+*.bat text eol=crlf

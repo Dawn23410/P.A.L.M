@@ -1,0 +1,13 @@
+{
+  "voice_id": "spkC_3",
+  "mode": "zero_shot",
+  "description": "",
+  "sample_text": "明天可能会下雨，记得带伞出门。",
+  "wav_path": "C:\\Users\\24459\\Desktop\\P.A.L.M\\声纹识别\\test_data\\spkC_3.wav",
+  "text_path": "C:\\Users\\24459\\Desktop\\P.A.L.M\\声纹识别\\test_data\\spkC_3.txt",
+  "gsv_refer_wav_path": "C:\\Users\\24459\\Desktop\\P.A.L.M\\声纹识别\\test_data\\spkC_3.wav",
+  "gsv_prompt_text": "明天可能会下雨，记得带伞出门。",
+  "gsv_prompt_language": "zh",
+  "device": "cuda",
+  "created_at": "2026-08-16 14:36:43"
+}

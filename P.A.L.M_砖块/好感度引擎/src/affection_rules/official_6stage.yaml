@@ -1,0 +1,35 @@
+# 官方好感度规则（默认规则文件，用户仅可改各阶段 name 字段）
+#
+# 引擎零硬编码档位，只认以下结构：base / dynamics / bond。
+# 换一套档位 = 换一个 yaml，引擎一行不改，做到规则与代码低耦合。
+version: 1
+description: "官方双线好感度默认规则：6 阶关系档（地基）+ 温度计（当下心情）+ 无上限羁绊值"
+
+# ── 地基线（base）：关系的信任底线 / 熟悉度，变化极慢，可正可负 ──
+# 范围 -50~100；原始值可超出 100，但档位匹配与经验系数饱和于 saturation。
+# 每阶 max_up（升幅上限）远低于 max_down（降幅上限）——降幅显著高于升幅。
+base:
+  range: [-50, 100]
+  saturation: 100            # 档位匹配与游戏经验系数封顶点（亲密即封顶，体系不破）
+  stages:
+    - { lower_bound: -50, name: "抵触", greeting: "喂",   tone: "冷漠、厌恶、回避，不愿多说话",                  max_up: 0.05, max_down: 0.60 }
+    - { lower_bound: -10, name: "陌生", greeting: "你",   tone: "冷淡、保持距离，不带感情",                      max_up: 0.10, max_down: 0.50 }
+    - { lower_bound: 0,   name: "初识", greeting: "同学", tone: "礼貌平淡，偶尔傲娇嘴硬，但不亲密",              max_up: 0.08, max_down: 0.40 }
+    - { lower_bound: 30,  name: "友好", greeting: "你",   tone: "友好、会关心人，傲娇较轻",                      max_up: 0.05, max_down: 0.30 }
+    - { lower_bound: 60,  name: "亲近", greeting: "你",   tone: "语气更亲密、更依赖，傲娇很轻",                  max_up: 0.03, max_down: 0.20 }
+    - { lower_bound: 85,  name: "亲密", greeting: "主人", tone: "热情卖萌 + 中度傲娇 + 可爱病娇",                max_up: 0.02, max_down: 0.15 }
+
+# ── 温度计线（dynamics）：当下心情，变化快、会自然回归 0 ──
+# 单轮幅度比地基大得多；无强刺激时按幂律形状朝 0 平复（不会一直挂着火/嗨）。
+dynamics:
+  range: [-50, 50]
+  max_up: 10.0               # 单轮正向幅度上限（快）
+  max_down: 15.0             # 单轮负向幅度上限（降幅更高）
+  regression_lambda: 0.2     # 幂律回归：越久无新情绪波动，越朝 0 收
+  regression_gamma: 0.9
+
+# ── 羁绊值（bond）：无上限，纯装饰 / 叙事 ──
+# 承接 base 超过 saturation 的溢出与超额增益，给重活用户"永远有东西追"的爽感。
+# 用户要求全部不加每日上限，故 bond 同样不设每日预算。
+bond:
+  unbounded: true

@@ -1,0 +1,12 @@
+{
+  "id": "music",
+  "name": "正在播放",
+  "version": "1.0",
+  "width": 340,
+  "height": 160,
+  "tier": "rich",
+  "clickThrough": false,
+  "permissions": [],
+  "x": 40,
+  "y": 200
+}
