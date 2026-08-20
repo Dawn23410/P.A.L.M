@@ -1,0 +1,51 @@
+[
+  {
+    "seg": 2,
+    "no": "D1",
+    "name": "委派→真实读写→回传",
+    "ok": true,
+    "detail": "回传='[外骨骼回传] 任务「用 write_file 把内容「你好世界」写入 C:/U'"
+  },
+  {
+    "seg": 2,
+    "no": "D2",
+    "name": "文件真实落盘",
+    "ok": true,
+    "detail": "C:/Users/24459/Desktop/P.A.L.M/mentalcore/mentalcore_data/e2e_test/worker_out/hello_v2.txt"
+  },
+  {
+    "seg": 2,
+    "no": "D3",
+    "name": "ask_user 心智魔方中转",
+    "ok": true,
+    "detail": "hit=True 桥取回=True"
+  },
+  {
+    "seg": 2,
+    "no": "D4",
+    "name": "run_code 沙箱执行",
+    "ok": true,
+    "detail": "观测='2'"
+  },
+  {
+    "seg": 2,
+    "no": "D5",
+    "name": "干预 cancel",
+    "ok": true,
+    "detail": "末4=\"write_file:{'path': '/结论.; write_file:执行失败：路径越权：文件工具; intervention:任务被 Boss 取消; output:已被 Boss 取消\""
+  },
+  {
+    "seg": 2,
+    "no": "D6",
+    "name": "自主规划 use_planning",
+    "ok": true,
+    "detail": "步数=2"
+  },
+  {
+    "seg": 2,
+    "no": "D13",
+    "name": "token 计量台账",
+    "ok": true,
+    "detail": "30 笔 / 19837 token / 0.021819 元"
+  }
+]

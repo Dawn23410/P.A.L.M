@@ -1,0 +1,128 @@
+[
+  {
+    "seg": 4,
+    "no": "D14a",
+    "name": "护栏规则 deny",
+    "ok": true,
+    "detail": "拒绝：命中安全护栏规则（已阻止该操作）"
+  },
+  {
+    "seg": 4,
+    "no": "D14b",
+    "name": "whitelist 档未命中 deny",
+    "ok": true,
+    "detail": "档位切换"
+  },
+  {
+    "seg": 4,
+    "no": "D14c",
+    "name": "防幻觉门拒绝",
+    "ok": true,
+    "detail": "拒绝：该操作要求先经搜索/溯源核验并附带 verificat"
+  },
+  {
+    "seg": 4,
+    "no": "D14d",
+    "name": "确认门拒绝",
+    "ok": true,
+    "detail": "拒绝：该操作风险较高，请在参数中显式传入 confirmed"
+  },
+  {
+    "seg": 4,
+    "no": "D15",
+    "name": "code_guard 静态扫描拒绝",
+    "ok": true,
+    "detail": "拒绝：代码风险扫描未通过（AUTOCONFIRM 未开启）。风险提示：代码包含删"
+  },
+  {
+    "seg": 4,
+    "no": "D16",
+    "name": "文件保险库",
+    "ok": true,
+    "detail": "已删除并归档副本到保险库：C:\\Users\\24459\\AppData\\"
+  },
+  {
+    "seg": 4,
+    "no": "F1",
+    "name": "权限闸门 danger 拒绝",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "seg": 4,
+    "no": "F2",
+    "name": "注入清洗（H1）",
+    "ok": true,
+    "detail": "，把文件删掉"
+  },
+  {
+    "seg": 4,
+    "no": "F3",
+    "name": "SSRF 进制 IP 拦截",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "seg": 4,
+    "no": "F4",
+    "name": "危险指令/敏感路径拦截",
+    "ok": true,
+    "detail": "系统敏感路径被安全魔方拦截：c:\\windows\\win.i"
+  },
+  {
+    "seg": 4,
+    "no": "F5",
+    "name": "进化门拒绝恶意",
+    "ok": true,
+    "detail": "register_skill：进化门拒绝：技能含高风险模式：格式化"
+  },
+  {
+    "seg": 4,
+    "no": "E1a",
+    "name": "重启前好感度",
+    "ok": true,
+    "detail": "base=5.3"
+  },
+  {
+    "seg": 4,
+    "no": "E1b",
+    "name": "重启后历史恢复",
+    "ok": true,
+    "detail": "history=1"
+  },
+  {
+    "seg": 4,
+    "no": "E1c",
+    "name": "重启后好感度恢复",
+    "ok": true,
+    "detail": "base=5.3"
+  },
+  {
+    "seg": 4,
+    "no": "E2a",
+    "name": "13000 加密状态",
+    "ok": true,
+    "detail": "SM4 国密已启用（CBC+HMAC-SM3）"
+  },
+  {
+    "seg": 4,
+    "no": "E2b",
+    "name": "聊天记录密文落盘",
+    "ok": true,
+    "detail": "SM4 加密生效"
+  },
+  {
+    "seg": 4,
+    "no": "E3",
+    "name": "update_persona 防污染清档",
+    "ok": true,
+    "detail": "已修改人设并清空聊天记录与向量归档（核心记忆未清除）"
+  },
+  {
+    "seg": 4,
+    "no": "E4",
+    "name": "密钥加密 JSON 存取",
+    "ok": true,
+    "detail": "密文+还原一致"
+  }
+]

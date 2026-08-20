@@ -1,0 +1,100 @@
+[
+  {
+    "seg": 3,
+    "no": "A2b",
+    "name": "工具 31 个（含扩展）",
+    "ok": true,
+    "detail": "数=31"
+  },
+  {
+    "seg": 3,
+    "no": "D7a",
+    "name": "PCB 注册技能",
+    "ok": true,
+    "detail": "register_skill：已插入扩展「文件整理」（kind=skill，槽位 1/8）"
+  },
+  {
+    "seg": 3,
+    "no": "D7b",
+    "name": "进化门拒绝恶意",
+    "ok": true,
+    "detail": "register_skill：进化门拒绝：技能含高风险模式：删除全部文件"
+  },
+  {
+    "seg": 3,
+    "no": "D7c",
+    "name": "技能注入",
+    "ok": true,
+    "detail": "注入含技能=True"
+  },
+  {
+    "seg": 3,
+    "no": "D8",
+    "name": "matcher 语义筛选",
+    "ok": true,
+    "detail": "注入 7/31 个工具"
+  },
+  {
+    "seg": 3,
+    "no": "D9",
+    "name": "completion_gate 防空转",
+    "ok": true,
+    "detail": "第一行=第一行 abc；字符数=7"
+  },
+  {
+    "seg": 3,
+    "no": "D10",
+    "name": "prod 成语",
+    "ok": true,
+    "detail": "愚公移山：比喻坚持不懈。"
+  },
+  {
+    "seg": 3,
+    "no": "D10b",
+    "name": "prod 节日",
+    "ok": true,
+    "detail": "中秋节\n八月十五，团圆赏月、吃月饼。"
+  },
+  {
+    "seg": 3,
+    "no": "D11",
+    "name": "scheduler 提醒送达",
+    "ok": true,
+    "detail": "已设置提醒：1 秒后触发「e2e提醒」"
+  },
+  {
+    "seg": 3,
+    "no": "D12",
+    "name": "沙箱还原点",
+    "ok": true,
+    "detail": "已创建还原点：v2_rp（沙箱快照）"
+  },
+  {
+    "seg": 3,
+    "no": "D12b",
+    "name": "沙箱清理还原点",
+    "ok": true,
+    "detail": "已清理还原点：v2_rp"
+  },
+  {
+    "seg": 3,
+    "no": "D12c",
+    "name": "沙箱后台任务传达",
+    "ok": true,
+    "detail": "后台任务已启动（19:49:52）：echo v2_bg_o"
+  },
+  {
+    "seg": 3,
+    "no": "D17a",
+    "name": "cron 解析",
+    "ok": true,
+    "detail": "下次=2026-08-21 09:00:00"
+  },
+  {
+    "seg": 3,
+    "no": "D17b",
+    "name": "schedule cron 任务",
+    "ok": true,
+    "detail": "已设置提醒：47406 秒后触发「每日简报」"
+  }
+]

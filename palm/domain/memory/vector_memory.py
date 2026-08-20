@@ -46,6 +46,53 @@ _FALLBACK_EMBED_MODEL = "mxbai-embed-large:latest"
 _OLLAMA_API = "http://127.0.0.1:11434/api/embed"
 _COLLECTION_NAME = "agent_archived_memory"
 
+# 本地 ONNX embedding（脱离 Ollama 运行时）：weights/ 下放置
+# bge_m3.onnx + tokenizer.json（Xenova/bge-m3 转换版，1024 维）。
+# 模型缺失 / onnxruntime 未装 / 推理失败 → 返回 None，由 Ollama 接口兜底。
+_WEIGHTS_DIR = Path(__file__).resolve().parent / "weights"
+_onnx_session = None
+_onnx_tokenizer = None
+
+
+def _local_onnx_embed(texts: list[str]) -> list[list[float]] | None:
+    """本地 bge-m3 ONNX 推理：XLM-R 词表 tokenize → [CLS] 池化 → L2 归一化（1024 维）。"""
+    global _onnx_session, _onnx_tokenizer
+    model_path = _WEIGHTS_DIR / "bge_m3.onnx"
+    tok_path = _WEIGHTS_DIR / "tokenizer.json"
+    if not (model_path.is_file() and tok_path.is_file()):
+        return None
+    try:
+        if _onnx_session is None:
+            import onnxruntime as ort
+            _onnx_session = ort.InferenceSession(
+                str(model_path), providers=["CPUExecutionProvider"])
+        if _onnx_tokenizer is None:
+            from tokenizers import Tokenizer
+            _onnx_tokenizer = Tokenizer.from_file(str(tok_path))
+        encs = _onnx_tokenizer.encode_batch(texts, add_special_tokens=True)
+        max_len = min(max((len(e.ids) for e in encs), default=1), 8192)
+        input_ids, attn = [], []
+        for e in encs:
+            ids = e.ids[:max_len]
+            input_ids.append(ids + [0] * (max_len - len(ids)))
+            attn.append([1] * len(ids) + [0] * (max_len - len(ids)))
+        outputs = _onnx_session.run(None, {
+            "input_ids": input_ids, "attention_mask": attn})
+        # Xenova 转换版输出 last_hidden_state[batch, seq, 1024] → [CLS] 池化；
+        # 兼容直接输出 [batch, 1024] 的导出形态。
+        emb = outputs[0]
+        cls_vec = emb[:, 0, :] if len(emb.shape) == 3 else emb
+        vecs = []
+        for v in cls_vec:
+            # float() 包裹 sum：np.float32 累加会污染 norm 类型，导致后续除法
+            # 结果仍是 np.float32（chromadb 校验拒绝），必须回归 Python float
+            norm = float(sum(x * x for x in v)) ** 0.5
+            vecs.append([round(float(x) / norm, 6) if norm else 0.0 for x in v])
+        return vecs
+    except Exception as exc:
+        _LOGGER.warning("本地 ONNX embedding 不可用：%s", exc)
+        return None
+
 
 def _ollama_embed(texts: list[str], model: str = _DEFAULT_EMBED_MODEL) -> list[list[float]] | None:
     """调用 Ollama embed API 批量生成向量；主模型失败时降级后备模型。
@@ -71,6 +118,14 @@ def _ollama_embed(texts: list[str], model: str = _DEFAULT_EMBED_MODEL) -> list[l
     return None
 
 
+def _embed(texts: list[str]) -> list[list[float]] | None:
+    """embedding 总入口：本地 ONNX 优先（脱离 Ollama），失败走 Ollama 接口。"""
+    vecs = _local_onnx_embed(texts)
+    if vecs:
+        return vecs
+    return _ollama_embed(texts)
+
+
 class VectorMemory:
     """基于 ChromaDB 的向量记忆存储。
 
@@ -80,12 +135,15 @@ class VectorMemory:
       results = vm.search("用户喜欢什么风格", top_k=5)
     """
 
-    def __init__(self, persist_dir: str = "", collection_name: str = _COLLECTION_NAME):
+    def __init__(self, persist_dir: str = "", collection_name: str = _COLLECTION_NAME,
+                 cipher=None):
         self._persist_dir = persist_dir or brick_local(__file__, "data", "vector_memory")
         self._client: chromadb.ClientAPI | None = None
         self._collection: chromadb.Collection | None = None
         self._collection_name = collection_name
         self._ready = False
+        # 可选加密器（encrypt_text/decrypt_text）：加密落盘，检索返回时解密；None=明文
+        self._cipher = cipher
 
     # ── 生命周期 ─────────────────────────────────────────────────
 
@@ -106,9 +164,19 @@ class VectorMemory:
             self._ready = False
 
     def close(self) -> None:
-        """仅标记本实例不可用；客户端保留在进程级缓存以便后续请求复用。"""
+        """关闭底层 ChromaDB 客户端并释放 SQLite 文件锁。
+
+        同时移出进程级缓存：close 后目录可被清理/重建；后续复用由 _get_client
+        按需新建（缓存 miss 自动重建）。
+        """
         self._ready = False
         self._collection = None
+        if self._client is not None:
+            try:
+                self._client.close()
+            except Exception:
+                pass
+            _CLIENT_CACHE.pop(self._persist_dir, None)
         self._client = None
 
     @property
@@ -130,7 +198,7 @@ class VectorMemory:
             self._collection = self._client.get_or_create_collection(
                 name=self._collection_name, metadata={"hnsw:space": "cosine"})
             if old_docs:
-                new_embs = _ollama_embed(old_docs)
+                new_embs = _embed(old_docs)
                 if new_embs:
                     self._collection.add(
                         ids=old_ids, embeddings=new_embs,
@@ -164,24 +232,28 @@ class VectorMemory:
             return existing["ids"][0]
 
         # 生成 embedding
-        embedding = _ollama_embed([text])
+        embedding = _embed([text])
         if embedding is None:
             return None  # embedding 失败，无向量可存
 
         meta = {
             "content_hash": hash(text),
             "timestamp": datetime.now().isoformat(),
-            "text_preview": text[:200],
+            # 预览与正文同样加密（避免泄露明文）
+            "text_preview": (self._cipher.encrypt_text(text[:200])
+                             if self._cipher else text[:200]),
         }
         if metadata:
             meta.update(metadata)
+
+        doc_text = self._cipher.encrypt_text(text) if self._cipher else text
 
         try:
             self._collection.add(
                 ids=[record_id],
                 embeddings=embedding,
                 metadatas=[meta],
-                documents=[text],
+                documents=[doc_text],
             )
             return record_id
         except Exception as exc:
@@ -190,7 +262,7 @@ class VectorMemory:
                 try:
                     self._collection.add(
                         ids=[record_id], embeddings=embedding,
-                        metadatas=[meta], documents=[text])
+                        metadatas=[meta], documents=[doc_text])
                     return record_id
                 except Exception as exc2:
                     _LOGGER.warning("向量记忆写入失败(自愈后重试): %s", exc2)
@@ -209,7 +281,7 @@ class VectorMemory:
         if not self._ready or not self._collection:
             return []
 
-        query_emb = _ollama_embed([query])
+        query_emb = _embed([query])
         if query_emb is None:
             return []  # 无 embedding 则无法向量检索
 
@@ -243,9 +315,13 @@ class VectorMemory:
         ids = results.get("ids", [[]])[0] or []
 
         for i in range(len(ids)):
+            raw_doc = docs[i] if i < len(docs) else ""
+            # 加密器存在时返回前解密；旧明文数据解密失败原样返回（兼容）
+            content = (self._cipher.decrypt_text(raw_doc)
+                       if self._cipher and raw_doc else raw_doc)
             items.append({
                 "id": ids[i],
-                "content": docs[i] if i < len(docs) else "",
+                "content": content,
                 "metadata": metas[i] if i < len(metas) else {},
                 "distance": dists[i] if i < len(dists) else 1.0,
                 "score": 1.0 - (dists[i] if i < len(dists) else 0.0),

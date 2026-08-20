@@ -1,0 +1,15 @@
+﻿side,round,window,mode,input_tokens,completion_tokens,cache_hit,cache_miss,fixed_est,var_est,fixed_tokens,var_tokens,history_turns
+Worker,1,6,compressed,681,96,4,,770,0,681,0,0
+Worker,2,6,compressed,722,56,4,,811,0,722,0,1
+Worker,3,6,compressed,762,33,676,,853,0,762,0,2
+Worker,4,6,compressed,802,96,756,,895,0,802,0,3
+Worker,5,6,compressed,842,96,796,,936,0,842,0,4
+Worker,6,6,compressed,882,96,836,,978,0,882,0,5
+Worker,7,6,compressed,922,96,876,,1019,0,922,0,6
+Worker,8,6,compressed,955,96,687,,1052,0,955,0,7
+Worker,9,6,compressed,955,35,687,,1052,0,955,0,8
+Worker,10,6,compressed,955,31,687,,1052,0,955,0,9
+Worker,11,6,compressed,955,58,687,,1053,0,955,0,10
+Worker,12,6,compressed,955,96,687,,1053,0,955,0,11
+Worker,13,6,compressed,955,96,4,,1053,0,955,0,12
+Worker,14,6,compressed,955,96,687,,1053,0,955,0,13
