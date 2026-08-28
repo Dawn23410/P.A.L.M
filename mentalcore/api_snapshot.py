@@ -1,6 +1,6 @@
-"""可用 API 快照：实测 NoneLinear 端点 12 个免费模型，生成 JSON 清单。
+"""可用 API 快照：实测端点模型，生成 JSON 清单。
 
-输出：C:/Users/24459/Desktop/可用API.json（含端点/key/默认模型/各模型可用性/TTFB/推荐）
+输出：环境变量 PALM_API_JSON，缺省 ~/Desktop/可用API.json（含端点/key/默认模型/各模型可用性/TTFB/推荐）
 用法：python api_snapshot.py
 """
 import json
@@ -18,7 +18,8 @@ MODELS = [
     "GLM-4-Flash", "internlm2_5-7b-chat:free", "xunfei-spark-lite",
 ]
 
-OUT = r"C:/Users/24459/Desktop/可用API.json"
+# 输出路径：优先环境变量 PALM_API_JSON，否则回退到当前用户桌面（跨机器可移植）。
+OUT = os.environ.get("PALM_API_JSON", os.path.expanduser("~/Desktop/可用API.json"))
 
 
 def probe(client, url, headers, model):

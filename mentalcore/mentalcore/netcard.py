@@ -16,7 +16,16 @@ import threading
 
 import httpx
 
-from palm._core import net
+# 解耦：优先经 DI 容器取「net」门面（与「业务统一经 container 取用」保持一致），
+# 失败则回退到直接 import，保证引导期/测试期不崩。
+try:
+    from palm._core.container import container
+    _net_handle = container.get("net")
+    net = _net_handle.impl if _net_handle is not None else None
+except Exception:
+    net = None
+if net is None:
+    from palm._core import net  # noqa: E402
 
 _logger = None
 

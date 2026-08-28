@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "palm"
+version = "0.1.0"
+description = "P.A.L.M microkernel project (functional-domain layout)"
+requires-python = ">=3.10"
+# Only the hard dependency is pinned here; the rest of palm's deps
+# (chromadb, cv2, playwright, pyautogui, gmssl, ...) are OPTIONAL and
+# loaded lazily with graceful degradation inside bootstrap/app.py.
+dependencies = ["pydantic>=2.10"]
+
+[tool.setuptools]
+# ONLY the kernel microkernel packages are installed as importable by name.
+# Other domains (engine/, ui/, speech/, tools/, knowledge/, docs/, tests/,
+# devlogs/, archive/) are standalone apps launched from their own folders and
+# must NOT be crawled by setuptools (archive/ alone is 473k files).
+packages = {find = {include = [
+    "palm", "palm.*", "palm.*.*", "palm.*.*.*",
+    "memory", "memory.*", "memory.*.*",
+    "tool", "tool.*", "tool.*.*",
+    "plan", "plan.*", "plan.*.*",
+    "gui", "gui.*", "gui.*.*",
+    "llm", "llm.*", "llm.*.*",
+    "sandbox", "sandbox.*", "sandbox.*.*",
+    "security", "security.*", "security.*.*",
+    "speech", "speech.*", "speech.*.*",
+    "mentalcore", "mentalcore.*", "mentalcore.*.*", "mentalcore.*.*.*",
+    "mentalcore_data", "mentalcore_data.*", "mentalcore_data.*.*",
+], namespaces = true}}

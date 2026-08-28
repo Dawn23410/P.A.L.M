@@ -13,12 +13,12 @@ from .trace_store import TraceStore, TraceEntry
 from .planner import Planner, Plan, PlanStep
 from .plan_engine import PlanEngine
 from .runner import reflect_once, _sanitize_tool_text
-from .prompt import build_worker_prompt
-from .dual_parse import _normalize_native_chunk, _should_reflect
+from security.prompt import build_worker_prompt
+from security.dual_parse import _normalize_native_chunk, _should_reflect
 from .coordinator import ExoCoordinator
 from .archived_tools import register_archived_tools
 from .extended_tools import register_extended_tools
-from .tool_matcher import ToolMatcher
+from tool.tool_matcher import ToolMatcher
 from .completion_gate import CompletionGate
 from .expansion import ExpansionBoard, Extension
 from .evolution import EvolutionGate, SkillRegistry, Skill

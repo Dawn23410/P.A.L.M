@@ -403,7 +403,7 @@ def build_core(config, persona: CharacterCard) -> MentalCore:
     persist 与语义记忆同生共死：mock（persist=False）时语义记忆不装配——
     不建 ChromaDB 库、不检索、不落盘（MemoryFace 自动退化为仅近期对话）。
     """
-    from . import crypto_provider, semantic_memory, llm, netcard
+    from . import crypto_provider, llm, netcard
 
     persist = config.mode != "mock"  # mock 只聊不记（无任何落盘）
     crypto = crypto_provider.CryptoProvider(
@@ -411,8 +411,11 @@ def build_core(config, persona: CharacterCard) -> MentalCore:
         master_key_hex=config.master_key_hex,
         key_file=config.master_key_file,
     )
-    sem = (semantic_memory.SemanticMemory(config.chroma_dir, cipher=crypto)
-           if persist else None)
+    # 语义记忆适配器（semantic_memory）依赖已被拆分移除的 palm.domain.memory，
+    # 续8 已将其移入 __PALM_TRASH__ 安全网。长期向量记忆功能暂以 None 占位，
+    # 记忆面自动退化为仅近期对话（fail-operational），待 memory 内核提供
+    # 向量接口后接回。此处仅移除对缺失模块的硬 import，不影响其余装配。
+    sem = None  # TODO: 接 memory 内核向量接口后恢复 SemanticMemory(config.chroma_dir, cipher=crypto)
     storage = StorageFace(
         path=config.storage_dir, crypto=crypto, semantic_memory=sem,
     )

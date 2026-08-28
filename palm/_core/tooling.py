@@ -398,9 +398,14 @@ def validate_tool_args(spec: object, args: dict) -> str | None:
 # ── 工具执行包装（裁决引擎整合） ──────────────────────────────
 
 def _resolve_default_guardrail_cap():
-    """惰性解析统一护栏能力；任一环节失败则回退为 None（保持旧行为，不阻断）。"""
+    """惰性解析统一护栏能力；任一环节失败则回退为 None（保持旧行为，不阻断）。
+
+    注：原 palm._core.guardrail 已在续7/续9 拆入顶层 security 内核，
+    此处改指 security.guardrail_core.engine，否则会因模块已删除而静默返回 None，
+    导致工具执行的安全裁决（adjudicator）被悄悄关闭。
+    """
     try:
-        from palm._core.guardrail.engine import get_guardrail_capability
+        from security.guardrail_core.engine import get_guardrail_capability
         return get_guardrail_capability()
     except Exception:
         return None

@@ -15,11 +15,12 @@ import time
 import urllib.error
 import urllib.request
 
-CONF_PATH = r"C:\Users\24459\Desktop\可用API.json"
+# 配置/输出路径：优先环境变量，否则回退到当前用户桌面 / 脚本目录（跨机器可移植）。
+CONF_PATH = os.environ.get("PALM_API_JSON", os.path.expanduser("~/Desktop/可用API.json"))
 ROUNDS = 20
 MODEL = "GLM-4.5-Flash-nothink"
-OUT_CSV = r"C:\Users\24459\Desktop\P.A.L.M\mentalcore\prompt缓存轨迹_20260820.csv"
-OUT_JSON = r"C:\Users\24459\Desktop\P.A.L.M\mentalcore\prompt缓存轨迹_20260820.json"
+OUT_CSV = os.environ.get("PALM_PROBE_CSV", os.path.join(os.path.dirname(os.path.abspath(__file__)), "prompt缓存轨迹.csv"))
+OUT_JSON = os.environ.get("PALM_PROBE_JSON", os.path.join(os.path.dirname(os.path.abspath(__file__)), "prompt缓存轨迹.json"))
 
 
 def load_conf():

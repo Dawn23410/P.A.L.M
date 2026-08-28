@@ -18,9 +18,9 @@ from .protocol import parse_worker_output, extract_exo
 from .cubes import (ToolCube, SandboxCube, PlanCube, CommCube,
                     ProfessionalMemory, SecurityCube)
 from .intent_router import IntentRouter, IntentResult
-from .prompt import build_worker_prompt
+from security.prompt import build_worker_prompt
 from .runner import reflect_once
-from .dual_parse import _should_reflect
+from security.dual_parse import _should_reflect
 from .trace_store import T_INTERVENTION, T_PLAN
 
 

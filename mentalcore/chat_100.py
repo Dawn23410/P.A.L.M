@@ -143,7 +143,8 @@ def main():
         except Exception:
             logs = []
 
-    client = httpx.Client()
+    # 显式超时，避免大模型慢响应或卡死导致脚本无限挂起（可被样例复制扩散）。
+    client = httpx.Client(timeout=httpx.Timeout(connect= 10, read=180, write=15, pool=10))
     start = len(logs) + 1
     total = args.rounds
     print(f"开始采集：目标 {total} 轮，模式={cfg.mode} 模型={model}")

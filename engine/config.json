@@ -1,0 +1,187 @@
+{
+  "providers": [
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "type": "openai_compat",
+      "base_url": "https://api.openai.com/v1",
+      "api_key": "",
+      "models": [
+        "gpt-4o",
+        "gpt-4o-mini",
+        "gpt-4-turbo",
+        "o1",
+        "o1-mini"
+      ]
+    },
+    {
+      "id": "deepseek",
+      "name": "DeepSeek",
+      "type": "openai_compat",
+      "base_url": "https://api.deepseek.com/v1",
+      "api_key": "",
+      "models": [
+        "deepseek-chat",
+        "deepseek-reasoner"
+      ]
+    },
+    {
+      "id": "qwen",
+      "name": "通义千问 (阿里)",
+      "type": "openai_compat",
+      "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+      "api_key": "",
+      "models": [
+        "qwen-max",
+        "qwen-plus",
+        "qwen-turbo",
+        "qwen-vl-max"
+      ]
+    },
+    {
+      "id": "zhipu",
+      "name": "智谱 GLM",
+      "type": "openai_compat",
+      "base_url": "https://open.bigmodel.cn/api/paas/v4",
+      "api_key": "8d1357ed17a14951b7cae14350aa9f35.NTOeUI126kY21vVZ",
+      "models": [
+        "glm-4.6v",
+        "glm-4.5-air",
+        "glm-4-plus",
+        "glm-4-air",
+        "glm-4v-plus"
+      ]
+    },
+    {
+      "id": "doubao",
+      "name": "豆包 / 火山引擎",
+      "type": "openai_compat",
+      "base_url": "https://ark.cn-beijing.volces.com/api/v3",
+      "api_key": "",
+      "models": [
+        "doubao-pro-32k",
+        "doubao-lite-32k"
+      ]
+    },
+    {
+      "id": "kimi",
+      "name": "Kimi (月之暗面)",
+      "type": "openai_compat",
+      "base_url": "https://api.moonshot.cn/v1",
+      "api_key": "",
+      "models": [
+        "moonshot-v1-8k",
+        "moonshot-v1-32k",
+        "moonshot-v1-128k"
+      ]
+    },
+    {
+      "id": "baichuan",
+      "name": "百川智能",
+      "type": "openai_compat",
+      "base_url": "https://api.baichuan-ai.com/v1",
+      "api_key": "",
+      "models": [
+        "baichuan4",
+        "baichuan3-turbo"
+      ]
+    },
+    {
+      "id": "minimax",
+      "name": "MiniMax",
+      "type": "openai_compat",
+      "base_url": "https://api.minimax.chat/v1",
+      "api_key": "",
+      "models": [
+        "abab6.5-chat",
+        "abab5.5-chat"
+      ]
+    },
+    {
+      "id": "stepfun",
+      "name": "阶跃星辰",
+      "type": "openai_compat",
+      "base_url": "https://api.stepfun.com/v1",
+      "api_key": "",
+      "models": [
+        "step-1v-8k",
+        "step-2-16k"
+      ]
+    },
+    {
+      "id": "ollama",
+      "name": "Ollama (本地)",
+      "type": "openai_compat",
+      "base_url": "http://localhost:11434/v1",
+      "api_key": "ollama",
+      "models": [
+        "llama3.1",
+        "qwen2.5",
+        "deepseek-r1"
+      ]
+    },
+    {
+      "id": "anthropic",
+      "name": "Claude (Anthropic)",
+      "type": "anthropic",
+      "base_url": "https://api.anthropic.com/v1",
+      "api_key": "",
+      "models": [
+        "claude-3-5-sonnet-latest",
+        "claude-3-opus-latest",
+        "claude-3-haiku-latest"
+      ]
+    },
+    {
+      "id": "gemini",
+      "name": "Gemini (Google)",
+      "type": "gemini",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta",
+      "api_key": "",
+      "models": [
+        "gemini-1.5-pro",
+        "gemini-1.5-flash",
+        "gemini-2.0-flash-exp"
+      ]
+    },
+    {
+      "id": "mock",
+      "name": "Mock 模拟 (本地测试)",
+      "type": "mock",
+      "base_url": "",
+      "api_key": "test-secret-123",
+      "models": [
+        "mock-model"
+      ]
+    }
+  ],
+  "active_provider": "zhipu",
+  "active_model": "glm-4.6v",
+  "system_prompt": "你是一个有帮助、诚实、安全的AI助手。",
+  "parameters": {
+    "temperature": 0.7,
+    "top_p": 1.0,
+    "max_tokens": 8192,
+    "frequency_penalty": 0.0,
+    "presence_penalty": 0.0,
+    "extra_body": null
+  },
+  "presets": [
+    {
+      "name": "默认助手",
+      "prompt": "你是一个有帮助、诚实、安全的AI助手。"
+    },
+    {
+      "name": "中文翻译",
+      "prompt": "你是一位专业的中英互译翻译专家，只输出翻译结果，保持原意与语气。"
+    },
+    {
+      "name": "代码专家",
+      "prompt": "你是一位资深软件工程师，擅长多种编程语言，给出可运行、整洁、带注释的代码，并解释关键思路。"
+    },
+    {
+      "name": "写作助手",
+      "prompt": "你是一位擅长各类文体写作的助手，语言流畅、结构清晰，可根据要求调整风格。"
+    }
+  ]
+}

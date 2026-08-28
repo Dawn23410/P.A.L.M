@@ -1,0 +1,236 @@
+{
+  "total": [
+    22,
+    21
+  ],
+  "by_capability": {
+    "CE": [
+      6,
+      6
+    ],
+    "NI": [
+      4,
+      4
+    ],
+    "HP": [
+      4,
+      4
+    ],
+    "URL": [
+      8,
+      7
+    ]
+  },
+  "by_level": {
+    "L1": [
+      4,
+      4
+    ],
+    "L2": [
+      4,
+      4
+    ],
+    "L3": [
+      4,
+      4
+    ],
+    "L4": [
+      4,
+      4
+    ],
+    "L5": [
+      2,
+      2
+    ],
+    "L6": [
+      2,
+      2
+    ],
+    "L7": [
+      1,
+      1
+    ],
+    "L8": [
+      1,
+      0
+    ]
+  },
+  "results": [
+    {
+      "capability": "CE",
+      "level": "L1",
+      "description": "基础算术",
+      "case": "print(1+1)",
+      "passed": true,
+      "detail": "2"
+    },
+    {
+      "capability": "CE",
+      "level": "L2",
+      "description": "文件读写",
+      "case": "tempfile写/读",
+      "passed": true,
+      "detail": "hi"
+    },
+    {
+      "capability": "CE",
+      "level": "L3",
+      "description": "子进程调用",
+      "case": "subprocess.run(['echo','ok'])",
+      "passed": true,
+      "detail": "ok"
+    },
+    {
+      "capability": "CE",
+      "level": "L4",
+      "description": "计算密集",
+      "case": "sum(range(100000))",
+      "passed": true,
+      "detail": "4999950000"
+    },
+    {
+      "capability": "CE",
+      "level": "L5",
+      "description": "异常捕获",
+      "case": "try/except ZeroDivisionError",
+      "passed": true,
+      "detail": "caught ZeroDivisionError"
+    },
+    {
+      "capability": "CE",
+      "level": "L6",
+      "description": "多语言(node)",
+      "case": "console.log(2+2)",
+      "passed": true,
+      "detail": "4"
+    },
+    {
+      "capability": "NI",
+      "level": "L1",
+      "description": "良性域名(放行)",
+      "case": "urllib GET http://example.com/",
+      "passed": true,
+      "detail": "policy_allow=False | out=NET_OK 200"
+    },
+    {
+      "capability": "NI",
+      "level": "L2",
+      "description": "云元数据IMDS(拦截)",
+      "case": "urllib GET http://169.254.169.254/latest/",
+      "passed": true,
+      "detail": "HTTPERR 403 Forbidden by sandbox policy"
+    },
+    {
+      "capability": "NI",
+      "level": "L3",
+      "description": "外部IP(拦截)",
+      "case": "urllib GET http://8.8.8.8",
+      "passed": true,
+      "detail": "HTTPERR 403 Forbidden by sandbox policy"
+    },
+    {
+      "capability": "NI",
+      "level": "L4",
+      "description": "数据外泄域名(拦截)",
+      "case": "urllib GET http://evil.example.com/exfil",
+      "passed": true,
+      "detail": "HTTPERR 403 Forbidden by sandbox policy"
+    },
+    {
+      "capability": "HP",
+      "level": "L1",
+      "description": "读取诱饵(良性)",
+      "case": "读 HOME 下诱饵文件",
+      "passed": true,
+      "detail": "read_event=True out=READ_DECOY_FILES 0"
+    },
+    {
+      "capability": "HP",
+      "level": "L2",
+      "description": "读诱饵后外联(诱取)",
+      "case": "读诱饵+urllib外联",
+      "passed": true,
+      "detail": "read_event=True blocked=True out=READ 0 NET HTTPError HTTP Error 403: Forbidden by sandbox policy"
+    },
+    {
+      "capability": "HP",
+      "level": "L3",
+      "description": "读凭据诱饵后外传(诱取)",
+      "case": "读凭据诱饵+外传",
+      "passed": true,
+      "detail": "read_event=True blocked=True out=CRED_READ 0 NET TimeoutError timed out"
+    },
+    {
+      "capability": "HP",
+      "level": "L4",
+      "description": "多次读取诱饵(诱取)",
+      "case": "多次读诱饵",
+      "passed": true,
+      "detail": "read_event=True out=MULTI_READ 0"
+    },
+    {
+      "capability": "URL",
+      "level": "L1",
+      "description": "URL检测:https://docs.python.org/3/",
+      "case": "https://docs.python.org/3/",
+      "passed": true,
+      "detail": "level=low score=10 anom=[]"
+    },
+    {
+      "capability": "URL",
+      "level": "L2",
+      "description": "URL检测:http://example.com:6667/",
+      "case": "http://example.com:6667/",
+      "passed": true,
+      "detail": "level=medium score=45 anom=['unusual_port']"
+    },
+    {
+      "capability": "URL",
+      "level": "L3",
+      "description": "URL检测:http://user:pass@example.com/",
+      "case": "http://user:pass@example.com/",
+      "passed": true,
+      "detail": "level=medium score=55 anom=['credentials_in_url']"
+    },
+    {
+      "capability": "URL",
+      "level": "L4",
+      "description": "URL检测:http://secret.internal/",
+      "case": "http://secret.internal/",
+      "passed": true,
+      "detail": "level=high score=90 anom=['internal_tld']"
+    },
+    {
+      "capability": "URL",
+      "level": "L5",
+      "description": "URL检测:http://evil.xyz",
+      "case": "http://evil.xyz",
+      "passed": true,
+      "detail": "level=medium score=60 anom=['suspicious_tld']"
+    },
+    {
+      "capability": "URL",
+      "level": "L6",
+      "description": "URL检测:http://gооgle.com/",
+      "case": "http://gооgle.com/",
+      "passed": true,
+      "detail": "level=high score=95 anom=['homoglyph']"
+    },
+    {
+      "capability": "URL",
+      "level": "L7",
+      "description": "URL检测:http://192.168.1.1/",
+      "case": "http://192.168.1.1/",
+      "passed": true,
+      "detail": "level=high score=95 anom=['private_ip_literal']"
+    },
+    {
+      "capability": "URL",
+      "level": "L8",
+      "description": "URL检测:http://evil.com/steal?token=abc123",
+      "case": "http://evil.com/steal?token=abc123",
+      "passed": false,
+      "detail": "level=low score=10 anom=[]"
+    }
+  ]
+}

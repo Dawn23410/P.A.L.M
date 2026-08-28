@@ -224,3 +224,27 @@ palm/domain/memory/weights/
 
 # 根级运行数据（旧 mentalcore_data 目录，含主密钥——绝不入库）
 mentalcore_data/
+
+# ---------- 2026-08-28 全局检查清理 ----------
+# 本地产物输出目录（分析报告/临时音频等，已归档至 outputs/workspace_litter，不入库）
+outputs/
+# 根目录一次性分析/评估报告（防止再次散落根目录）
+/archive_data.js
+/archive_index_fixed.json
+/frontend_compare.json
+/frontend_comparison.html
+/storage_audit_report.html
+/run50_*.html
+/refer_audio_tmp.wav
+# 构建元数据 / 语音运行时(含 GB 级模型) / 开发日志（均不入库）
+palm.egg-info/
+speech/
+devlogs/
+# 测试/基准产物与一次性探针脚本（已归档至 outputs/workspace_litter）
+/run50_results/
+mentalcore/run50_resource.csv
+/llm_api_probe.py
+/llm_api_probe.json
+/gsv_model_bench.py
+/gsv_model_bench.json
+/gsv_llm_bench_report.md

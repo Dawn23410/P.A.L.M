@@ -18,10 +18,13 @@ from __future__ import annotations
 import asyncio
 import contextvars
 import io
+import logging
 import sys
 from dataclasses import dataclass
 from typing import Any, Callable, Optional
 from urllib.parse import urlparse
+
+_LOGGER = logging.getLogger("palm.net")
 
 # ---- 铁律异常 ----
 _NETWORK_FORBIDDEN_MSG = "未挂载网卡或网卡已拔出：外网请求被拒绝（fail-closed）"
@@ -286,6 +289,7 @@ def install_guard() -> None:
     _patch_urllib()
     _patch_socket()
     _GUARD["installed"] = True
+    _LOGGER.info("网络守卫已安装：外网直连将被拦截并改走门面（fail-closed）")
 
 
 def uninstall_guard() -> None:
@@ -455,6 +459,7 @@ def _patch_socket() -> None:
         if is_loopback(host) or _INTERNAL.get():
             return orig_cc(*args, **kwargs)
         # 外网裸 socket：上层 httpx/requests 已拦截；此处兜底拒绝。
+        _LOGGER.warning("拦截裸 socket 外网直连（create_connection -> %s），已拒绝（fail-closed）", host)
         raise NetworkForbidden(_NETWORK_FORBIDDEN_MSG)
 
     socket.create_connection = cc_wrapper
@@ -466,6 +471,7 @@ def _patch_socket() -> None:
         host = _addr_host(address)
         if is_loopback(host) or _INTERNAL.get():
             return orig_connect(self, address)
+        _LOGGER.warning("拦截裸 socket 外网直连（socket.connect -> %s），已拒绝（fail-closed）", host)
         raise NetworkForbidden(_NETWORK_FORBIDDEN_MSG)
 
     socket.socket.connect = connect_wrapper
@@ -485,3 +491,14 @@ def _addr_host(address):
     if isinstance(address, tuple) and address:
         return str(address[0])
     return str(address)
+
+
+# 自注册：让网卡门面经 DI 容器可被发现（与「业务统一经 container 取用」保持一致）。
+# 无循环依赖：container 不反向 import net。重复注册无害（后写同名覆盖）。
+try:
+    from palm._core.container import container
+    container.register("net", sys.modules[__name__])
+except Exception:
+    # 容器不可用时（极早期引导）静默跳过，net 仍可经直接 import 使用。
+    pass
+

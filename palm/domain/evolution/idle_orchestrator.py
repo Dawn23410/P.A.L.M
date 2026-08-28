@@ -12,7 +12,13 @@ from __future__ import annotations
 import time
 
 from palm._core.container import registry
-from palm._core.guardrail.engine import get_guardrail_capability
+
+# 注：原 palm._core.guardrail 已在续7/续9 拆入顶层 security 内核
+# （security/guardrail_core/engine.py 提供同签名的 get_guardrail_capability）。
+# 改为惰性导入以容错（缺失时 fail-closed 拦截，见 _adjudicator_allows）。
+def _get_guardrail_capability():
+    from security.guardrail_core.engine import get_guardrail_capability
+    return get_guardrail_capability()
 
 _IDLE_THRESHOLD_DEFAULT = 15  # 分钟；设置 idle_minutes 可覆盖。
 
@@ -31,18 +37,37 @@ def _load_settings() -> dict:
 
 
 # 后端活动时间戳（模块级，由 agent 砖在 /run、/ask-response 时刷新）。
+# _NOW_OVERRIDE 供测试注入固定时钟，避免模块级时间戳跨测试污染。
 _LAST_ACTIVITY = time.time()
+_NOW_OVERRIDE = None
 
 
 def touch_activity() -> None:
     # 刷新最后用户活动时间；agent 砖在对话入口调用。
     global _LAST_ACTIVITY
+    _LAST_ACTIVITY = _now()
+
+
+def reset_activity() -> None:
+    """重置闲置计时为「现在」；供测试与进程启动时调用，避免跨会话/跨测试污染。"""
+    global _LAST_ACTIVITY, _NOW_OVERRIDE
+    _NOW_OVERRIDE = None
     _LAST_ACTIVITY = time.time()
+
+
+def _now() -> float:
+    return _NOW_OVERRIDE if _NOW_OVERRIDE is not None else time.time()
+
+
+def set_now_for_test(ts: float) -> None:
+    """测试钩子：注入固定时钟（调用 reset_activity / 真实运行前请 restore）。"""
+    global _NOW_OVERRIDE
+    _NOW_OVERRIDE = ts
 
 
 def get_idle_seconds() -> float:
     # 距最后用户活动的秒数；供闲置判定与测试。
-    return time.time() - _LAST_ACTIVITY
+    return _now() - _LAST_ACTIVITY
 
 
 def _is_idle() -> bool:
@@ -58,7 +83,7 @@ def _adjudicator_allows() -> bool:
     # 风险门：经统一护栏（palm_sdk.guardrail）评估主动提案事件；拒绝/deny 则拦截。
     # 裁决引擎砖已拆，安全门由 guardrail 承接；默认宽松档放行，异常时 fail-closed 拦截。
     try:
-        cap = get_guardrail_capability()
+        cap = _get_guardrail_capability()
         result = cap("agent.proactive", {"source": "idle_orchestrator"})
         if result is None:
             return True

@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import json
 
-from .prompt import _sanitize_tool_text  # noqa: F401  供外部复用
+from security.prompt import _sanitize_tool_text  # noqa: F401  供外部复用
 
 _REFLECT_PROMPT = '你是一个严苛的回答自我审查员。请判断「本次回答」是否真正、完整地满足了「用户请求」。\n\n用户请求：\n{request}\n\n本次回答：\n{draft}\n{failure_note}\n\n仅输出一个 JSON 对象，不要任何额外文字：\n{{"verdict": "ok" 或 "revise", "issue": "若存在问题，用一句话说明", "instruction": "若需修正，给自己的具体修正指令（中文）"}}\n\n判定要点：\n- 回答明显未回应请求、遗漏用户明确要求的重点、或声称完成但仍有未解决的工具失败，则 verdict="revise"。\n- 回答已合理满足请求则为 "ok"。\n'
 

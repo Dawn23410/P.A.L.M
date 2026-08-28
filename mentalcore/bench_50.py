@@ -198,7 +198,7 @@ def main():
     ap.add_argument("--rounds", type=int, default=50)
     ap.add_argument("--resume", action="store_true",
                     help="从已有 JSON 的轮数 +1 续跑（history 自动从存储恢复）")
-    ap.add_argument("--snapshot", default=r"C:/Users/24459/Desktop/可用API.json")
+    ap.add_argument("--snapshot", default=os.environ.get("PALM_API_JSON", os.path.expanduser("~/Desktop/可用API.json")))
     args = ap.parse_args()
 
     if args.mode == "mock":

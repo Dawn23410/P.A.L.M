@@ -1,0 +1,37 @@
+# P.A.L.M 编排：内核服务 + 可选 GSV 语音服务（独立服务，避免把 17GB 烤进镜像）
+# 用法：
+#   docker compose up -d palm            # 仅内核
+#   docker compose up -d                # 内核 + GSV（需本地已下载模型到 ./speech）
+#   docker compose run --rm palm python tests/mentalcore_selftest.py
+
+services:
+  palm:
+    build: .
+    image: palm:0.1.0
+    container_name: palm-core
+    # 区域约定：默认 CNY；股票涨跌色由可视化层遵循，无需此处设置
+    environment:
+      - PALM_OFFLINE=0
+      - PALM_DATA=/data
+      - PALM_API_JSON=/data/可用API.json
+      # 凭证通过 env 注入，不要写死在 compose（已避免凭据污染）
+      - SANDBOX_USER=${SANDBOX_USER:-}
+      - SANDBOX_USER_PASS=${SANDBOX_USER_PASS:-}
+    volumes:
+      - palm-data:/data
+      # 语音模型与源码：仅在使用 GSV 时挂载；Linux 下需自行准备 torch 环境
+      - ./speech:/opt/palm/speech:ro
+    ports:
+      - "9880:9880"   # GSV TTS（启用时）
+      - "8000:8000"   # 预留 Web/API
+    restart: unless-stopped
+    command: ["python", "-c", "import palm.bootstrap.app as a; a.build_app(); import time; print('P.A.L.M 内核就绪'); time.sleep(1e9)"]
+
+  # 可选：若未来接入 Web 前端 / 后端服务，在此扩展（保持服务边界清晰）。
+  # web:
+  #   build: ./ui
+  #   ports: ["8080:8080"]
+
+volumes:
+  palm-data:
+    driver: local

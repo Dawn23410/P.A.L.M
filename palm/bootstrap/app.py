@@ -69,7 +69,7 @@ def build_app() -> ContainerProxy:
         print(f"[bootstrap] models 注册失败（降级）: {exc}")
 
     try:
-        from palm.adapters.gui import automation_orchestrator as _gui
+        from gui.adapters_gui import automation_orchestrator as _gui
         _register("gui", _gui)
     except Exception as exc:  # noqa: BLE001
         print(f"[bootstrap] gui 注册失败（降级）: {exc}")
@@ -107,7 +107,7 @@ def build_app() -> ContainerProxy:
     _register("roleplay", _roleplay, {"roleplay_api": _roleplay})
 
     try:
-        from palm.domain.memory import memory_writer as _memory
+        from memory.domain_memory import memory_writer as _memory
         _register("memory", _memory, {"memory_api": _memory})
     except Exception as exc:  # noqa: BLE001
         print(f"[bootstrap] memory 注册失败（降级）: {exc}")

@@ -107,7 +107,14 @@ def send_to_recycle_bin(path) -> None:
                 return  # 已被移入回收站（SHFileOperationW 偶发返回非零但仍成功）
             _move_to_trash(path)  # 源仍在：确属失败，回退到本地 trash
             return
-        _move_to_trash(path)
+        # 非 Windows（Linux/macOS）：优先 OS 原生 trash，失败回退本地 trash
+        try:
+            from palm._core.platform import send_to_trash as _os_trash
+            _os_trash(path)
+            return
+        except Exception:
+            _move_to_trash(path)
+            return
     finally:
         _BYPASS = prev
 

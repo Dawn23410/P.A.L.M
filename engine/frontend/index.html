@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 对话 · Web UI</title>
+<link rel="stylesheet" href="/vendor/hljs-github-dark.min.css">
+<style>
+  :root {
+    --bg: #0f1115; --panel: #171a21; --panel-2: #1e222b; --border: #2a2f3a;
+    --text: #e6e8ec; --muted: #8b93a1; --accent: #4f8cff; --accent-2: #6ee7b7;
+    --user: #2b4a7a; --danger: #ff6b6b; --radius: 12px;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font: 14px/1.6 -apple-system, "Segoe UI", system-ui, "Microsoft YaHei", sans-serif;
+    display: flex; overflow: hidden;
+  }
+  /* 侧栏 */
+  #sidebar {
+    width: 260px; min-width: 260px; background: var(--panel);
+    border-right: 1px solid var(--border); display: flex; flex-direction: column;
+  }
+  #sidebar header { padding: 16px; border-bottom: 1px solid var(--border); }
+  #sidebar header h1 { font-size: 16px; margin: 0; display: flex; align-items: center; gap: 8px; }
+  #sidebar header h1 .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent-2); box-shadow: 0 0 8px var(--accent-2); }
+  #newChat {
+    margin: 12px 16px; padding: 10px; border: 1px dashed var(--border); border-radius: var(--radius);
+    background: transparent; color: var(--text); cursor: pointer; font-size: 14px; transition: .15s;
+  }
+  #newChat:hover { border-color: var(--accent); color: var(--accent); }
+  #convList { flex: 1; overflow-y: auto; padding: 0 8px 12px; }
+  .conv-item {
+    padding: 9px 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center;
+    gap: 8px; color: var(--muted); margin-bottom: 2px;
+  }
+  .conv-item:hover { background: var(--panel-2); color: var(--text); }
+  .conv-item.active { background: var(--panel-2); color: var(--text); }
+  .conv-item .title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .conv-item .del { opacity: 0; color: var(--danger); font-size: 12px; }
+  .conv-item:hover .del { opacity: 1; }
+  /* 主区 */
+  #main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+  #topbar {
+    height: 52px; border-bottom: 1px solid var(--border); display: flex; align-items: center;
+    padding: 0 16px; gap: 12px; background: var(--panel);
+  }
+  #topbar .conv-title { flex: 1; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #topbar button {
+    background: var(--panel-2); color: var(--text); border: 1px solid var(--border);
+    border-radius: 8px; padding: 7px 12px; cursor: pointer; font-size: 13px;
+  }
+  #topbar button:hover { border-color: var(--accent); }
+  #messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+  .row { display: flex; gap: 10px; max-width: 860px; width: 100%; margin: 0 auto; }
+  .row.user { justify-content: flex-end; }
+  .bubble {
+    padding: 10px 14px; border-radius: 14px; max-width: 78%; line-height: 1.65;
+    word-break: break-word; white-space: pre-wrap;
+  }
+  .row.user .bubble { background: var(--user); border-bottom-right-radius: 4px; }
+  .row.assistant .bubble { background: var(--panel-2); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+  .reasoning {
+    max-width: 860px; width: 100%; margin: 0 auto; font-size: 12.5px; color: var(--muted);
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px;
+  }
+  .reasoning summary { cursor: pointer; color: var(--accent); }
+  .reasoning pre { white-space: pre-wrap; margin: 8px 0 0; }
+  .typing span { display: inline-block; width: 6px; height: 6px; margin: 0 1px; border-radius: 50%; background: var(--muted); animation: blink 1.2s infinite; }
+  .typing span:nth-child(2){ animation-delay: .2s; } .typing span:nth-child(3){ animation-delay: .4s; }
+  @keyframes blink { 0%,60%,100%{opacity:.2} 30%{opacity:1} }
+  .err { color: var(--danger); }
+  /* 输入区 */
+  #composer { border-top: 1px solid var(--border); padding: 12px 16px; background: var(--panel); }
+  #composer .box { max-width: 860px; margin: 0 auto; display: flex; gap: 10px; align-items: flex-end; }
+  #input {
+    flex: 1; resize: none; min-height: 44px; max-height: 160px; padding: 11px 14px; border-radius: 12px;
+    border: 1px solid var(--border); background: var(--bg); color: var(--text); font: inherit; outline: none;
+  }
+  #input:focus { border-color: var(--accent); }
+  #send {
+    padding: 0 18px; height: 44px; border: none; border-radius: 12px; background: var(--accent);
+    color: #fff; cursor: pointer; font-size: 14px; font-weight: 600;
+  }
+  #send:disabled { opacity: .5; cursor: not-allowed; }
+  .hint { max-width: 860px; margin: 6px auto 0; color: var(--muted); font-size: 12px; }
+  /* 设置弹窗 */
+  .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 50; align-items: center; justify-content: center; }
+  .modal-bg.open { display: flex; }
+  .modal { width: 520px; max-width: 92vw; max-height: 86vh; overflow-y: auto; background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+  .modal h2 { margin: 0 0 14px; font-size: 16px; }
+  .modal label { display: block; font-size: 12px; color: var(--muted); margin: 12px 0 4px; }
+  .modal select, .modal input, .modal textarea {
+    width: 100%; padding: 9px 11px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text); font: inherit;
+  }
+  .modal textarea { min-height: 64px; resize: vertical; }
+  .modal .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .modal .actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
+  .modal .actions button { padding: 9px 16px; border-radius: 8px; cursor: pointer; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); }
+  .modal .actions .primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .keyrow { display: flex; gap: 8px; align-items: center; }
+  .keyrow .name { width: 130px; color: var(--muted); font-size: 13px; }
+  .grow { flex: 1; }
+</style>
+</head>
+<body>
+  <aside id="sidebar">
+    <header><h1><span class="dot"></span>AI 对话</h1></header>
+    <button id="newChat">+ 新对话</button>
+    <div id="convList"></div>
+  </aside>
+
+  <main id="main">
+    <div id="topbar">
+      <span class="conv-title" id="convTitle">新对话</span>
+      <button id="settingsBtn">⚙ 设置</button>
+    </div>
+    <div id="messages"></div>
+    <div id="composer">
+      <div class="box">
+        <textarea id="input" placeholder="输入消息，Enter 发送，Shift+Enter 换行…"></textarea>
+        <button id="send">发送</button>
+      </div>
+      <div class="hint" id="hint"></div>
+    </div>
+  </main>
+
+  <!-- 设置弹窗 -->
+  <div class="modal-bg" id="settingsModal">
+    <div class="modal">
+      <h2>设置</h2>
+      <label>提供方</label>
+      <select id="setProvider"></select>
+      <label>模型</label>
+      <select id="setModel"></select>
+      <label>系统提示词</label>
+      <textarea id="setSystem"></textarea>
+      <div class="grid2">
+        <div><label>temperature</label><input id="setTemp" type="number" step="0.1" min="0" max="2"></div>
+        <div><label>max_tokens</label><input id="setMax" type="number" step="256" min="1"></div>
+        <div><label>top_p</label><input id="setTopP" type="number" step="0.05" min="0" max="1"></div>
+        <div><label>frequency_penalty</label><input id="setFreq" type="number" step="0.1" min="-2" max="2"></div>
+      </div>
+      <label>预设</label>
+      <select id="setPreset"><option value="">— 不套用 —</option></select>
+      <label>API Key（按提供方填写，留空不修改）</label>
+      <div id="keyRows"></div>
+      <div class="actions">
+        <button id="setCancel">取消</button>
+        <button class="primary" id="setSave">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 依赖顺序：先加载渲染管线，再加载组件 -->
+  <script src="/vendor/marked.min.js"></script>
+  <script src="/vendor/purify.min.js"></script>
+  <script src="/vendor/highlight.min.js"></script>
+  <script src="/vendor/lang-bundle.js"></script>
+  <script src="/vendor/emoji-common.js"></script>
+  <script src="/vendor/emoji-loader.js"></script>
+  <script src="/md-renderer.js"></script>
+  <script src="/ai-message.js"></script>
+  <script>
+  (function () {
+    const $ = (s) => document.querySelector(s);
+    let state = { cid: null, config: null, streaming: false };
+
+    // ---------- 配置 / 侧栏 ----------
+    async function loadConfig() {
+      const r = await fetch('/api/config'); const c = await r.json();
+      state.config = c;
+      const pSel = $('#setProvider'); pSel.innerHTML = '';
+      c.providers.forEach(p => {
+        const o = document.createElement('option'); o.value = p.id; o.textContent = p.name; pSel.appendChild(o);
+      });
+      pSel.value = c.active_provider || (c.providers[0] && c.providers[0].id) || '';
+      fillModels();
+      $('#setSystem').value = c.system_prompt || '';
+      $('#setTemp').value = (c.parameters && c.parameters.temperature) ?? 0.7;
+      $('#setMax').value = (c.parameters && c.parameters.max_tokens) ?? 8192;
+      $('#setTopP').value = (c.parameters && c.parameters.top_p) ?? 1.0;
+      $('#setFreq').value = (c.parameters && c.parameters.frequency_penalty) ?? 0.0;
+      const pres = $('#setPreset'); pres.innerHTML = '<option value="">— 不套用 —</option>';
+      (c.presets || []).forEach(pr => { const o = document.createElement('option'); o.value = pr.prompt; o.textContent = pr.name; pres.appendChild(o); });
+      // key 行
+      const kr = $('#keyRows'); kr.innerHTML = '';
+      c.providers.forEach(p => {
+        const row = document.createElement('div'); row.className = 'keyrow';
+        row.innerHTML = `<span class="name">${p.name}</span><input class="grow" data-pid="${p.id}" placeholder="${p.has_key ? '已设置（留空不改）' : '未设置'}" type="password">`;
+        kr.appendChild(row);
+      });
+      updateHint();
+    }
+    function fillModels() {
+      const pid = $('#setProvider').value;
+      const p = (state.config.providers || []).find(x => x.id === pid);
+      const mSel = $('#setModel'); mSel.innerHTML = '';
+      (p ? p.models : []).forEach(m => { const o = document.createElement('option'); o.value = m; o.textContent = m; mSel.appendChild(o); });
+      if (state.config.active_model) mSel.value = state.config.active_model;
+    }
+    function updateHint() {
+      const pid = $('#setProvider').value;
+      const p = (state.config.providers || []).find(x => x.id === pid);
+      const cur = p ? p.id : '';
+      $('#hint').textContent = '当前：' + (p ? p.name : '未选择') + (p && p.models.length ? ' / ' + (p.models.includes(state.config.active_model) ? state.config.active_model : p.models[0]) : '');
+    }
+
+    async function loadConversations() {
+      const r = await fetch('/api/conversations'); const d = await r.json();
+      const list = $('#convList'); list.innerHTML = '';
+      (d.conversations || []).forEach(c => {
+        const it = document.createElement('div'); it.className = 'conv-item' + (c.id === state.cid ? ' active' : '');
+        it.innerHTML = `<span class="title">${escapeHtml(c.title)}</span><span class="del">删除</span>`;
+        it.querySelector('.title').onclick = () => selectConv(c.id);
+        it.querySelector('.del').onclick = (e) => { e.stopPropagation(); delConv(c.id); };
+        list.appendChild(it);
+      });
+    }
+    async function selectConv(id) {
+      state.cid = id;
+      const r = await fetch('/api/conversations/' + id); const d = await r.json();
+      $('#convTitle').textContent = d.title || '对话';
+      $('#messages').innerHTML = '';
+      (d.messages || []).forEach(m => {
+        if (m.role === 'user') addUser(m.content);
+        else addAssistant(m.content || '', m.reasoning || '');
+      });
+      scrollBottom(); loadConversations();
+    }
+    async function delConv(id) {
+      if (!confirm('删除该对话？')) return;
+      await fetch('/api/conversations/' + id, { method: 'DELETE' });
+      if (state.cid === id) { state.cid = null; $('#messages').innerHTML = ''; $('#convTitle').textContent = '新对话'; }
+      loadConversations();
+    }
+
+    // ---------- 渲染消息 ----------
+    function escapeHtml(s) { return (s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+    function scrollBottom() { const m = $('#messages'); m.scrollTop = m.scrollHeight; }
+    function addUser(text) {
+      const row = document.createElement('div'); row.className = 'row user';
+      const b = document.createElement('div'); b.className = 'bubble'; b.textContent = text;
+      row.appendChild(b); $('#messages').appendChild(row); scrollBottom();
+    }
+    function addAssistant(markdown, reasoning) {
+      const wrap = document.createElement('div'); wrap.style.width = '100%'; wrap.style.maxWidth = '860px'; wrap.style.margin = '0 auto';
+      if (reasoning) {
+        const r = document.createElement('details'); r.className = 'reasoning';
+        r.innerHTML = `<summary>💭 思维链</summary><pre>${escapeHtml(reasoning)}</pre>`;
+        wrap.appendChild(r);
+      }
+      const row = document.createElement('div'); row.className = 'row assistant';
+      const msg = document.createElement('ai-message'); msg.setAttribute('role', 'assistant'); msg.setAttribute('theme', 'dark');
+      if (markdown) msg.setAttribute('markdown', markdown);
+      row.appendChild(msg); wrap.appendChild(row);
+      $('#messages').appendChild(wrap); scrollBottom();
+      return msg;
+    }
+
+    // ---------- 发送 / 流式 ----------
+    async function send() {
+      const input = $('#input'); const text = input.value.trim();
+      if (!text || state.streaming) return;
+      input.value = ''; addUser(text);
+      const tokenEl = document.createElement('span'); tokenEl.className = 'typing';
+      tokenEl.innerHTML = '<span></span><span></span><span></span>';
+      const ph = document.createElement('div'); ph.className = 'row assistant'; ph.appendChild(tokenEl);
+      $('#messages').appendChild(ph); scrollBottom();
+
+      const payload = {
+        conversation_id: state.cid,
+        provider: $('#setProvider').value,
+        model: $('#setModel').value,
+        system_prompt: $('#setSystem').value || undefined,
+        content: text,
+      };
+      state.streaming = true; $('#send').disabled = true;
+
+      let mdAcc = '', reasonAcc = '', msgEl = null, reasoningEl = null, firstMeta = true;
+      try {
+        const resp = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+        const reader = resp.body.getReader(); const dec = new TextDecoder(); let buf = '';
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buf += dec.decode(value, { stream: true });
+          let idx;
+          while ((idx = buf.indexOf('\n\n')) >= 0) {
+            const chunk = buf.slice(0, idx); buf = buf.slice(idx + 2);
+            if (!chunk.startsWith('data: ')) continue;
+            const json = chunk.slice(6).trim();
+            if (json === '[DONE]') continue;
+            let ev; try { ev = JSON.parse(json); } catch (e) { continue; }
+            if (ev.type === 'meta') {
+              if (ev.conversation_id) { state.cid = ev.conversation_id; $('#convTitle').textContent = ev.title || '对话'; }
+              if (firstMeta) { ph.remove(); msgEl = addAssistant('', ''); firstMeta = false; }
+            } else if (ev.type === 'reasoning') {
+              if (!msgEl) { ph.remove(); msgEl = addAssistant('', ''); }
+              reasonAcc += ev.content;
+              if (!reasoningEl) {
+                reasoningEl = document.createElement('details'); reasoningEl.className = 'reasoning';
+                reasoningEl.innerHTML = '<summary>💭 思维链</summary><pre></pre>';
+                msgEl.parentElement.parentElement.insertBefore(reasoningEl, msgEl.parentElement);
+              }
+              reasoningEl.querySelector('pre').textContent = reasonAcc; scrollBottom();
+            } else if (ev.type === 'token') {
+              if (!msgEl) { ph.remove(); msgEl = addAssistant('', ''); }
+              mdAcc += ev.content; msgEl.setMarkdown(mdAcc); scrollBottom();
+            } else if (ev.type === 'done') {
+              // 完成
+            } else if (ev.type === 'error') {
+              if (!msgEl) { ph.remove(); msgEl = addAssistant('', ''); }
+              msgEl.setMarkdown('**错误：** ' + ev.message);
+            }
+          }
+        }
+        if (!msgEl) ph.remove();
+        loadConversations();
+      } catch (e) {
+        ph.remove(); addAssistant('**请求失败：** ' + e.message, '');
+      } finally {
+        state.streaming = false; $('#send').disabled = false;
+      }
+    }
+
+    // ---------- 设置保存 ----------
+    async function saveSettings() {
+      const keys = {};
+      document.querySelectorAll('#keyRows input').forEach(inp => { const v = inp.value.trim(); if (v) keys[inp.dataset.pid] = v; });
+      const body = {
+        active_provider: $('#setProvider').value,
+        active_model: $('#setModel').value,
+        system_prompt: $('#setSystem').value,
+        parameters: {
+          temperature: parseFloat($('#setTemp').value),
+          max_tokens: parseInt($('#setMax').value),
+          top_p: parseFloat($('#setTopP').value),
+          frequency_penalty: parseFloat($('#setFreq').value),
+        },
+        provider_keys: keys,
+      };
+      const r = await fetch('/api/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      if (r.ok) { state.config = await r.json(); closeSettings(); updateHint(); alert('设置已保存'); }
+      else alert('保存失败');
+    }
+    function openSettings() { $('#settingsModal').classList.add('open'); }
+    function closeSettings() { $('#settingsModal').classList.remove('open'); }
+
+    // ---------- 绑定 ----------
+    $('#newChat').onclick = () => { state.cid = null; $('#messages').innerHTML = ''; $('#convTitle').textContent = '新对话'; loadConversations(); $('#input').focus(); };
+    $('#send').onclick = send;
+    $('#input').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } });
+    $('#settingsBtn').onclick = openSettings;
+    $('#setCancel').onclick = closeSettings;
+    $('#setSave').onclick = saveSettings;
+    $('#setProvider').onchange = () => { fillModels(); updateHint(); };
+    $('#setPreset').onchange = () => { if ($('#setPreset').value) $('#setSystem').value = $('#setPreset').value; };
+    $('#settingsModal').addEventListener('click', e => { if (e.target === $('#settingsModal')) closeSettings(); });
+
+    // ---------- 启动 ----------
+    loadConfig().then(loadConversations);
+    $('#input').focus();
+  })();
+  </script>
+</body>
+</html>
