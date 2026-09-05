@@ -12,8 +12,8 @@ from __future__ import annotations
 import logging
 from typing import AsyncIterator
 
-from palm_sdk.schemas.chat import ChatMessage, ProviderRef
-from palm_sdk.bricks._token_estimate import estimate_tokens
+from palm._core.schemas.chat import ChatMessage, ProviderRef
+from palm._core.token_estimate import estimate_tokens
 
 _LOGGER = logging.getLogger(__name__)
 

@@ -1,0 +1,1199 @@
+{
+  "generated": "2026-08-23T09:48:18",
+  "python": "3.11.12",
+  "environment": "repaired .venv (Python 3.10.10 + palm.pth, offline)",
+  "kernels": [
+    {
+      "kernel": "palm",
+      "importable": true,
+      "summary": "PASS=10 FAIL=0 SKIP=0",
+      "counts": {
+        "total": 10,
+        "PASS": 10,
+        "FAIL": 0,
+        "SKIP": 0,
+        "XFAIL": 0
+      },
+      "cases": [
+        {
+          "kernel": "palm",
+          "suite": "import",
+          "name": "palm_submodules_importable",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "palm._core.* / palm.bootstrap.app 导入成功",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "palm",
+          "suite": "eventbus",
+          "name": "publish_subscribe",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "订阅→发布→投递成功，收到 1 条；审计快照可用",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "palm",
+          "suite": "eventbus",
+          "name": "unsubscribe_works",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "unsubscribe(event_type, handler) 后订阅计数归零",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "palm",
+          "suite": "eventbus",
+          "name": "emit_latency",
+          "dimension": "latency",
+          "status": "PASS",
+          "detail": "emit 时延分布",
+          "root_cause": "",
+          "latency": {
+            "n": 31,
+            "min_ms": 0.00029998773243278265,
+            "p50_ms": 0.000400003045797348,
+            "p95_ms": 0.00445000478066504,
+            "p99_ms": 0.05888000159757206,
+            "max_ms": 0.08179999713320285,
+            "mean_ms": 0.0033806441464431345
+          },
+          "metrics": {}
+        },
+        {
+          "kernel": "palm",
+          "suite": "container",
+          "name": "missing_service_none",
+          "dimension": "degradation",
+          "status": "PASS",
+          "detail": "查询未注册服务返回 None（不崩溃）",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "palm",
+          "suite": "token_estimate",
+          "name": "deterministic",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "中文+英文混合估算=6 tokens，幂等",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "palm",
+          "suite": "token_estimate",
+          "name": "latency",
+          "dimension": "latency",
+          "status": "PASS",
+          "detail": "500 字符估算时延",
+          "root_cause": "",
+          "latency": {
+            "n": 31,
+            "min_ms": 0.0026000052457675338,
+            "p50_ms": 0.002800006768666208,
+            "p95_ms": 0.003850000211969018,
+            "p99_ms": 0.004350004019215703,
+            "max_ms": 0.0045000051613897085,
+            "mean_ms": 0.0029483870152504214
+          },
+          "metrics": {}
+        },
+        {
+          "kernel": "palm",
+          "suite": "emotion",
+          "name": "detect_and_hint",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "detect→{'valence': 0.0, 'arousal': 0.0, 'dominance': 0.0}；hint 生成成功",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "palm",
+          "suite": "net",
+          "name": "fail_closed_offline",
+          "dimension": "boundary",
+          "status": "PASS",
+          "detail": "未注册网卡时外网请求抛 NetworkForbidden（fail-closed 安全）",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "palm",
+          "suite": "bootstrap",
+          "name": "build_app_idempotent_degrade",
+          "dimension": "degradation",
+          "status": "PASS",
+          "detail": "build_app() 在依赖齐备环境下仍返回容器且不抛异常",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        }
+      ]
+    },
+    {
+      "kernel": "mentalcore",
+      "importable": true,
+      "summary": "PASS=6 FAIL=0 SKIP=2",
+      "counts": {
+        "total": 9,
+        "PASS": 6,
+        "FAIL": 0,
+        "SKIP": 2,
+        "XFAIL": 1
+      },
+      "cases": [
+        {
+          "kernel": "mentalcore",
+          "suite": "import",
+          "name": "mentalcore_importable",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "mentalcore.mentalcore 全符号导入成功（agent 框架整体保留）",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "mentalcore",
+          "suite": "character_card",
+          "name": "construct",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "CharacterCard(id,name,tagline,pillars,flaws) 构造成功",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "mentalcore",
+          "suite": "character_card",
+          "name": "construct_latency",
+          "dimension": "latency",
+          "status": "PASS",
+          "detail": "构造时延",
+          "root_cause": "",
+          "latency": {
+            "n": 31,
+            "min_ms": 0.0005999900167807937,
+            "p50_ms": 0.000700005330145359,
+            "p95_ms": 0.002000007953029126,
+            "p99_ms": 0.0027399961254559457,
+            "max_ms": 0.0027999922167509794,
+            "mean_ms": 0.0009129036052693282
+          },
+          "metrics": {}
+        },
+        {
+          "kernel": "mentalcore",
+          "suite": "affinity_stage",
+          "name": "official_six_present",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "OFFICIAL_6 含 6 个好感度档位: ['抵触', '陌生', '初识', '友好', '亲近', '亲密']",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "mentalcore",
+          "suite": "persona",
+          "name": "default_idempotent",
+          "dimension": "idempotency",
+          "status": "PASS",
+          "detail": "default_persona 两次等价: 梦瑶",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "mentalcore",
+          "suite": "control_code",
+          "name": "intent_routes",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "INTENT_ROUTES 路由表含 19 条入口",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "mentalcore",
+          "suite": "transport_packet",
+          "name": "partial_construct",
+          "dimension": "boundary",
+          "status": "XFAIL",
+          "detail": "TransportPacket 缺字段构造异常: TransportPacket.__init__() got an unexpected keyword argument 'role'",
+          "root_cause": "Traceback (most recent call last):\n  File \"C:\\Users\\Dawn\\Desktop\\P.A.L.M\\tests\\benchmarks\\bench_mentalcore.py\", line 87, in bench\n    tp = G[\"TransportPacket\"](role=\"user\", content=\"hi\")\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: TransportPacket.__init__() got an unexpected ",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "mentalcore",
+          "suite": "core",
+          "name": "stream_message_run",
+          "dimension": "degradation",
+          "status": "SKIP",
+          "detail": "",
+          "root_cause": "MentalCore.send_message/stream_message 需 LLM 运行时，离线不可执行 → skip",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "mentalcore",
+          "suite": "exo",
+          "name": "build_exo_run",
+          "dimension": "degradation",
+          "status": "SKIP",
+          "detail": "",
+          "root_cause": "build_exo/WorkCube 依赖 exo 运行时，离线不可执行 → skip",
+          "latency": null,
+          "metrics": {}
+        }
+      ]
+    },
+    {
+      "kernel": "memory",
+      "importable": true,
+      "summary": "PASS=7 FAIL=0 SKIP=3",
+      "counts": {
+        "total": 11,
+        "PASS": 7,
+        "FAIL": 0,
+        "SKIP": 3,
+        "XFAIL": 1
+      },
+      "cases": [
+        {
+          "kernel": "memory",
+          "suite": "import",
+          "name": "memory_submodules_importable",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "memory.domain_memory.* 导入成功",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "memory",
+          "suite": "memory",
+          "name": "construct_offline",
+          "dimension": "degradation",
+          "status": "PASS",
+          "detail": "Memory 离线构造成功；VectorMemory 惰性（依赖缺失不崩）",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "memory",
+          "suite": "memory",
+          "name": "keyword_extract",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "提取 11 个关键词，幂等",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "memory",
+          "suite": "memory",
+          "name": "keyword_latency",
+          "dimension": "latency",
+          "status": "PASS",
+          "detail": "关键词提取时延",
+          "root_cause": "",
+          "latency": {
+            "n": 31,
+            "min_ms": 0.004999994416721165,
+            "p50_ms": 0.005099995178170502,
+            "p95_ms": 0.005649999366141856,
+            "p99_ms": 0.008040007378440349,
+            "max_ms": 0.009000010322779417,
+            "mean_ms": 0.005287096193510919
+          },
+          "metrics": {}
+        },
+        {
+          "kernel": "memory",
+          "suite": "memory",
+          "name": "relevance_ranking",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "高相关=0.500 ≥ 低相关=0.000",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "memory",
+          "suite": "memory",
+          "name": "keyword_extract",
+          "dimension": "correctness",
+          "status": "SKIP",
+          "detail": "",
+          "root_cause": "Memory 未构造（互操作砖缺失）→ 关键词提取 skip",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "memory",
+          "suite": "memory",
+          "name": "relevance_ranking",
+          "dimension": "correctness",
+          "status": "SKIP",
+          "detail": "",
+          "root_cause": "Memory 未构造（互操作砖缺失）→ 相关度 skip",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "memory",
+          "suite": "base",
+          "name": "dataclass_construction",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "SafetyLevel(Enum)/UserProfile/CoreMemoryData/SafetyConstraints 构造与字段访问正常",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "memory",
+          "suite": "token_budget",
+          "name": "allocate",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "预算分配产出 Budget: core=122 recent=819",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "memory",
+          "suite": "boundary",
+          "name": "empty_inputs_safe",
+          "dimension": "boundary",
+          "status": "XFAIL",
+          "detail": "空输入边界测试需 Memory 实例：'Memory' object has no attribute '_extract_keywords'",
+          "root_cause": "Traceback (most recent call last):\n  File \"C:\\Users\\Dawn\\Desktop\\P.A.L.M\\tests\\benchmarks\\bench_memory.py\", line 122, in bench\n    assert mem._extract_keywords(\"\") == set()\n           ^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'Memory' object has no attribute '_extract_keywords'\n",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "memory",
+          "suite": "memory",
+          "name": "vector_memory_init",
+          "dimension": "degradation",
+          "status": "SKIP",
+          "detail": "",
+          "root_cause": "VectorMemory.initialize 需 ChromaDB + Ollama bge-m3 嵌入，离线不可用 → skip",
+          "latency": null,
+          "metrics": {}
+        }
+      ]
+    },
+    {
+      "kernel": "tool",
+      "importable": true,
+      "summary": "PASS=8 FAIL=0 SKIP=0",
+      "counts": {
+        "total": 8,
+        "PASS": 8,
+        "FAIL": 0,
+        "SKIP": 0,
+        "XFAIL": 0
+      },
+      "cases": [
+        {
+          "kernel": "tool",
+          "suite": "import",
+          "name": "tool_submodules_importable",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "tool.tool_cube / tool_matcher / agent_tools 导入成功（已修复内核拆分后 ..tool_base 相对导入断裂）",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "tool",
+          "suite": "tool_cube",
+          "name": "register_and_decide",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "注册 1 工具，get/decide 链路通顺，decision.allowed=False",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "tool",
+          "suite": "tool_cube",
+          "name": "openai_schema_gen",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "to_openai_tool 产出合规 OpenAI function schema",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "tool",
+          "suite": "tool_matcher",
+          "name": "keyword_ranking",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "中文查询『读取一个文件』→ top=read_file",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "tool",
+          "suite": "tool_matcher",
+          "name": "rank_latency",
+          "dimension": "latency",
+          "status": "PASS",
+          "detail": "rank 时延分布",
+          "root_cause": "",
+          "latency": {
+            "n": 31,
+            "min_ms": 0.005900001269765198,
+            "p50_ms": 0.006100002792663872,
+            "p95_ms": 0.012649994459934533,
+            "p99_ms": 0.015549991803709416,
+            "max_ms": 0.015999990864656866,
+            "mean_ms": 0.006999999787958879
+          },
+          "metrics": {}
+        },
+        {
+          "kernel": "tool",
+          "suite": "tool_matcher",
+          "name": "rank_idempotent",
+          "dimension": "idempotency",
+          "status": "PASS",
+          "detail": "同查询排序稳定",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "tool",
+          "suite": "boundary",
+          "name": "unknown_tool_safe",
+          "dimension": "boundary",
+          "status": "PASS",
+          "detail": "查询未注册工具返回 None，不抛异常",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "tool",
+          "suite": "file_tools",
+          "name": "path_traversal_blocked",
+          "dimension": "boundary",
+          "status": "PASS",
+          "detail": "越权路径读取抛异常被安全拦截: AttributeError",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        }
+      ]
+    },
+    {
+      "kernel": "plan",
+      "importable": true,
+      "summary": "PASS=8 FAIL=0 SKIP=1",
+      "counts": {
+        "total": 9,
+        "PASS": 8,
+        "FAIL": 0,
+        "SKIP": 1,
+        "XFAIL": 0
+      },
+      "cases": [
+        {
+          "kernel": "plan",
+          "suite": "import",
+          "name": "plan_submodules_importable",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "plan.plan_cube / plan.planning.planner 导入成功",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "plan",
+          "suite": "plan_cube",
+          "name": "goal_decomposition",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "目标分解为 3 步: ['明确目标与验收标准', '选择工具并执行', '核对结果并汇总结论']",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "plan",
+          "suite": "plan_cube",
+          "name": "progress_state_machine",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "mark_done 后 progress 状态推进",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "plan",
+          "suite": "plan_cube",
+          "name": "build_plan_latency",
+          "dimension": "latency",
+          "status": "PASS",
+          "detail": "build_plan 时延分布",
+          "root_cause": "",
+          "latency": {
+            "n": 31,
+            "min_ms": 0.000800006091594696,
+            "p50_ms": 0.00100000761449337,
+            "p95_ms": 0.0021500018192455173,
+            "p99_ms": 0.002479994145687669,
+            "max_ms": 0.0025999906938523054,
+            "mean_ms": 0.001177417993124935
+          },
+          "metrics": {}
+        },
+        {
+          "kernel": "plan",
+          "suite": "plan_cube",
+          "name": "decomposition_idempotent",
+          "dimension": "idempotency",
+          "status": "PASS",
+          "detail": "同目标分解结果一致",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "plan",
+          "suite": "planner",
+          "name": "robust_json_array_parse",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "干净数组/带噪声数组解析成功；畸形/对象/空串降级为 None",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "plan",
+          "suite": "planner",
+          "name": "parse_latency",
+          "dimension": "latency",
+          "status": "PASS",
+          "detail": "解析时延分布",
+          "root_cause": "",
+          "latency": {
+            "n": 31,
+            "min_ms": 0.0020000006770715117,
+            "p50_ms": 0.0021000014385208488,
+            "p95_ms": 0.004749999789055437,
+            "p99_ms": 0.005699999746866524,
+            "max_ms": 0.005699999746866524,
+            "mean_ms": 0.002541934654507185
+          },
+          "metrics": {}
+        },
+        {
+          "kernel": "plan",
+          "suite": "boundary",
+          "name": "empty_goal_safe",
+          "dimension": "boundary",
+          "status": "PASS",
+          "detail": "空目标返回列表（降级单步/空），不崩溃",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "plan",
+          "suite": "planner",
+          "name": "llm_driven_plan",
+          "dimension": "degradation",
+          "status": "SKIP",
+          "detail": "",
+          "root_cause": "Planner.plan/replan 依赖 llm_stream_fn（LLM 流式回调），离线不可执行 → skip",
+          "latency": null,
+          "metrics": {}
+        }
+      ]
+    },
+    {
+      "kernel": "gui",
+      "importable": true,
+      "summary": "PASS=3 FAIL=0 SKIP=2",
+      "counts": {
+        "total": 5,
+        "PASS": 3,
+        "FAIL": 0,
+        "SKIP": 2,
+        "XFAIL": 0
+      },
+      "cases": [
+        {
+          "kernel": "gui",
+          "suite": "import",
+          "name": "gui_modules_importable",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "gui.window_tools / gui.adapters_gui 导入成功（已修复内核拆分后 ..tool_base 与 .window_api 相对导入断裂）",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "gui",
+          "suite": "window_tools",
+          "name": "tool_classes_exposed",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "暴露 13 个窗口工具类: ['CloseWindowTool', 'FocusWindowTool', 'GetActiveWindowTool', 'GetWindowRectTool', 'ListWindowsTool', 'MaximizeWindowTool']",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "gui",
+          "suite": "window_tools",
+          "name": "enum_safe_headless",
+          "dimension": "boundary",
+          "status": "PASS",
+          "detail": "无桌面会话下 enum_visible_windows 返回 list（安全降级）",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "gui",
+          "suite": "window_tools",
+          "name": "real_window_ops",
+          "dimension": "degradation",
+          "status": "SKIP",
+          "detail": "",
+          "root_cause": "focus_window/get_pixel_color 等需活动图形会话与 user32，无头环境 → skip",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "gui",
+          "suite": "adapters_gui",
+          "name": "real_gui_automation",
+          "dimension": "degradation",
+          "status": "SKIP",
+          "detail": "",
+          "root_cause": "Atlas/世界模型/UIA 实时感知需桌面会话与屏幕，无头环境 → skip",
+          "latency": null,
+          "metrics": {}
+        }
+      ]
+    },
+    {
+      "kernel": "llm",
+      "importable": true,
+      "summary": "PASS=5 FAIL=0 SKIP=0",
+      "counts": {
+        "total": 5,
+        "PASS": 5,
+        "FAIL": 0,
+        "SKIP": 0,
+        "XFAIL": 0
+      },
+      "cases": [
+        {
+          "kernel": "llm",
+          "suite": "import",
+          "name": "package_importable",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "llm 包顶层可导入",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "llm",
+          "suite": "import",
+          "name": "providers_importable",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "llm.providers 可导入（llm.models + httpx 已具备）",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "llm",
+          "suite": "factory",
+          "name": "factory_routing",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "get_provider_instance 按 type 路由到 MockProvider",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "llm",
+          "suite": "mock",
+          "name": "mock_provider_echo",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "MockProvider 离线回声可用（输出 167 字符，含 done）",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "llm",
+          "suite": "live",
+          "name": "real_provider_ttfb",
+          "dimension": "latency",
+          "status": "PASS",
+          "detail": "真实端点 nonelinear/GLM-4.5-Flash-nothink 流式首字 2026ms（本地开销约0.2ms，余为服务端思考）",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        }
+      ]
+    },
+    {
+      "kernel": "sandbox",
+      "importable": true,
+      "summary": "PASS=6 FAIL=0 SKIP=1",
+      "counts": {
+        "total": 7,
+        "PASS": 6,
+        "FAIL": 0,
+        "SKIP": 1,
+        "XFAIL": 0
+      },
+      "cases": [
+        {
+          "kernel": "sandbox",
+          "suite": "import",
+          "name": "sandbox_submodules_importable",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "sandbox.ast / sandbox.sandbox_cube 导入成功",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "sandbox",
+          "suite": "ast",
+          "name": "extract_host_and_risk",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "AST 提取 hosts=['bad.org', 'evil.com']，risk=high",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "sandbox",
+          "suite": "ast",
+          "name": "analyze_latency",
+          "dimension": "latency",
+          "status": "PASS",
+          "detail": "分析时延分布",
+          "root_cause": "",
+          "latency": {
+            "n": 31,
+            "min_ms": 0.026399997295811772,
+            "p50_ms": 0.02780000795610249,
+            "p95_ms": 0.034300006518606097,
+            "p99_ms": 0.0789700090535916,
+            "max_ms": 0.09700001101009548,
+            "mean_ms": 0.030570967693723018
+          },
+          "metrics": {}
+        },
+        {
+          "kernel": "sandbox",
+          "suite": "ast",
+          "name": "analyze_idempotent",
+          "dimension": "idempotency",
+          "status": "PASS",
+          "detail": "同代码分析结果一致",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "sandbox",
+          "suite": "sandbox_cube",
+          "name": "danger_refuse",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "deny 模式下危险命令被 _refuse 拦截",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "sandbox",
+          "suite": "boundary",
+          "name": "malformed_syntax_safe",
+          "dimension": "boundary",
+          "status": "PASS",
+          "detail": "畸形 Python 语法分析不崩溃，降级返回",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "sandbox",
+          "suite": "sandbox_cube",
+          "name": "real_exec",
+          "dimension": "degradation",
+          "status": "SKIP",
+          "detail": "",
+          "root_cause": "SandboxCube.run 真实命令执行需管理员/pywin32/Job Objects，离线不可执行 → skip",
+          "latency": null,
+          "metrics": {}
+        }
+      ]
+    },
+    {
+      "kernel": "security",
+      "importable": true,
+      "summary": "PASS=13 FAIL=0 SKIP=0",
+      "counts": {
+        "total": 13,
+        "PASS": 13,
+        "FAIL": 0,
+        "SKIP": 0,
+        "XFAIL": 0
+      },
+      "cases": [
+        {
+          "kernel": "security",
+          "suite": "import",
+          "name": "all_submodules_importable",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "security.* 全部离线子模块导入成功",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "security",
+          "suite": "guardrail",
+          "name": "five_profiles_constructible",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "hardline/strict/loose/ai/whitelist 均可构造",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "security",
+          "suite": "guardrail",
+          "name": "engine_deny_rule",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "注入 process.execute+rm -rf deny 规则后 evaluate→deny",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "security",
+          "suite": "guardrail",
+          "name": "hardline_warn_upgrade",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "hardline 下 warn 升级→deny",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "security",
+          "suite": "guardrail",
+          "name": "default_fail_open",
+          "dimension": "boundary",
+          "status": "PASS",
+          "detail": "默认档对危险事件 verdict=deny（已预置基线）",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "security",
+          "suite": "adjudicator",
+          "name": "batch_rules_fire",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "5 条请求均产出 {action,confidence,reason} 裁决",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "security",
+          "suite": "adjudicator",
+          "name": "single_latency",
+          "dimension": "latency",
+          "status": "PASS",
+          "detail": "单条裁决时延分布",
+          "root_cause": "",
+          "latency": {
+            "n": 31,
+            "min_ms": 0.002700006007216871,
+            "p50_ms": 0.0030999945010989904,
+            "p95_ms": 0.004649991751648486,
+            "p99_ms": 0.007640004332642999,
+            "max_ms": 0.00890000956133008,
+            "mean_ms": 0.003387096277888744
+          },
+          "metrics": {}
+        },
+        {
+          "kernel": "security",
+          "suite": "adjudicator",
+          "name": "deterministic_idempotent",
+          "dimension": "idempotency",
+          "status": "PASS",
+          "detail": "同输入重复裁决结果一致",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "security",
+          "suite": "code_guard",
+          "name": "hard_block_detection",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "恶意码 hard_block=True；scan 返回 0 条风险",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "security",
+          "suite": "security_cube",
+          "name": "ssrf_host_deny",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "环回/链路本地/私网地址被拒，公网放行",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "security",
+          "suite": "boundary",
+          "name": "empty_inputs_safe",
+          "dimension": "boundary",
+          "status": "PASS",
+          "detail": "空 dict / 空串 / 空 chunk 不抛异常",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "security",
+          "suite": "threat",
+          "name": "offline_local_scoring",
+          "dimension": "degradation",
+          "status": "PASS",
+          "detail": "无 DNS 后端时仍返回本地规则评分: 10",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "security",
+          "suite": "honeypot",
+          "name": "decoy_listing",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "诱饵库列出 8 条；match 接口可用",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        }
+      ]
+    },
+    {
+      "kernel": "speech",
+      "importable": true,
+      "summary": "PASS=3 FAIL=0 SKIP=2",
+      "counts": {
+        "total": 5,
+        "PASS": 3,
+        "FAIL": 0,
+        "SKIP": 2,
+        "XFAIL": 0
+      },
+      "cases": [
+        {
+          "kernel": "speech",
+          "suite": "import",
+          "name": "package_importable",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "speech 包顶层可导入（VOSK/CosyVoice/GSV 三引擎目录就位）",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "speech",
+          "suite": "vosk",
+          "name": "recognize_importable",
+          "dimension": "correctness",
+          "status": "SKIP",
+          "detail": "",
+          "root_cause": "导入失败: ModuleNotFoundError: No module named 'sounddevice'；根因=缺失 sounddevice/vosk/numpy",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "speech",
+          "suite": "vosk",
+          "name": "signal_fns",
+          "dimension": "degradation",
+          "status": "SKIP",
+          "detail": "",
+          "root_cause": "resample_audio/ensure_16bit_pcm 等 numpy 信号处理不可达（numpy 缺失）→ skip",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "speech",
+          "suite": "cosyvoice",
+          "name": "importable",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "speech.cosyvoice 可导入",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "speech",
+          "suite": "gpt_sovits",
+          "name": "importable",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "speech.gpt-sovits 可导入",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        }
+      ]
+    },
+    {
+      "kernel": "mentalcore_data",
+      "importable": false,
+      "summary": "PASS=5 FAIL=0 SKIP=0",
+      "counts": {
+        "total": 5,
+        "PASS": 5,
+        "FAIL": 0,
+        "SKIP": 0,
+        "XFAIL": 0
+      },
+      "cases": [
+        {
+          "kernel": "mentalcore_data",
+          "suite": "fixture",
+          "name": "data_dir_present",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "数据目录存在: C:\\Users\\Dawn\\Desktop\\P.A.L.M\\mentalcore_data\\_borrowed_P.A.L.M_clean_Data",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "mentalcore_data",
+          "suite": "fixture",
+          "name": "json_parse_all",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "全部 27 个固件 JSON 可被标准库解析",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "mentalcore_data",
+          "suite": "fixture",
+          "name": "pool_present",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "pool.json 存在",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "mentalcore_data",
+          "suite": "fixture",
+          "name": "settings_present",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "settings.json 存在",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        },
+        {
+          "kernel": "mentalcore_data",
+          "suite": "fixture",
+          "name": "characters_present",
+          "dimension": "correctness",
+          "status": "PASS",
+          "detail": "characters/ 含 3 个角色 JSON",
+          "root_cause": "",
+          "latency": null,
+          "metrics": {}
+        }
+      ]
+    }
+  ],
+  "broken_kernels": [],
+  "summary": {
+    "kernels": 11,
+    "total": 87,
+    "PASS": 74,
+    "FAIL": 0,
+    "SKIP": 11,
+    "XFAIL": 2
+  }
+}

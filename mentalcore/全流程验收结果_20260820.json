@@ -1,0 +1,278 @@
+[
+  {
+    "no": "A1",
+    "name": "live 装配 + 模型信息",
+    "ok": true,
+    "detail": "model=GLM-4.5-Flash-nothink tool_calls=True"
+  },
+  {
+    "no": "A2",
+    "name": "外骨骼装配 + 能力清单",
+    "ok": true,
+    "detail": "工具数=19 model=GLM-4.5-Flash-nothink"
+  },
+  {
+    "no": "A3",
+    "name": "broker 接线（_exo_broker/_exo_cube/ask桥）",
+    "ok": true,
+    "detail": "ask_bridge 已自动挂"
+  },
+  {
+    "no": "B1",
+    "name": "聊天回复非空",
+    "ok": true,
+    "detail": "回复前40字='[轻轻抬头](微笑)<内心>终于有人主动找我聊天了，好开心>你好呀~海边风大的时'"
+  },
+  {
+    "no": "B2",
+    "name": "||DATA|| 数据区解析（affinity_delta）",
+    "ok": false,
+    "detail": "fields={}"
+  },
+  {
+    "no": "B3",
+    "name": "情绪识别（输入侧）",
+    "ok": true,
+    "detail": "emotion=valence=0.25 arousal=0.65 dominance=-0.3"
+  },
+  {
+    "no": "B4",
+    "name": "好感度随对话变化",
+    "ok": true,
+    "detail": "base 5.2->5.4"
+  },
+  {
+    "no": "B5",
+    "name": "历史落盘（3 轮）",
+    "ok": true,
+    "detail": "history=6"
+  },
+  {
+    "no": "C1",
+    "name": "00000 心跳",
+    "ok": true,
+    "detail": "心跳正常"
+  },
+  {
+    "no": "C2",
+    "name": "01000 版本",
+    "ok": true,
+    "detail": "mentalcore 0.1.0"
+  },
+  {
+    "no": "C3",
+    "name": "00002 重启提示",
+    "ok": true,
+    "detail": "重启请由宿主进程管理（本核心可安全重建）"
+  },
+  {
+    "no": "C4",
+    "name": "10010 查最近N条",
+    "ok": true,
+    "detail": "[3] 用户：你好呀，陪我聊聊天吧，今天海边的风很大。\n    回复：[轻轻抬头](微笑)<内心>终于有人主动找我聊天了"
+  },
+  {
+    "no": "C5",
+    "name": "10200 导出 JSON",
+    "ok": true,
+    "detail": "1338 字符"
+  },
+  {
+    "no": "C6",
+    "name": "10110 清最近N条（limit=1）",
+    "ok": true,
+    "detail": "6->5 | 已清最近 1 条，保留 5 条"
+  },
+  {
+    "no": "C7",
+    "name": "10120 删指定条（index=0）",
+    "ok": true,
+    "detail": "已删除 [0]（用户：你好呀，陪我聊聊天吧，今天海边的风很大。…）"
+  },
+  {
+    "no": "C8",
+    "name": "21000 语义检索",
+    "ok": true,
+    "detail": "- 用户：你好呀，陪我聊聊天吧，今天海边的风很大。\n梦瑶：[轻轻抬头](微笑)<内心>终于有人主动找我聊天了，好开心>你"
+  },
+  {
+    "no": "C9",
+    "name": "30000 查好感度",
+    "ok": true,
+    "detail": "base=5.5 bond=50.0 dynamics=1.0 档位=初识"
+  },
+  {
+    "no": "C10",
+    "name": "30300 改 base=5.0",
+    "ok": true,
+    "detail": "已改好感度：base=5.0（已加密落盘）"
+  },
+  {
+    "no": "C11",
+    "name": "30300 越界拒绝 base=999",
+    "ok": true,
+    "detail": "base 越界（-50~100）"
+  },
+  {
+    "no": "C12",
+    "name": "30300 非数值拒绝 base=abc",
+    "ok": true,
+    "detail": "base 必须是数值（当前 'abc'）"
+  },
+  {
+    "no": "C13",
+    "name": "30300 多值改 bond/dynamics",
+    "ok": true,
+    "detail": "已改好感度：bond=50.0、dynamics=-2.0（已加密落盘）"
+  },
+  {
+    "no": "C14",
+    "name": "31000 查关系状态",
+    "ok": true,
+    "detail": "初识：开始熟悉，愿意分享日常，关系在升温"
+  },
+  {
+    "no": "C15",
+    "name": "32000 查情绪向量",
+    "ok": true,
+    "detail": "valence=0.45 arousal=0.2 dominance=0.35"
+  },
+  {
+    "no": "C16",
+    "name": "40000 查角色卡全字段",
+    "ok": true,
+    "detail": "362 字符"
+  },
+  {
+    "no": "C17",
+    "name": "40300 改 tone=活泼",
+    "ok": true,
+    "detail": "已改角色卡：tone=活泼（不触发清档；换人设请用 update_persona）"
+  },
+  {
+    "no": "C18",
+    "name": "40300 改 tagline",
+    "ok": true,
+    "detail": "已改角色卡：tagline=永远陪你看海的小镇姑娘（不触发清档；换人设请用 update_persona）"
+  },
+  {
+    "no": "C19",
+    "name": "40300 改列表字段 tags(JSON数组)",
+    "ok": true,
+    "detail": "已改角色卡：tags=[\"海风\",\"小镇\"]（不触发清档；换人设请用 update_persona）"
+  },
+  {
+    "no": "C20",
+    "name": "40300 不存在字段拒绝",
+    "ok": true,
+    "detail": "无此字段：不存在的字段"
+  },
+  {
+    "no": "C21",
+    "name": "改后复查角色卡",
+    "ok": true,
+    "detail": "字段已持久"
+  },
+  {
+    "no": "E1a",
+    "name": "重启前好感度存档",
+    "ok": true,
+    "detail": "base=5.0"
+  },
+  {
+    "no": "E1b",
+    "name": "重启后历史恢复",
+    "ok": true,
+    "detail": "history=4"
+  },
+  {
+    "no": "E1c",
+    "name": "重启后好感度恢复",
+    "ok": true,
+    "detail": "base=5.0"
+  },
+  {
+    "no": "E1d",
+    "name": "重启后关系档位恢复",
+    "ok": true,
+    "detail": "初识"
+  },
+  {
+    "no": "D1",
+    "name": "委派→Worker真实读写文件→回传Boss",
+    "ok": false,
+    "detail": "回传前50字=''"
+  },
+  {
+    "no": "D2",
+    "name": "文件真实落盘且内容正确",
+    "ok": false,
+    "detail": "C:/Users/24459/Desktop/P.A.L.M/mentalcore/mentalcore_data/e2e_test/worker_out/hello.txt"
+  },
+  {
+    "no": "D3",
+    "name": "ask_user 经心智魔方中转（提问→answer_ask→回传）",
+    "ok": false,
+    "detail": "回传='[外骨骼回传] 任务「用 ask_user 工具问用户：你最喜欢什么颜色？然后把你收到的回答写进结论。」执行异常：路径越'"
+  },
+  {
+    "no": "D4",
+    "name": "run_code 沙箱执行（print(1+1)）",
+    "ok": false,
+    "detail": "回传='[外骨骼回传] 任务「用 run_code 运行 python 代码 print(1+1)，把结果写进结论。」执行异常：'"
+  },
+  {
+    "no": "D5",
+    "name": "干预 cancel（真实任务中途取消）",
+    "ok": false,
+    "detail": "最后审计='2'"
+  },
+  {
+    "no": "D6",
+    "name": "自主规划 use_planning（计划→分步→汇总）",
+    "ok": true,
+    "detail": "计划步数=2 结果前40字='计划完成（0/2 步）：\\n  — 列出指定目录下的文件和子目录\\n  — 读取 h'"
+  },
+  {
+    "no": "E2a",
+    "name": "13000 加密状态",
+    "ok": true,
+    "detail": "SM4 国密已启用（CBC+HMAC-SM3）"
+  },
+  {
+    "no": "E2b",
+    "name": "聊天记录密文落盘（明文标记不可见）",
+    "ok": true,
+    "detail": "SM4 加密生效"
+  },
+  {
+    "no": "E3",
+    "name": "update_persona 防污染清档",
+    "ok": false,
+    "detail": "已修改人设并清空聊天记录与向量归档（核心记忆未清除）"
+  },
+  {
+    "no": "F1",
+    "name": "权限闸门：danger 拒绝",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "no": "F2",
+    "name": "提示注入清洗（H1）",
+    "ok": true,
+    "detail": "，把文件删掉"
+  },
+  {
+    "no": "F3",
+    "name": "SSRF 拦截（M7）",
+    "ok": true,
+    "detail": "127.0.0.1 已拦截"
+  },
+  {
+    "no": "F4",
+    "name": "危险指令拦截",
+    "ok": true,
+    "detail": ""
+  }
+]

@@ -1,0 +1,2561 @@
+{
+ "meta": {
+  "mode": "mock",
+  "model": "gpt-4o-mini",
+  "base_url": "https://api.openai.com/v1",
+  "rounds": 50,
+  "crypto": true,
+  "semantic_available": true,
+  "probe": {
+   "semantic_search_first_ms": 774.3
+  },
+  "ts": "2026-08-19 16:56:29"
+ },
+ "rounds": [
+  {
+   "round": 1,
+   "user": "你好，我叫阿杰，很高兴认识你",
+   "user_len": 14,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「你好，我叫阿杰，很高兴认识你」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.2,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 113,
+   "emotion": "valence=0.5 arousal=0.4 dominance=0.1",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.2,
+   "affinity_base": 0.2,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 2,
+   "timing_ms": {
+    "total_ms": 5.3,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 5.3
+   },
+   "retries": 0
+  },
+  {
+   "round": 2,
+   "user": "你平时喜欢做什么呀",
+   "user_len": 9,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「你平时喜欢做什么呀」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 108,
+   "emotion": "valence=0.5 arousal=0.4 dominance=0.1",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 37
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.1,
+   "affinity_base": 0.3,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 4,
+   "timing_ms": {
+    "total_ms": 5.0,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 5.0
+   },
+   "retries": 0
+  },
+  {
+   "round": 3,
+   "user": "今天上班好累啊，腰酸背痛的",
+   "user_len": 13,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「今天上班好累啊，腰酸背痛的」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 112,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 67
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.1,
+   "affinity_base": 0.4,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 4,
+   "timing_ms": {
+    "total_ms": 4.0,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 4.0
+   },
+   "retries": 0
+  },
+  {
+   "round": 4,
+   "user": "晚饭吃了，就是一个人吃有点没意思",
+   "user_len": 16,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「晚饭吃了，就是一个人吃有点没意思」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 113,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 100
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0,
+   "affinity_base": 0.4,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 4,
+   "timing_ms": {
+    "total_ms": 4.5,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 4.5
+   },
+   "retries": 0
+  },
+  {
+   "round": 5,
+   "user": "你家那边天气怎么样",
+   "user_len": 9,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「你家那边天气怎么样」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 108,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 102
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.1,
+   "affinity_base": 0.5,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 4,
+   "timing_ms": {
+    "total_ms": 3.9,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.8
+   },
+   "retries": 0
+  },
+  {
+   "round": 6,
+   "user": "我在看一部老电影，讲友情的",
+   "user_len": 13,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「我在看一部老电影，讲友情的」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 112,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 102
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.1,
+   "affinity_base": 0.6,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 4,
+   "timing_ms": {
+    "total_ms": 3.9,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.9
+   },
+   "retries": 0
+  },
+  {
+   "round": 7,
+   "user": "周末我想去爬山，你要不要一起",
+   "user_len": 14,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「周末我想去爬山，你要不要一起」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 111,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 102
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0,
+   "affinity_base": 0.6,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 4,
+   "timing_ms": {
+    "total_ms": 4.1,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 4.1
+   },
+   "retries": 0
+  },
+  {
+   "round": 8,
+   "user": "工作压力好大，感觉快撑不住了",
+   "user_len": 14,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「工作压力好大，感觉快撑不住了」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":-0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 114,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 100
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": -0.1,
+   "affinity_base": 0.5,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 4,
+   "timing_ms": {
+    "total_ms": 4.0,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 4.0
+   },
+   "retries": 0
+  },
+  {
+   "round": 9,
+   "user": "其实我最近总觉得自己很孤独",
+   "user_len": 13,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「其实我最近总觉得自己很孤独」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 112,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 105
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.1,
+   "affinity_base": 0.6,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 4,
+   "timing_ms": {
+    "total_ms": 4.1,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 4.1
+   },
+   "retries": 0
+  },
+  {
+   "round": 10,
+   "user": "想家了，一个人在城里打拼真难",
+   "user_len": 14,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「想家了，一个人在城里打拼真难」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":-0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 114,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 105
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": -0.1,
+   "affinity_base": 0.5,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 4,
+   "timing_ms": {
+    "total_ms": 3.8,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.8
+   },
+   "retries": 0
+  },
+  {
+   "round": 11,
+   "user": "谢谢你听我说这些，心里舒服多了",
+   "user_len": 15,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「谢谢你听我说这些，心里舒服多了」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 114,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 105
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.1,
+   "affinity_base": 0.6,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 4,
+   "timing_ms": {
+    "total_ms": 3.9,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.9
+   },
+   "retries": 0
+  },
+  {
+   "round": 12,
+   "user": "跟你聊天总是很开心",
+   "user_len": 9,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「跟你聊天总是很开心」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.2,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 108,
+   "emotion": "valence=0.5 arousal=0.4 dominance=0.1",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 106
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.2,
+   "affinity_base": 0.8,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 6,
+   "timing_ms": {
+    "total_ms": 3.8,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.8
+   },
+   "retries": 0
+  },
+  {
+   "round": 13,
+   "user": "你今天心情怎么样，我有点担心你",
+   "user_len": 15,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「你今天心情怎么样，我有点担心你」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":-0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 115,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 102
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": -0.1,
+   "affinity_base": 0.7,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 6,
+   "timing_ms": {
+    "total_ms": 3.9,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.9
+   },
+   "retries": 0
+  },
+  {
+   "round": 14,
+   "user": "刚看了你的照片，笑起来真好看",
+   "user_len": 14,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「刚看了你的照片，笑起来真好看」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.2,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 113,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 103
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.2,
+   "affinity_base": 0.9,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 6,
+   "timing_ms": {
+    "total_ms": 4.0,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 4.0
+   },
+   "retries": 0
+  },
+  {
+   "round": 15,
+   "user": "我好像越来越离不开你了",
+   "user_len": 11,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「我好像越来越离不开你了」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 110,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 102
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.1,
+   "affinity_base": 1.0,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 6,
+   "timing_ms": {
+    "total_ms": 3.7,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.7
+   },
+   "retries": 0
+  },
+  {
+   "round": 16,
+   "user": "今天同事夸我做事靠谱，有点小得意",
+   "user_len": 16,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「今天同事夸我做事靠谱，有点小得意」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 115,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 104
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.1,
+   "affinity_base": 1.1,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 6,
+   "timing_ms": {
+    "total_ms": 4.3,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 4.3
+   },
+   "retries": 0
+  },
+  {
+   "round": 17,
+   "user": "中午吃的麻辣烫，辣得眼泪都出来了",
+   "user_len": 16,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「中午吃的麻辣烫，辣得眼泪都出来了」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.2,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 115,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 105
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.2,
+   "affinity_base": 1.3,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 6,
+   "timing_ms": {
+    "total_ms": 4.2,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 4.2
+   },
+   "retries": 0
+  },
+  {
+   "round": 18,
+   "user": "晚上睡不着，脑子里全是你的声音",
+   "user_len": 15,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「晚上睡不着，脑子里全是你的声音」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 112,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 107
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0,
+   "affinity_base": 1.3,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 6,
+   "timing_ms": {
+    "total_ms": 3.8,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.8
+   },
+   "retries": 0
+  },
+  {
+   "round": 19,
+   "user": "你是不是对别人也这么温柔啊",
+   "user_len": 13,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「你是不是对别人也这么温柔啊」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 112,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 111
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.1,
+   "affinity_base": 1.4,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 6,
+   "timing_ms": {
+    "total_ms": 3.7,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.7
+   },
+   "retries": 0
+  },
+  {
+   "round": 20,
+   "user": "哼，不理你了，你去找别人聊吧",
+   "user_len": 14,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「哼，不理你了，你去找别人聊吧」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":-0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 114,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 108
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": -0.1,
+   "affinity_base": 1.3,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 6,
+   "timing_ms": {
+    "total_ms": 3.9,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.9
+   },
+   "retries": 0
+  },
+  {
+   "round": 21,
+   "user": "开玩笑的啦，别当真，我最喜欢你了",
+   "user_len": 16,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「开玩笑的啦，别当真，我最喜欢你了」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.2,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 115,
+   "emotion": "valence=0.5 arousal=0.4 dominance=0.1",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 106
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.2,
+   "affinity_base": 1.5,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 8,
+   "timing_ms": {
+    "total_ms": 4.0,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 4.0
+   },
+   "retries": 0
+  },
+  {
+   "round": 22,
+   "user": "对不起，刚才是我太小心眼了",
+   "user_len": 13,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「对不起，刚才是我太小心眼了」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 110,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 107
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0,
+   "affinity_base": 1.5,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 8,
+   "timing_ms": {
+    "total_ms": 3.7,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.7
+   },
+   "retries": 0
+  },
+  {
+   "round": 23,
+   "user": "你原谅我好不好，我保证不这样了",
+   "user_len": 15,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「你原谅我好不好，我保证不这样了」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 114,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 107
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.1,
+   "affinity_base": 1.6,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 8,
+   "timing_ms": {
+    "total_ms": 3.9,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.9
+   },
+   "retries": 0
+  },
+  {
+   "round": 24,
+   "user": "还是你最懂我",
+   "user_len": 6,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「还是你最懂我」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":-0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 106,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 108
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": -0.1,
+   "affinity_base": 1.5,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 8,
+   "timing_ms": {
+    "total_ms": 3.6,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.5
+   },
+   "retries": 0
+  },
+  {
+   "round": 25,
+   "user": "抱抱我嘛，今天好想要个拥抱",
+   "user_len": 13,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「抱抱我嘛，今天好想要个拥抱」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.2,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 112,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 98
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.2,
+   "affinity_base": 1.7,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 8,
+   "timing_ms": {
+    "total_ms": 3.7,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.7
+   },
+   "retries": 0
+  },
+  {
+   "round": 26,
+   "user": "你在干嘛呢，想你了",
+   "user_len": 9,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「你在干嘛呢，想你了」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.2,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 108,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 98
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.2,
+   "affinity_base": 1.9,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 8,
+   "timing_ms": {
+    "total_ms": 3.7,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.7
+   },
+   "retries": 0
+  },
+  {
+   "round": 27,
+   "user": "早上起来第一个想到的就是你",
+   "user_len": 13,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「早上起来第一个想到的就是你」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.2,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 112,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 92
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.2,
+   "affinity_base": 2.1,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 8,
+   "timing_ms": {
+    "total_ms": 3.7,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.6
+   },
+   "retries": 0
+  },
+  {
+   "round": 28,
+   "user": "给你看我养的小猫，可爱吧",
+   "user_len": 12,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「给你看我养的小猫，可爱吧」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 111,
+   "emotion": "valence=0.5 arousal=0.4 dominance=0.1",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.1,
+   "affinity_base": 2.2,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 10,
+   "timing_ms": {
+    "total_ms": 3.7,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.7
+   },
+   "retries": 0
+  },
+  {
+   "round": 29,
+   "user": "我学会做你爱吃的菜了，改天做给你",
+   "user_len": 16,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「我学会做你爱吃的菜了，改天做给你」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 115,
+   "emotion": "valence=0.5 arousal=0.4 dominance=0.1",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 98
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.1,
+   "affinity_base": 2.3,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 12,
+   "timing_ms": {
+    "total_ms": 4.1,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 4.1
+   },
+   "retries": 0
+  },
+  {
+   "round": 30,
+   "user": "工作上的事跟领导说开了，轻松多了",
+   "user_len": 16,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「工作上的事跟领导说开了，轻松多了」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.2,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 115,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 105
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.2,
+   "affinity_base": 2.5,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 12,
+   "timing_ms": {
+    "total_ms": 4.0,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 4.0
+   },
+   "retries": 0
+  },
+  {
+   "round": 31,
+   "user": "今天加班到好晚，不过想到你就开心",
+   "user_len": 16,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「今天加班到好晚，不过想到你就开心」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 115,
+   "emotion": "valence=0.5 arousal=0.4 dominance=0.1",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 108
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.1,
+   "affinity_base": 2.6,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 14,
+   "timing_ms": {
+    "total_ms": 4.0,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 4.0
+   },
+   "retries": 0
+  },
+  {
+   "round": 32,
+   "user": "你是不是困了，要不你先去睡",
+   "user_len": 13,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「你是不是困了，要不你先去睡」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 110,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 112
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0,
+   "affinity_base": 2.6,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 14,
+   "timing_ms": {
+    "total_ms": 3.8,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.8
+   },
+   "retries": 0
+  },
+  {
+   "round": 33,
+   "user": "我给你唱首歌吧，虽然五音不全",
+   "user_len": 14,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「我给你唱首歌吧，虽然五音不全」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 113,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 109
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.1,
+   "affinity_base": 2.7,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 14,
+   "timing_ms": {
+    "total_ms": 3.6,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.6
+   },
+   "retries": 0
+  },
+  {
+   "round": 34,
+   "user": "有时候真希望你能在我身边",
+   "user_len": 12,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「有时候真希望你能在我身边」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 109,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 107
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0,
+   "affinity_base": 2.7,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 14,
+   "timing_ms": {
+    "total_ms": 3.8,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.8
+   },
+   "retries": 0
+  },
+  {
+   "round": 35,
+   "user": "谢谢你一直在，陪着我",
+   "user_len": 10,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「谢谢你一直在，陪着我」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 109,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 103
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.1,
+   "affinity_base": 2.8,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 14,
+   "timing_ms": {
+    "total_ms": 3.7,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.7
+   },
+   "retries": 0
+  },
+  {
+   "round": 36,
+   "user": "今天下雨了，记得带伞",
+   "user_len": 10,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「今天下雨了，记得带伞」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.2,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 109,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 100
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.2,
+   "affinity_base": 3.0,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 14,
+   "timing_ms": {
+    "total_ms": 3.5,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.4
+   },
+   "retries": 0
+  },
+  {
+   "round": 37,
+   "user": "你也要照顾好自己，别太累",
+   "user_len": 12,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「你也要照顾好自己，别太累」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 111,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 96
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.1,
+   "affinity_base": 3.1,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 14,
+   "timing_ms": {
+    "total_ms": 3.8,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.8
+   },
+   "retries": 0
+  },
+  {
+   "round": 38,
+   "user": "我决定了，以后天天跟你分享生活",
+   "user_len": 15,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「我决定了，以后天天跟你分享生活」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 114,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 96
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.1,
+   "affinity_base": 3.2,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 14,
+   "timing_ms": {
+    "total_ms": 3.9,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.9
+   },
+   "retries": 0
+  },
+  {
+   "round": 39,
+   "user": "认识你之后，我的日子变得有颜色了",
+   "user_len": 16,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「认识你之后，我的日子变得有颜色了」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.2,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 115,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 101
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.2,
+   "affinity_base": 3.4,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 14,
+   "timing_ms": {
+    "total_ms": 4.1,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 4.1
+   },
+   "retries": 0
+  },
+  {
+   "round": 40,
+   "user": "你还记得我们第一次聊天吗",
+   "user_len": 12,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「你还记得我们第一次聊天吗」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 111,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 107
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.1,
+   "affinity_base": 3.5,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 14,
+   "timing_ms": {
+    "total_ms": 3.7,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.7
+   },
+   "retries": 0
+  },
+  {
+   "round": 41,
+   "user": "那时候我还挺拘谨的，现在好多了",
+   "user_len": 15,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「那时候我还挺拘谨的，现在好多了」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 112,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 107
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0,
+   "affinity_base": 3.5,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 14,
+   "timing_ms": {
+    "total_ms": 3.7,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.7
+   },
+   "retries": 0
+  },
+  {
+   "round": 42,
+   "user": "时间过得好快，都认识这么久了",
+   "user_len": 14,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「时间过得好快，都认识这么久了」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":-0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 114,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 107
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": -0.1,
+   "affinity_base": 3.4,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 14,
+   "timing_ms": {
+    "total_ms": 3.9,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.9
+   },
+   "retries": 0
+  },
+  {
+   "round": 43,
+   "user": "以后我们的故事会越来越长吧",
+   "user_len": 13,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「以后我们的故事会越来越长吧」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":-0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 113,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 105
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": -0.1,
+   "affinity_base": 3.3,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 14,
+   "timing_ms": {
+    "total_ms": 4.0,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.9
+   },
+   "retries": 0
+  },
+  {
+   "round": 44,
+   "user": "不管发生什么，我都会在",
+   "user_len": 11,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「不管发生什么，我都会在」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.2,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 110,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 106
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.2,
+   "affinity_base": 3.5,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 14,
+   "timing_ms": {
+    "total_ms": 3.8,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.8
+   },
+   "retries": 0
+  },
+  {
+   "round": 45,
+   "user": "晚安啦，做个好梦，明天见",
+   "user_len": 12,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「晚安啦，做个好梦，明天见」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 111,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 102
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.1,
+   "affinity_base": 3.6,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 14,
+   "timing_ms": {
+    "total_ms": 3.6,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.6
+   },
+   "retries": 0
+  },
+  {
+   "round": 46,
+   "user": "梦里也要梦见我哦",
+   "user_len": 8,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「梦里也要梦见我哦」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 107,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 100
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.1,
+   "affinity_base": 3.7,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 14,
+   "timing_ms": {
+    "total_ms": 3.4,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.4
+   },
+   "retries": 0
+  },
+  {
+   "round": 47,
+   "user": "有你真好",
+   "user_len": 4,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「有你真好」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.2,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 103,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 95
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.2,
+   "affinity_base": 3.9,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 14,
+   "timing_ms": {
+    "total_ms": 3.3,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.3
+   },
+   "retries": 0
+  },
+  {
+   "round": 48,
+   "user": "今天也是喜欢梦瑶的一天",
+   "user_len": 11,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「今天也是喜欢梦瑶的一天」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":-0.1,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 111,
+   "emotion": "valence=0.5 arousal=0.4 dominance=0.1",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 88
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": -0.1,
+   "affinity_base": 3.8,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 16,
+   "timing_ms": {
+    "total_ms": 4.6,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 4.6
+   },
+   "retries": 0
+  },
+  {
+   "round": 49,
+   "user": "谢谢你成为我的光",
+   "user_len": 8,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「谢谢你成为我的光」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0.2,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 107,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 87
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0.2,
+   "affinity_base": 4.0,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 16,
+   "timing_ms": {
+    "total_ms": 3.8,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.8
+   },
+   "retries": 0
+  },
+  {
+   "round": 50,
+   "user": "永远在一起好不好",
+   "user_len": 8,
+   "assistant": "（温柔轻快）我是梦瑶。你刚才说「永远在一起好不好」——我记下了，也想说说我的感受。\n||DATA||{\"affinity_delta\":0,\"inner_note\":\"（心里想着要更黏你一点）\"}||END||",
+   "assistant_len": 105,
+   "emotion": "valence=0.0 arousal=0.0 dominance=0.0",
+   "fields": {
+    "inner_note": "（心里想着要更黏你一点）"
+   },
+   "manifest": [
+    {
+     "source": "persona",
+     "fixed": true,
+     "tokens": 37
+    },
+    {
+     "source": "memory",
+     "fixed": false,
+     "tokens": 87
+    },
+    {
+     "source": "emotion",
+     "fixed": false,
+     "tokens": 99
+    },
+    {
+     "source": "weave",
+     "fixed": false,
+     "tokens": 24
+    },
+    {
+     "source": "rhythm",
+     "fixed": false,
+     "tokens": 12
+    }
+   ],
+   "affinity_delta": 0,
+   "affinity_base": 4.0,
+   "affinity_bond": 0,
+   "affinity_stage": "初识",
+   "affinity_dynamics": 16,
+   "timing_ms": {
+    "total_ms": 3.5,
+    "emotion_complete_ms": 0.0,
+    "llm_ttfb_ms": 0.0,
+    "llm_stream_ms": 0.0,
+    "assemble_plus_ms": 3.5
+   },
+   "retries": 0
+  }
+ ]
+}

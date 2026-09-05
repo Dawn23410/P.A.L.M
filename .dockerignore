@@ -1,0 +1,29 @@
+# 不烤入镜像的内容（减小镜像体积 + 避免交叉平台污染）
+# 第三方 vendored 大模型/音频运行时：含 Windows 内嵌 python 与 17GB checkpoint，
+# Linux 下应通过卷挂载或独立服务接入，而非烤进镜像。
+speech/
+
+# 个人缓存与临时
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+.workbuddy/
+.venv/
+venv/
+
+# 归档 / 日志 / 历史产物（archive 473k 文件，绝不进镜像）
+archive/
+devlogs/
+docs/
+*.log
+
+# 版本控制忽略项
+.git/
+.gitignore
+
+# 本机特定
+Desktop/
+Downloads/
+Documents/

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8"/>
+<title>心智核心 100 次对话实测 · 图表附录</title>
+<style>
+ body{font-family:'Microsoft YaHei',sans-serif;background:#f5f6f8;margin:0;color:#222}
+ .wrap{max-width:880px;margin:0 auto;padding:24px 16px 60px}
+ h1{font-size:20px;margin:0 0 4px} .sub{color:#777;font-size:13px;margin-bottom:18px}
+ .card{background:#fff;border:1px solid #e3e6ea;border-radius:12px;padding:14px 16px;margin-bottom:18px}
+ .card h2{font-size:15px;margin:0 0 8px;color:#444}
+ .box{position:relative;height:260px}
+ .kpis{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+ .kpi{background:#fff;border:1px solid #e3e6ea;border-radius:10px;padding:10px 14px;flex:1;min-width:120px}
+ .kpi b{display:block;font-size:20px} .kpi span{font-size:12px;color:#777}
+</style></head><body><div class="wrap">
+<h1>心智核心（梦瑶）100 次对话实测 · 图表附录</h1>
+<div class="sub">数据源 bench_100_raw.json · 模型 GLM-4.5-Flash-nothink · 配合《基准报告_100次对话实测.md》阅读</div>
+<div class="kpis">
+ <div class="kpi"><b>5.61s</b><span>TTFB 中位数</span></div>
+ <div class="kpi"><b>32.54s</b><span>TTFB P95</span></div>
+ <div class="kpi"><b>15.0s</b><span>总耗时中位数</span></div>
+ <div class="kpi"><b>95/100</b><span>数据区遵守</span></div>
+ <div class="kpi"><b>159</b><span>平均回复字数</span></div>
+ <div class="kpi"><b>100</b><span>总轮次</span></div>
+</div>
+<div class="card"><h2>① TTFB 逐轮轨迹</h2><div class="box"><canvas id="c_ttfb" role="img" aria-label="TTFB 逐轮折线图"></canvas></div></div>
+<div class="card"><h2>② 总耗时逐轮轨迹</h2><div class="box"><canvas id="c_total" role="img" aria-label="总耗时逐轮折线图"></canvas></div></div>
+<div class="card"><h2>③ TTFB 分布直方图</h2><div class="box"><canvas id="c_hist" role="img" aria-label="TTFB 分布直方图"></canvas></div></div>
+<div class="card"><h2>④ 回复长度分布</h2><div class="box"><canvas id="c_len" role="img" aria-label="回复长度分布图"></canvas></div></div>
+<div class="card"><h2>⑤ 好感度 Δ 频次</h2><div class="box"><canvas id="c_delta" role="img" aria-label="好感度变化频次图"></canvas></div></div>
+<div class="card"><h2>⑥ 用户情绪 valence 轨迹</h2><div class="box"><canvas id="c_val" role="img" aria-label="情绪 valence 轨迹图"></canvas></div></div>
+<div class="card"><h2>⑦ 注入面参与轮次</h2><div class="box" style="height:200px"><canvas id="c_man" role="img" aria-label="注入面参与轮次条形图"></canvas></div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const ttfb=[10.907, 9.72, 14.482, 10.708, 31.315, 18.984, 41.908, 32.283, 10.984, 14.069, 12.913, 5.064, 2.509, 2.447, 3.572, 3.604, 2.363, 2.547, 2.994, 5.814, 2.66, 14.398, 15.777, 13.5, 2.944, 5.041, 13.938, 18.319, 21.474, 8.902, 8.947, 4.798, 26.887, 2.897, 8.944, 8.815, 3.576, 7.27, 64.818, 8.961, 4.741, 3.736, 2.358, 12.681, 3.082, 30.587, 20.021, 29.356, 6.427, 2.529, 29.514, 17.479, 9.579, 3.186, 37.491, 2.583, 23.619, 6.531, 2.41, 2.682, 4.656, 2.964, 2.347, 25.285, 56.051, 4.435, 4.85, 3.005, 3.404, 5.156, 2.536, 2.844, 7.528, 3.162, 2.182, 11.753, 3.809, 5.407, 14.126, 2.431, 19.692, 2.15, 18.575, 2.776, 3.186, 3.748, 10.541, 2.407, 6.828, 2.53, 2.366, 13.921, 3.029, 2.224, 9.627, 5.175, 2.435, 3.372, 10.948, 80.193];
+const total=[15.103, 14.426, 19.912, 15.543, 35.92, 24.456, 47.421, 36.624, 15.705, 19.527, 16.115, 10.11, 6.906, 9.858, 8.006, 9.988, 8.948, 6.815, 10.972, 9.994, 7.645, 19.878, 19.534, 17.279, 6.196, 11.11, 18.148, 25.557, 25.685, 13.68, 11.938, 8.243, 32.101, 7.565, 15.273, 21.397, 11.733, 17.074, 75.02, 18.216, 12.648, 12.288, 10.607, 25.085, 12.039, 56.647, 29.667, 37.46, 15.83, 11.744, 36.276, 26.686, 19.97, 13.702, 46.591, 12.866, 32.192, 16.165, 16.502, 10.951, 14.539, 12.263, 9.874, 34.553, 63.8, 14.838, 15.507, 12.096, 15.421, 17.492, 10.957, 13.094, 16.157, 13.503, 10.429, 21.687, 12.501, 13.649, 23.161, 6.763, 22.913, 5.053, 22.258, 11.222, 7.035, 9.257, 19.668, 6.077, 10.733, 12.628, 4.886, 25.835, 6.665, 8.273, 15.748, 13.999, 15.264, 7.898, 15.47, 85.407];
+const lens=[103, 139, 116, 168, 137, 197, 165, 127, 172, 176, 93, 143, 150, 217, 150, 252, 155, 147, 192, 146, 110, 148, 120, 168, 137, 197, 165, 127, 172, 176, 93, 143, 150, 217, 150, 252, 155, 147, 192, 146, 110, 148, 120, 178, 141, 201, 165, 127, 172, 176, 93, 143, 150, 217, 150, 252, 155, 147, 192, 146, 116, 148, 120, 172, 141, 201, 169, 131, 176, 180, 97, 147, 150, 217, 150, 252, 155, 147, 192, 146, 116, 148, 120, 172, 141, 201, 169, 131, 176, 180, 97, 147, 150, 217, 150, 252, 155, 147, 192, 146];
+const rounds=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100];
+const deltas={"0": 97, "1": 3};
+const valences=[0.75, -0.7, 0.25, 0.25, 0.65, 0.15, 0.1, 0.75, 0.5, -0.7, 0.2, 0.25, 0.7, 0.15, 0.5, 0.12, -0.6, 0.5, -0.65, 0.75, 0.65, -0.75, 0.25, 0.3, 0.65, 0.15, 0.2, 0.0, 0.2, -0.7, 0.2, 0.25, 0.75, 0.2, 0.4, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.65, 0.65, -0.7, 0.2, 0.0, 0.65, 0.25, 0.2, 0.85, 0.2, 0.0, 0.2, 0.25, 0.75, 0.2, 0.45, 0.0, 0.0, 0.6, -0.75, 0.75];
+const manifest={"persona": 100, "emotion": 100, "weave": 100, "rhythm": 100, "memory": 99};
+function chart(id, type, data, opts) {
+  new Chart(document.getElementById(id), {
+    type: type,
+    data: data,
+    options: Object.assign({ responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } } }, opts || {})
+  });
+}
+chart('c_ttfb', 'line', {
+  labels: rounds,
+  datasets: [{
+    label: 'TTFB(s)', data: ttfb, borderColor: '#E24B4A', backgroundColor: 'rgba(226,75,74,.12)',
+    pointRadius: 1.5, tension: .2, fill: true
+  }]
+}, { scales: { x: { title: { display: true, text: '轮次' } }, y: { title: { display: true, text: '秒' } } } });
+chart('c_total', 'line', {
+  labels: rounds,
+  datasets: [{
+    label: '总耗时(s)', data: total, borderColor: '#185FA5', backgroundColor: 'rgba(24,95,165,.12)',
+    pointRadius: 1.5, tension: .2, fill: true
+  }]
+}, { scales: { x: { title: { display: true, text: '轮次' } }, y: { title: { display: true, text: '秒' } } } });
+chart('c_hist', 'bar', {
+  labels: ['0-1','1-2','2-3','3-5','5-8','8-12','12-20','20-60','>60'],
+  datasets: [{
+    label: 'TTFB 频次', data: [
+      ttfb.filter(v=>v<1).length, ttfb.filter(v=>v>=1&&v<2).length,
+      ttfb.filter(v=>v>=2&&v<3).length, ttfb.filter(v=>v>=3&&v<5).length,
+      ttfb.filter(v=>v>=5&&v<8).length, ttfb.filter(v=>v>=8&&v<12).length,
+      ttfb.filter(v=>v>=12&&v<20).length, ttfb.filter(v=>v>=20&&v<60).length,
+      ttfb.filter(v=>v>=60).length
+    ], backgroundColor: '#E24B4A', borderRadius: 4
+  }]
+}, { scales: { x: { title: { display: true, text: 'TTFB 区间(s)' } }, y: { title: { display: true, text: '轮次' } } } });
+chart('c_len', 'bar', {
+  labels: ['0-50','50-100','100-150','150-200','200-300','>300'],
+  datasets: [{
+    label: '回复长度分布', data: [
+      lens.filter(v=>v<50).length, lens.filter(v=>v>=50&&v<100).length,
+      lens.filter(v=>v>=100&&v<150).length, lens.filter(v=>v>=150&&v<200).length,
+      lens.filter(v=>v>=200&&v<300).length, lens.filter(v=>v>=300).length
+    ], backgroundColor: '#1D9E75', borderRadius: 4
+  }]
+}, { scales: { x: { title: { display: true, text: '字符数' } }, y: { title: { display: true, text: '轮次' } } } });
+chart('c_delta', 'bar', {
+  labels: Object.keys(deltas),
+  datasets: [{
+    label: 'Δ 频次', data: Object.values(deltas), backgroundColor: '#8E44AD', borderRadius: 4
+  }]
+}, { scales: { x: { title: { display: true, text: '好感度 Δ' } }, y: { title: { display: true, text: '轮次' } } } });
+chart('c_val', 'line', {
+  labels: rounds,
+  datasets: [{
+    label: 'valence', data: valences, borderColor: '#D85A30', pointRadius: 1.5, tension: .2
+  }]
+}, { scales: { y: { min: -1, max: 1, title: { display: true, text: 'valence' } }, x: { title: { display: true, text: '轮次' } } } });
+chart('c_man', 'bar', {
+  labels: Object.keys(manifest),
+  datasets: [{
+    label: '参与轮次', data: Object.values(manifest), backgroundColor: '#534AB7', borderRadius: 4
+  }]
+}, { indexAxis: 'y', scales: { x: { title: { display: true, text: '轮次' } } } });
+</script>
+</div></body></html>

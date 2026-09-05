@@ -91,7 +91,7 @@ class TraceStore:
         self._vector_store = None
         self._vector_index: list[tuple[str, TraceEntry]] = []  # (text, entry) 降级用
         try:
-            from palm_sdk.bricks._shared.interop import get_memory_api
+            from palm._core.interop import get_memory_api
             api = get_memory_api()
             if api is not None and vector_persist_dir:
                 self._vector_store = api.VectorMemory(

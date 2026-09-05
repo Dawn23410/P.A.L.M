@@ -22,8 +22,10 @@ def _restore_module():
 
 # 系统级毁灭性操作的硬阻断清单：此类风险即使开启 _AUTOCONFIRM 也强制拦截，
 # 防止评测/无人值守场景下误执行彻底破坏系统的代码。
+# 同时覆盖 Windows 与 Linux/macOS 的等价敏感根目录，避免跨平台盲区。
 _SYSTEM_DIRS = ("c:\\windows", "c:\\program files", "c:\\programdata",
-                "/windows", "/sys", "/boot")
+                "/windows", "/sys", "/boot", "/etc", "/usr", "/var",
+                "/root", "/home", "/system", "/system32")
 _DESTRUCTIVE_KEYS = ("rm -rf", "rmdir /s", "del /f", "os.remove", "shutil.rmtree",
                      "remove-item", "format ", "mkfs", "diskpart")
 
@@ -89,8 +91,13 @@ def _check_subproc_timeout(low: str) -> list[str]:
 
 
 def _check_system_path_delete(low: str, code: str) -> list[str]:
-    """硬编码系统路径删除：风险较高，需用户确认路径无误。"""
-    if ("c:\\users" in low and ("*" in code or "rm" in low)) or ("c:\\windows" in low and "rm" in low):
+    """硬编码系统路径删除：风险较高，需用户确认路径无误。
+
+    覆盖 Windows（c:\\users / c:\\windows）与 Linux（/home / /etc）等价敏感路径。
+    """
+    win_risk = ("c:\\users" in low and ("*" in code or "rm" in low)) or ("c:\\windows" in low and "rm" in low)
+    linux_risk = ("/home" in low and ("*" in code or "rm" in low)) or ("/etc" in low and "rm" in low)
+    if win_risk or linux_risk:
         return ["代码包含硬编码系统路径删除：风险较高，请确认路径无误"]
     return []
 

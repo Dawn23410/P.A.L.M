@@ -2,7 +2,7 @@
 
 用户决策（2026-08-18）：放弃传统主板架构——Brick/BrickManifest/BusType 等
 主板隐喻类不再存在；模块按名注册/取用，ServiceHandle.capability 对齐旧
-`registry.get(name).capabilities[key]` 语义，业务代码无需改动取用方式。
+`container.get(name).capabilities[key]` 语义，业务代码无需改动取用方式。
 """
 
 from typing import Any, Callable

@@ -15,7 +15,7 @@ import time
 from dataclasses import dataclass
 from pathlib import Path
 
-from palm_sdk.bricks._shared.paths import resolve_storage
+from palm._core.paths import resolve_storage
 from typing import Any, Iterable
 
 _LOGGER = logging.getLogger(__name__)
@@ -421,7 +421,7 @@ async def _digest_trace(
 
 def _select_trivial_model(model: str) -> str:
     try:
-        from ..model_router import select_model
+        from palm.adapters.model.model_router import select_model
         return select_model("trivial", model)
     except Exception:  # noqa: BLE001
         return model

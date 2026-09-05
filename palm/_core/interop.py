@@ -8,7 +8,7 @@ from palm._core.container import registry
 
 def _resolve(brick_name: str, cap_key: str):
     """惰性取已注册砖的指定 capability；未注册/未暴露即返回 None。"""
-    brick = container.get(brick_name)
+    brick = registry.get(brick_name)
     if brick is None:
         return None
     return (getattr(brick, "capabilities", None) or {}).get(cap_key)
@@ -32,4 +32,4 @@ def get_affinity_api():
 
 def get_agent_api():
     # 其他砖经此取 agent 砖（含 agent_tools/register_tool 等能力），自行访问 capabilities。
-    return container.get("agent")
+    return registry.get("agent")

@@ -1,0 +1,340 @@
+/* P.A.L.M · Design System
+   Aesthetic: Technical Editorial / Precision Control Panel
+=========================================================== */
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'SF Mono', ui-monospace, 'JetBrains Mono', Menlo, monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.01em;
+}
+
+/* Design tokens (light mode) */
+:root {
+  --palm-cyan: #00e5ff;
+  --palm-cyan-soft: #7ce5ff;
+  --palm-bg: #fafbfc;
+  --palm-surface: #ffffff;
+  --palm-line: #e6e8eb;
+  --palm-line-strong: #d3d7dd;
+  --palm-text: #0a1628;
+  --palm-text-dim: #64748b;
+  --palm-text-faint: #9aa5b1;
+  --palm-ok: #22c55e;
+}
+
+:root[data-theme='dark'] {
+  --palm-bg: #07121f;
+  --palm-surface: #0d1d30;
+  --palm-line: rgba(255, 255, 255, 0.06);
+  --palm-line-strong: rgba(255, 255, 255, 0.12);
+  --palm-text: #e6eef6;
+  --palm-text-dim: #8aa0b4;
+  --palm-text-faint: #5c6f82;
+}
+
+/* Page background (subtle grid) */
+.ant-layout.palm-page-bg {
+  background-color: var(--palm-bg) !important;
+  background-image:
+    linear-gradient(var(--palm-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--palm-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: -1px -1px;
+}
+
+:root[data-theme='dark'] .ant-layout.palm-page-bg {
+  background-color: var(--palm-bg) !important;
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(0, 229, 255, 0.05), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(0, 229, 255, 0.02), transparent 50%);
+}
+
+/* Override Ant Design defaults — inner panels match sider surface for unity */
+.ant-layout-sider { background: var(--palm-surface) !important; }
+.ant-layout:not(.palm-page-bg) { background: var(--palm-surface) !important; }
+.ant-layout-header { background: var(--palm-surface) !important; }
+.ant-menu { background: transparent !important; }
+
+/* Brand mark (3x3 grid logo) */
+.palm-brand {
+  position: relative;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--palm-line);
+  overflow: hidden;
+}
+
+.palm-brand::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  right: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--palm-cyan), transparent);
+  opacity: 0.5;
+}
+
+.palm-brand__mark {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.palm-brand__mark span {
+  display: block;
+  background: var(--palm-line-strong);
+}
+
+.palm-brand__mark span:nth-child(1),
+.palm-brand__mark span:nth-child(5),
+.palm-brand__mark span:nth-child(9) {
+  background: var(--palm-cyan);
+  box-shadow: 0 0 6px rgba(0, 229, 255, 0.5);
+}
+
+.palm-brand__mark span:nth-child(3),
+.palm-brand__mark span:nth-child(7) {
+  background: var(--palm-cyan);
+  opacity: 0.45;
+}
+
+.palm-brand__text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  flex: 1;
+}
+
+.palm-brand__title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--palm-text);
+  line-height: 1;
+}
+
+.palm-brand__tag {
+  font-size: 8px;
+  color: var(--palm-text-faint);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* Sider collapse toggle (custom button at top-right of brand area) */
+.palm-brand__toggle {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid var(--palm-line);
+  color: var(--palm-text-faint);
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  padding: 0;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.palm-brand__toggle:hover {
+  border-color: var(--palm-cyan);
+  color: var(--palm-cyan);
+}
+
+/* Hide default Ant Design sider trigger */
+.ant-layout-sider-trigger {
+  display: none !important;
+}
+
+/* Status dot (kept for potential reuse) */
+.palm-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--palm-text-dim);
+}
+
+.palm-status__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--palm-ok);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+  animation: palm-pulse 2s ease-in-out infinite;
+}
+
+@keyframes palm-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.8); }
+}
+
+/* Top bar */
+.palm-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px !important;
+  height: 48px;
+  border-bottom: 1px solid var(--palm-line);
+  background: var(--palm-surface) !important;
+}
+
+.palm-topbar__label {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--palm-text-faint);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.palm-topbar__label strong {
+  color: var(--palm-text);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+/* Segmented theme switcher */
+.palm-segmented {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  background: var(--palm-bg);
+  border: 1px solid var(--palm-line);
+  border-radius: 6px;
+}
+
+.palm-segmented button {
+  background: transparent;
+  border: none;
+  padding: 5px 12px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--palm-text-faint);
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+
+.palm-segmented button:hover { color: var(--palm-text); }
+
+.palm-segmented button.active {
+  background: rgba(0, 229, 255, 0.15);
+  color: var(--palm-cyan);
+  font-weight: 700;
+}
+
+/* Page content (card) */
+.palm-page {
+  padding: 16px 28px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.palm-page__title-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--palm-line);
+}
+
+.palm-page__title-row--compact .palm-page__subtitle {
+  font-size: 9px;
+}
+
+.palm-page__title-row--compact .palm-page__title {
+  font-size: 15px;
+  margin-bottom: 0;
+}
+
+.palm-page__title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--palm-text);
+  margin: 0 0 4px;
+  letter-spacing: 0.02em;
+}
+
+.palm-page__subtitle {
+  font-size: 10px;
+  color: var(--palm-text-faint);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Simple placeholder card */
+.palm-card-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  color: var(--palm-text-faint);
+  font-size: 14px;
+  letter-spacing: 0.05em;
+}
+
+/* Menu refinement */
+.ant-menu-item {
+  margin: 2px 8px !important;
+  border-radius: 4px !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+  transition: all 0.15s ease !important;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+
+.ant-menu-item .anticon {
+  color: var(--palm-text-faint) !important;
+  transition: color 0.15s ease !important;
+}
+
+.ant-menu-item:hover .anticon { color: var(--palm-cyan) !important; }
+
+.ant-menu-item-selected {
+  background: transparent !important;
+  border: 1px solid var(--palm-line-strong) !important;
+}
+
+.ant-menu-item-selected .ant-menu-title-content {
+  color: var(--palm-text) !important;
+  font-weight: 600;
+}
+
+.ant-menu-item-selected .anticon { color: var(--palm-cyan) !important; }
+
+.ant-menu-inline .ant-menu-item::after {
+  border-right: 2px solid var(--palm-cyan) !important;
+}

@@ -10,10 +10,12 @@ import logging
 import threading
 import time
 
+import sys
+
 try:
     import ctypes
     from ctypes import wintypes
-    _HAS_WIN32 = True
+    _HAS_WIN32 = sys.platform == "win32" and hasattr(ctypes, "windll")
 except Exception:  # 非 Windows 或 ctypes 缺失
     _HAS_WIN32 = False
 

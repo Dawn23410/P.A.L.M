@@ -1,0 +1,571 @@
+/* ══════════════════════════════════════════════
+   GPT-SoVITS 语音合成页面样式 — 与 P.A.L.M 项目设计同步
+   （类名沿用 qwen-tts-* 历史命名，仅供本控制台 TTS 模块复用）
+   ══════════════════════════════════════════════ */
+
+/* ── 模型选择框透明背景 ── */
+.qwen-tts-model-select .ant-select-selector {
+  background: transparent !important;
+  border-color: var(--palm-card-border, #b0b7c3) !important;
+  box-shadow: none !important;
+}
+
+.qwen-tts-model-select .ant-select-selection-item {
+  text-transform: none !important;
+  font-variant: normal !important;
+}
+
+/* ── 页面容器 ── */
+.qwen-tts-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  padding: 20px 24px;
+}
+
+.qwen-tts-content {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── 首页模型卡片行 ── */
+.qwen-tts-card--row {
+  background: var(--palm-surface, #fff);
+  border: 1px solid var(--palm-card-border, #b0b7c3);
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+:root[data-theme='dark'] .qwen-tts-card--row {
+  box-shadow: none;
+}
+
+.qwen-tts-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--palm-text-mid, #344054);
+}
+
+:root[data-theme='dark'] .qwen-tts-label {
+  color: var(--palm-text-mid, #9aa5b1);
+}
+
+/* ── 创建整合包弹窗 ── */
+.qwen-tts-create-modal .ant-modal-content {
+  background: var(--palm-surface, #fff);
+  border: 1px solid var(--palm-card-border, #b0b7c3);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.qwen-tts-create-modal .ant-modal-header {
+  background: transparent;
+  border-bottom: 1px solid var(--palm-card-border, #e4e7ec);
+  padding: 12px 20px;
+}
+
+.qwen-tts-create-modal .ant-modal-title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--palm-text-mid, #344054);
+}
+
+:root[data-theme='dark'] .qwen-tts-create-modal .ant-modal-content {
+  background: var(--palm-surface, #1a1d23);
+  border-color: var(--palm-card-border, #2d3139);
+}
+
+:root[data-theme='dark'] .qwen-tts-create-modal .ant-modal-title {
+  color: var(--palm-text-mid, #9aa5b1);
+}
+
+:root[data-theme='dark'] .qwen-tts-create-modal .ant-modal-header {
+  border-bottom-color: var(--palm-card-border, #2d3139);
+}
+
+/* 弹窗内输入框 & 选择框透明背景 */
+.qwen-tts-create-modal .ant-input {
+  background: transparent !important;
+}
+.qwen-tts-create-modal .ant-select-selector {
+  background: transparent !important;
+}
+.qwen-tts-create-modal .ant-input-affix-wrapper {
+  background: transparent !important;
+}
+
+/* ── 克隆模式 Radio 透明背景 & 降低选中亮度 ── */
+.qwen-tts-card .ant-radio-button-wrapper {
+  background: transparent !important;
+  border-color: var(--palm-card-border, #b0b7c3) !important;
+  color: var(--palm-text-mid, #344054) !important;
+}
+
+.qwen-tts-card .ant-radio-button-wrapper-checked {
+  background: var(--palm-bg-sub, #f0f2f5) !important;
+  border-color: var(--palm-primary, #3b82f6) !important;
+  color: var(--palm-primary, #3b82f6) !important;
+}
+
+.qwen-tts-card .ant-radio-button-wrapper:not(.ant-radio-button-wrapper-checked):hover {
+  color: var(--palm-text-mid, #344054) !important;
+}
+
+:root[data-theme='dark'] .qwen-tts-card .ant-radio-button-wrapper {
+  color: var(--palm-text-mid, #9aa5b1) !important;
+}
+
+:root[data-theme='dark'] .qwen-tts-card .ant-radio-button-wrapper-checked {
+  background: rgba(59,130,246,0.12) !important;
+  border-color: var(--palm-primary, #60a5fa) !important;
+  color: var(--palm-primary, #60a5fa) !important;
+}
+
+/* ── 独立可折叠子区块 ── */
+.qwen-tts-block {
+  overflow: hidden;
+}
+
+.qwen-tts-block + .qwen-tts-block {
+  border-top: 1px solid var(--palm-card-border, #b0b7c3);
+}
+
+:root[data-theme='dark'] .qwen-tts-block + .qwen-tts-block {
+  border-top-color: rgba(255,255,255,0.08);
+}
+
+.qwen-tts-block-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 0;
+  cursor: pointer;
+  user-select: none;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--palm-text-mid, #344054);
+  transition: color 0.15s;
+}
+
+.qwen-tts-block-header:hover {
+  color: var(--palm-cyan, #0d6b8a);
+}
+
+:root[data-theme='dark'] .qwen-tts-block-header {
+  color: var(--palm-text-mid, #9aa5b1);
+}
+
+:root[data-theme='dark'] .qwen-tts-block-header:hover {
+  color: var(--palm-cyan, #0d6b8a);
+}
+
+.qwen-tts-block-arrow {
+  font-size: 10px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.qwen-tts-block-body {
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.qwen-tts-block-body::-webkit-scrollbar { width: 4px; }
+.qwen-tts-block-body::-webkit-scrollbar-thumb { background: var(--palm-track, #d0d5dd); border-radius: 2px; }
+
+/* ── 子页面容器 ── */
+.qwen-tts-subpage {
+  min-height: 0;
+}
+
+.qwen-tts-subpage::-webkit-scrollbar { width: 4px; }
+.qwen-tts-subpage::-webkit-scrollbar-thumb { background: var(--palm-track, #d0d5dd); border-radius: 2px; }
+
+.qwen-tts-tag {
+  margin-left: auto;
+  align-self: flex-start;
+  margin-top: 4px;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+  font-size: 10px;
+}
+
+/* ── 主布局 ── */
+.qwen-tts-layout {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 2px;
+}
+
+.qwen-tts-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.qwen-tts-main::-webkit-scrollbar { width: 4px; }
+.qwen-tts-main::-webkit-scrollbar-thumb { background: var(--palm-track, #d0d5dd); border-radius: 2px; }
+
+/* ── 卡片覆盖（与 Dashboard 保持一致） ── */
+.qwen-tts-card {
+  border-radius: 6px !important;
+  background: var(--palm-surface, #fff) !important;
+  border: 1px solid var(--palm-card-border, #b0b7c3) !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04) !important;
+}
+
+:root[data-theme='dark'] .qwen-tts-card {
+  box-shadow: none !important;
+}
+
+.qwen-tts-card .ant-card-head {
+  min-height: 32px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--palm-card-border, #b0b7c3) !important;
+}
+
+.qwen-tts-card .ant-card-head-title {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--palm-text-mid, #344054);
+  padding: 8px 0;
+}
+
+:root[data-theme='dark'] .qwen-tts-card .ant-card-head-title {
+  color: var(--palm-text-mid, #9aa5b1);
+}
+
+.qwen-tts-card .ant-card-body {
+  padding: 10px 12px;
+}
+
+.qwen-tts-card.ant-card-small .ant-card-body {
+  padding: 8px 12px;
+}
+
+/* ── 输入框/选择框背景与项目一致 ── */
+.qwen-tts-card .ant-select-selector {
+  background: var(--palm-surface, #fff) !important;
+  border-color: var(--palm-card-border, #b0b7c3) !important;
+}
+
+.qwen-tts-card .ant-input,
+.qwen-tts-card .ant-input-affix-wrapper,
+.qwen-tts-card .ant-input-number,
+.qwen-tts-card .ant-input-number-input {
+  background: var(--palm-surface, #fff) !important;
+  border-color: var(--palm-card-border, #b0b7c3) !important;
+}
+
+:root[data-theme='dark'] .qwen-tts-card .ant-select-selector,
+:root[data-theme='dark'] .qwen-tts-card .ant-input,
+:root[data-theme='dark'] .qwen-tts-card .ant-input-affix-wrapper,
+:root[data-theme='dark'] .qwen-tts-card .ant-input-number,
+:root[data-theme='dark'] .qwen-tts-card .ant-input-number-input {
+  background: var(--palm-bg-card, #1e293b) !important;
+  border-color: var(--palm-card-border, rgba(255,255,255,0.08)) !important;
+}
+
+/* ── 文本域 ── */
+.qwen-tts-textarea {
+  border-radius: 4px !important;
+  font-size: 12px;
+  line-height: 1.6;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+}
+
+.qwen-tts-textarea:focus {
+  border-color: var(--palm-cyan, #0d6b8a) !important;
+  box-shadow: 0 0 0 2px rgba(13,107,138,0.15) !important;
+}
+
+/* ── 参数行 ── */
+.qwen-tts-param-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.qwen-tts-param-row .ant-slider {
+  min-width: 0;
+}
+
+/* ── 高级参数面板 ── */
+.qwen-tts-advanced {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.qwen-tts-param-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.qwen-tts-param-label {
+  font-size: 11px;
+  font-weight: 500;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+  min-width: 100px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  color: var(--palm-text-mid, #344054);
+}
+
+:root[data-theme='dark'] .qwen-tts-param-label {
+  color: var(--palm-text-mid, #9aa5b1);
+}
+
+/* ── 操作按钮行 ── */
+.qwen-tts-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 2px;
+  flex-wrap: wrap;
+}
+
+.qwen-tts-btn-generate {
+  border-radius: 4px !important;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-size: 13px;
+  height: 36px !important;
+  padding: 0 20px !important;
+}
+
+.qwen-tts-btn-generate:not(:disabled) {
+  background: linear-gradient(135deg, #0d6b8a, #0891b2) !important;
+  border: none !important;
+  box-shadow: 0 2px 6px rgba(13,107,138,0.25) !important;
+}
+
+.qwen-tts-btn-generate:not(:disabled):hover {
+  box-shadow: 0 3px 10px rgba(13,107,138,0.35) !important;
+  transform: translateY(-1px);
+}
+
+/* ── 功能界面滚动区 ── */
+.qwen-tts-page-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.qwen-tts-page-content::-webkit-scrollbar { width: 4px; }
+.qwen-tts-page-content::-webkit-scrollbar-thumb { background: var(--palm-track, #d0d5dd); border-radius: 2px; }
+
+/* ── 配置容器 ── */
+.qwen-tts-config-bar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* ── 路径输入行 ── */
+.qwen-tts-path-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.qwen-tts-path-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--palm-text-mid, #344054);
+  width: 100px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+:root[data-theme='dark'] .qwen-tts-path-label {
+  color: var(--palm-text-mid, #9aa5b1);
+}
+
+.qwen-tts-path-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.qwen-tts-config-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qwen-tts-config-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--palm-text-mid, #344054);
+  white-space: nowrap;
+}
+
+:root[data-theme='dark'] .qwen-tts-config-label {
+  color: var(--palm-text-mid, #9aa5b1);
+}
+
+/* ── 语种选择行 ── */
+.qwen-tts-lang-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.qwen-tts-lang-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── 表单区 ── */
+.qwen-tts-form-section {
+  padding: 8px 0;
+}
+
+.qwen-tts-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ── 参数值显示 ── */
+.qwen-tts-param-value {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--palm-text-low, #475467);
+  width: 48px;
+  min-width: 48px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  text-align: right;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+}
+
+/* ── 确定性开关 ── */
+.gsv-tts-deterministic {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  margin-top: 4px;
+  border-top: 1px solid var(--palm-card-border, #e4e7ec);
+}
+
+.gsv-tts-deterministic-inner {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  font-size: 11px;
+  color: var(--palm-text-mid, #344054);
+  line-height: 1.4;
+}
+
+.gsv-tts-deterministic-inner span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:root[data-theme='dark'] .gsv-tts-deterministic {
+  border-top-color: var(--palm-card-border, #2d3139);
+}
+
+:root[data-theme='dark'] .gsv-tts-deterministic-inner {
+  color: var(--palm-text-mid, #9aa5b1);
+}
+
+/* ── 音频播放器 ── */
+.qwen-tts-player-card {
+  margin-top: 2px;
+}
+
+.qwen-tts-player {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.qwen-tts-play-btn {
+  font-size: 26px !important;
+  color: var(--palm-cyan, #0d6b8a) !important;
+  flex-shrink: 0;
+}
+
+.qwen-tts-play-btn:hover {
+  color: #0891b2 !important;
+}
+
+.qwen-tts-player-wave {
+  flex: 1;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.qwen-tts-wave-bar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+  height: 100%;
+}
+
+.qwen-tts-wave-bar span {
+  flex: 1;
+  height: 4px;
+  background: linear-gradient(to top, #0d6b8a, #0891b2);
+  border-radius: 1px;
+  animation: qwen-wave 0.8s ease-in-out infinite alternate;
+  animation-play-state: paused;
+  opacity: 0.5;
+}
+
+.qwen-tts-wave-bar span:nth-child(odd) { animation-duration: 0.6s; }
+.qwen-tts-wave-bar span:nth-child(3n+1) { animation-duration: 1.0s; }
+.qwen-tts-wave-bar span:nth-child(5n+2) { animation-duration: 0.7s; }
+
+@keyframes qwen-wave {
+  0% { height: 3px; opacity: 0.3; }
+  100% { height: 30px; opacity: 0.9; }
+}
+
+.qwen-tts-download-btn {
+  flex-shrink: 0;
+  font-size: 12px !important;
+  color: var(--palm-text-low, #475467) !important;
+}
+
+/* ── 响应式 ── */
+@media (max-width: 600px) {
+  .qwen-tts-param-label {
+    min-width: 72px;
+  }
+  .qwen-tts-param-value {
+    width: 40px;
+    min-width: 40px;
+  }
+}

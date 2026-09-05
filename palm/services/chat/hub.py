@@ -19,13 +19,16 @@ import hashlib
 # 模型目录：本砖包内 models/weights/（真实权重可放置于此，缺省走 mock）
 MODEL_DIR = os.path.join(os.path.dirname(__file__), "models", "weights")
 _OFFLINE_DIM = 4096  # 离线哈希向量维度
+# 语义嵌入统一用 bge-m3（1024 维，与向量记忆同源，避免双份大权重）
+_BGE_M3_DIR = os.path.normpath(os.path.join(
+    os.path.dirname(__file__), "..", "..", "domain", "memory", "weights"))
 
 
 # --------------------------------------------------------------------------
-# 1) 语义嵌入：bge-small-zh（真实） / 字 n-gram 哈希 TF-IDF（离线占位）
+# 1) 语义嵌入：bge-m3（真实，1024 维，本地 ONNX） / 字 n-gram 哈希 TF-IDF（离线占位）
 # --------------------------------------------------------------------------
 class Embedder:
-    """把文本编码为向量；真实路径用 bge-small ONNX，离线路径用哈希 TF-IDF。"""
+    """把文本编码为向量；真实路径用 bge-m3 ONNX，离线路径用哈希 TF-IDF。"""
 
     def __init__(self, model_dir=MODEL_DIR):
         self.model_dir = model_dir
@@ -37,13 +40,14 @@ class Embedder:
         self._load_real()
 
     def _load_real(self):
-        onnx = os.path.join(self.model_dir, "bge_small.onnx")
-        tok = os.path.join(self.model_dir, "tokenizer.json")
+        # 统一 bge-m3（1024 维）：权重在 domain/memory/weights（与向量记忆同源）
+        onnx = os.path.join(_BGE_M3_DIR, "bge_m3.onnx")
+        tok = os.path.join(_BGE_M3_DIR, "tokenizer.json")
         if os.path.exists(onnx) and os.path.exists(tok):
             try:
                 import onnxruntime as ort  # 惰性导入，离线环境无需安装
                 self._real = ort.InferenceSession(onnx)
-                self._dim = 512
+                self._dim = 1024
                 self.kind = "real"
             except Exception:
                 self._real = None
@@ -90,17 +94,18 @@ class Embedder:
         return out
 
     def _encode_real(self, texts):
-        # 真实 bge-small-zh：models/weights/ 需有 bge_small.onnx + tokenizer.json。
-        # 取 [CLS] 池化 + L2 归一化（bge 标准做法），输出 512 维稠密向量。
+        # 真实 bge-m3：权重在 domain/memory/weights（与向量记忆同源）。
+        # 取 [CLS] 池化 + L2 归一化（bge 标准做法），输出 1024 维稠密向量。
         import numpy as np
         if self._tok is None:
             from tokenizers import Tokenizer
-            self._tok = Tokenizer.from_file(os.path.join(self.model_dir, "tokenizer.json"))
+            self._tok = Tokenizer.from_file(
+                os.path.join(_BGE_M3_DIR, "tokenizer.json"))
         encs = self._tok.encode_batch(texts, add_special_tokens=True)
-        maxlen = min(max((len(e.ids) for e in encs), default=1), 512)
+        maxlen = min(max((len(e.ids) for e in encs), default=1), 8192)
         ids, masks = [], []
         for e in encs:
-            seq = e.ids[:512]
+            seq = e.ids[:8192]
             ids.append(seq + [0] * (maxlen - len(seq)))
             masks.append([1] * len(seq) + [0] * (maxlen - len(seq)))
         inputs = {

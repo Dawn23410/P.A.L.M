@@ -9,7 +9,7 @@
 """
 from __future__ import annotations
 
-from palm_sdk.bricks._shared.eventbus import STORAGE_ARCHIVE, STORAGE_CLEANUP, emit
+from palm._core.eventbus import STORAGE_ARCHIVE, STORAGE_CLEANUP, emit
 from ..controller.audit import record_event
 from ..pool import _remove_disk, category_dir, category_used, cleanup_category
 from ..redundancy import vault as _vault
