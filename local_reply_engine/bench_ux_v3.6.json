@@ -1,0 +1,138 @@
+{
+  "mode": "semantic",
+  "records": 2610,
+  "cluster_before": {
+    "陪我": 2,
+    "睡不着": 2,
+    "抱抱我": 1,
+    "说说话吧": 1,
+    "心里堵得慌": 2,
+    "随便聊点什么": 1,
+    "在干嘛": 1,
+    "想你了": 3
+  },
+  "cluster_after": {
+    "陪我": 5,
+    "睡不着": 4,
+    "抱抱我": 4,
+    "说说话吧": 4,
+    "心里堵得慌": 4,
+    "随便聊点什么": 4,
+    "在干嘛": 4,
+    "想你了": 6
+  },
+  "sectionA_repeat_diversity": {
+    "陪我": {
+      "pool_ceiling_after": 5,
+      "pool_ceiling_before": 2,
+      "distinct_base": 5,
+      "repeat": 12,
+      "pool_utilization": 1.0,
+      "max_consec_repeat": 1,
+      "pool_mean": 3.5,
+      "randomization_engaged_rate": 58.3,
+      "lat_median_ms": 14.9,
+      "lat_p95_ms": 16.1
+    },
+    "睡不着": {
+      "pool_ceiling_after": 4,
+      "pool_ceiling_before": 2,
+      "distinct_base": 4,
+      "repeat": 12,
+      "pool_utilization": 1.0,
+      "max_consec_repeat": 2,
+      "pool_mean": 3.25,
+      "randomization_engaged_rate": 66.7,
+      "lat_median_ms": 15.4,
+      "lat_p95_ms": 15.8
+    },
+    "抱抱我": {
+      "pool_ceiling_after": 4,
+      "pool_ceiling_before": 1,
+      "distinct_base": 6,
+      "repeat": 12,
+      "pool_utilization": 1.5,
+      "max_consec_repeat": 2,
+      "pool_mean": 3.5,
+      "randomization_engaged_rate": 83.3,
+      "lat_median_ms": 15.5,
+      "lat_p95_ms": 17.0
+    },
+    "说说话吧": {
+      "pool_ceiling_after": 4,
+      "pool_ceiling_before": 1,
+      "distinct_base": 4,
+      "repeat": 12,
+      "pool_utilization": 1.0,
+      "max_consec_repeat": 2,
+      "pool_mean": 3.25,
+      "randomization_engaged_rate": 66.7,
+      "lat_median_ms": 15.0,
+      "lat_p95_ms": 16.1
+    },
+    "心里堵得慌": {
+      "pool_ceiling_after": 4,
+      "pool_ceiling_before": 2,
+      "distinct_base": 4,
+      "repeat": 12,
+      "pool_utilization": 1.0,
+      "max_consec_repeat": 2,
+      "pool_mean": 3.25,
+      "randomization_engaged_rate": 75.0,
+      "lat_median_ms": 15.5,
+      "lat_p95_ms": 17.0
+    },
+    "随便聊点什么": {
+      "pool_ceiling_after": 4,
+      "pool_ceiling_before": 1,
+      "distinct_base": 4,
+      "repeat": 12,
+      "pool_utilization": 1.0,
+      "max_consec_repeat": 2,
+      "pool_mean": 3.25,
+      "randomization_engaged_rate": 66.7,
+      "lat_median_ms": 16.0,
+      "lat_p95_ms": 16.3
+    },
+    "在干嘛": {
+      "pool_ceiling_after": 4,
+      "pool_ceiling_before": 1,
+      "distinct_base": 5,
+      "repeat": 12,
+      "pool_utilization": 1.25,
+      "max_consec_repeat": 3,
+      "pool_mean": 3.83,
+      "randomization_engaged_rate": 75.0,
+      "lat_median_ms": 16.3,
+      "lat_p95_ms": 20.7
+    },
+    "想你了": {
+      "pool_ceiling_after": 6,
+      "pool_ceiling_before": 3,
+      "distinct_base": 6,
+      "repeat": 12,
+      "pool_utilization": 1.0,
+      "max_consec_repeat": 2,
+      "pool_mean": 3.92,
+      "randomization_engaged_rate": 58.3,
+      "lat_median_ms": 15.3,
+      "lat_p95_ms": 16.4
+    }
+  },
+  "sectionB_mixed": {
+    "turns": 16,
+    "recall_real_rate": 1.0,
+    "in_character_rate": 0.812,
+    "immediate_repeat_within2": 0,
+    "conf_median": 0.984,
+    "lat_median_ms": 15.7,
+    "lat_p95_ms": 133.8
+  },
+  "sectionC_latency_all_ms": {
+    "median": 15.4,
+    "mean": 36.0,
+    "p95": 74.0,
+    "max": 1438.4,
+    "over_400ms_rate": 0.009
+  }
+}

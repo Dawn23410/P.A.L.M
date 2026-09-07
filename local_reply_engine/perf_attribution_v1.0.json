@@ -1,0 +1,42 @@
+{
+  "ablation": [
+    {
+      "label": "full",
+      "n": 27,
+      "median": 34.4,
+      "p90": 212.7,
+      "max": 278.5,
+      "rerank_calls": 0
+    },
+    {
+      "label": "no_reranker",
+      "n": 27,
+      "median": 33.9,
+      "p90": 201.7,
+      "max": 277.2,
+      "rerank_calls": 0
+    },
+    {
+      "label": "no_coherence",
+      "n": 27,
+      "median": 15.9,
+      "p90": 23.6,
+      "max": 33.4,
+      "rerank_calls": 0
+    },
+    {
+      "label": "neither",
+      "n": 27,
+      "median": 15.9,
+      "p90": 18.4,
+      "max": 31.9,
+      "rerank_calls": 0
+    }
+  ],
+  "components": {
+    "embed_first_ms": 16.3,
+    "embed_steady_ms": 14.8,
+    "retrieve_embed_plus_dot_ms": 15.6,
+    "rerank_one_pair_ms": 63.9
+  }
+}

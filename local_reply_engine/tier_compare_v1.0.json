@@ -1,0 +1,65 @@
+[
+  {
+    "tier": "full",
+    "base_mb": 25.0,
+    "boot_s": 3.82,
+    "boot_mb": 1872.1,
+    "single_ms": {
+      "median": 17.1,
+      "p90": 169.1
+    },
+    "multi_mb": 2717.1,
+    "multi_ms": {
+      "median": 181.7,
+      "max": 233.9
+    },
+    "peak_mb": 2717.1,
+    "threads": 65,
+    "t4_n": 56,
+    "T2_hit": "30/30",
+    "T3_hit": "55/56",
+    "T4_hit": "52/56"
+  },
+  {
+    "tier": "balanced",
+    "base_mb": 25.3,
+    "boot_s": 0.21,
+    "boot_mb": 113.0,
+    "single_ms": {
+      "median": 2.2,
+      "p90": 32.8
+    },
+    "multi_mb": 160.3,
+    "multi_ms": {
+      "median": 53.8,
+      "max": 73.8
+    },
+    "peak_mb": 160.3,
+    "threads": 58,
+    "t4_n": 56,
+    "T2_hit": "28/30",
+    "T3_hit": "52/56",
+    "T4_hit": "34/56"
+  },
+  {
+    "tier": "lite",
+    "base_mb": 25.1,
+    "boot_s": 0.03,
+    "boot_mb": 31.8,
+    "single_ms": {
+      "median": 17.9,
+      "p90": 19.1
+    },
+    "multi_mb": 32.5,
+    "multi_ms": {
+      "median": 33.9,
+      "max": 60.1
+    },
+    "peak_mb": 32.5,
+    "threads": 4,
+    "t4_n": 56,
+    "T2_hit": "22/30",
+    "T3_hit": "50/56",
+    "T4_hit": "16/56"
+  }
+]

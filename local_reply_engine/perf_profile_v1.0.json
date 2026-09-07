@@ -1,0 +1,25 @@
+{
+  "python_base_rss_mb": 18.8,
+  "import_s": 0.072,
+  "after_import_rss_mb": 24.4,
+  "boot_total_s": 3.619,
+  "after_boot_rss_mb": 1871.5,
+  "first_respond_s": 1.473,
+  "after_warm_rss_mb": 2699.5,
+  "steady_latency_ms": {
+    "n": 60,
+    "min": 14.1,
+    "median": 30.1,
+    "p90": 206.4,
+    "p99": 273.6,
+    "max": 273.6
+  },
+  "steady_cpu_ms": {
+    "median": 453.1,
+    "p99": 4203.1
+  },
+  "peak_rss_mb": 2724.6,
+  "threads": 65,
+  "system_total_mem_gb": 15.7,
+  "engine_share_of_ram_pct": 16.9
+}

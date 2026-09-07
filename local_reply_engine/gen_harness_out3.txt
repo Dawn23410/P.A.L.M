@@ -1,0 +1,26 @@
+=== 换语料泛化压测 ===
+语料目录: C:\Users\Dawn\Desktop\local_reply_engine\corpus_ordinary_20k
+
+--- mock / lite 档 ---
+  [外来20k] tier=lite mode=mock records=20000 load=0.3s rss=87.8MB | lat mean=5.7 median=3.2 p95=7.3 max=1119.0ms | recalls=479/500 fallbacks=21
+  [内置小语料] tier=lite mode=mock records=2837 load=0.0s rss=39.1MB | lat mean=0.2 median=0.1 p95=0.3 max=4.5ms | recalls=499/500 fallbacks=1
+  >> lite 中位延迟放大倍数 ≈ 32.0x（绝对 3.2ms，仍 <200ms 属可接受）
+
+--- semantic / full 档（外来 20k，首次构载含 embed，较慢）---
+  [外来20k] tier=full mode=semantic records=20000 load=4.4s rss=2608.2MB | lat mean=21.8 median=19.2 p95=25.2 max=903.2ms | recalls=500/500 fallbacks=0
+  [内置小语料] tier=full mode=semantic records=2837 load=0.1s rss=2698.5MB | lat mean=16.1 median=15.7 p95=17.9 max=62.2ms | recalls=500/500 fallbacks=0
+  >> full 中位延迟放大倍数 ≈ 1.2x（语义档为矩阵点积，几乎不随 N 增长）
+
+=== 边界用例 ===
+  极小语料(lite): records=2 respond('你好')='你好呀，我是通用助手。' recall=True
+  极小语料(full): records=2 respond('你好')='你好呀，我是通用助手。' recall=True
+  缺字段记录(lite): 加载后 records=3 (应为 3：tiny2 + partial1 正常) -> OK
+  异常输入('asdf qwer zxcv 123'...): reply='喵？这个我真没聊过。连上云端 LLM' recall=False suggest_llm=True
+  异常输入('xxxxxxxxxxxxxxxxxx'...): reply='（猫耳抖了抖）同样的句子说这么多遍，' recall=True suggest_llm=False
+  异常输入(''...): reply='我装懂的话你就输了喵～这种还是让 L' recall=False suggest_llm=True
+  异常输入('   '...): reply='我装懂的话你就输了喵～这种还是让 L' recall=False suggest_llm=True
+  异常输入('今天天气真好但我想问点别的关于宇宙有'...): reply='（说到这个）关于天气会有点累很自然，' recall=True suggest_llm=False
+
+=== 结论 ===
+若上面所有 bench 均输出且 edge_cases 无 ❌，则换语料不崩溃；
+延迟放大约为线性（mock）/ 近常数（semantic），绝对延迟均 <200ms，无大幅度衰退。
