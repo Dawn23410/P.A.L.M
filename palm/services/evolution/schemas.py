@@ -1,54 +1,9 @@
-"""自注册工具清单（manifest）数据结构与常量。"""
-from __future__ import annotations
+"""薄桥接层：实现已迁至独立项目「受控进化」（`palm_evolution_ctl`）。
 
-import hashlib
-import time
-import uuid
+原模块路径与导出**完整保留**（含下划线私有符号），调用面不变。
+"""
+import palm_boot  # noqa: F401,E402  自举：挂载独立项目
 
-STATUS_PENDING = "pending"
-STATUS_BLOCKED = "blocked"
-STATUS_APPROVED = "approved"
+import palm_evolution_ctl.schemas as _impl  # noqa: E402
 
-
-def new_tool_id() -> str:
-    return "tool_" + time.strftime("%Y%m%d") + "_" + uuid.uuid4().hex[:8]
-
-
-def hash_source(source: str) -> str:
-    return hashlib.sha256(source.encode("utf-8")).hexdigest()
-
-
-def build_manifest(
-    *,
-    tool_id: str,
-    name: str,
-    description: str,
-    scope: str,
-    params_schema: dict,
-    entry_source: str,
-    imports_allowlist: list[str],
-    requires_permission: str,
-    requires_network: bool,
-    risk_level: str,
-    status: str,
-    approved: bool,
-    enabled: bool,
-) -> dict:
-    """构造工具清单字典（纯数据，便于落盘与校验）。"""
-    return {
-        "id": tool_id,
-        "name": name,
-        "description": description,
-        "scope": scope,
-        "entry": "tool.py:entry",
-        "params_schema": params_schema,
-        "imports_allowlist": imports_allowlist,
-        "requires_permission": requires_permission,
-        "requires_network": bool(requires_network),
-        "risk_level": risk_level,
-        "status": status,
-        "approved": bool(approved),
-        "enabled": bool(enabled),
-        "source_hash": hash_source(entry_source),
-        "created_at": time.strftime("%Y-%m-%dT%H:%M:%S+08:00"),
-    }
+globals().update({k: v for k, v in vars(_impl).items() if not k.startswith("__")})

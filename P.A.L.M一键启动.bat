@@ -19,12 +19,12 @@ cd /d "%ROOT%"
 set "ENGINE=%ROOT%engine"
 set "FRONTEND=%ROOT%ui\migrated-frontend"
 set "PACKAGES=%ROOT%tool\_legacy_tools\codebuddy\runtime"
-set "VOICE=%ROOT%speech\gpt-sovits"
-set "COSY=%ROOT%speech\cosyvoice"
-set "VOSK=%ROOT%speech\vosk"
+REM [removed] set "VOICE=%ROOT%speech\gpt-sovits"
+REM [removed] set "COSY=%ROOT%speech\cosyvoice"
+set "VOSK=%ROOT%..\P.A.L.M\����ʶ��"
 set "VOSK_LOG=%TEMP%\palm_vosk.log"
-set "MENTALCORE=%ROOT%mentalcore"
-set "MENTALCORE_LOG=%TEMP%\palm_mentalcore.log"
+REM [removed] set "MENTALCORE=%ROOT%..\P.A.L.M\���Ǻ���"
+REM [removed] set "MENTALCORE_LOG=%TEMP%\palm_mentalcore.log"
 set "WEAVE_LOG=%TEMP%\palm_weave.log"
 
 if not defined TEMP set "TEMP=%USERPROFILE%\AppData\Local\Temp"
@@ -33,8 +33,8 @@ set "LAUNCH_LOG=%TEMP%\palm_launch.log"
 set "BACKEND_LOG=%TEMP%\palm_backend.log"
 set "FRONTEND_LOG=%TEMP%\palm_frontend.log"
 set "PACKAGES_LOG=%TEMP%\palm_packages.log"
-set "VOICE_LOG=%TEMP%\palm_voice.log"
-set "COSY_LOG=%TEMP%\palm_cosy.log"
+REM [removed] set "VOICE_LOG=%TEMP%\palm_voice.log"
+REM [removed] set "COSY_LOG=%TEMP%\palm_cosy.log"
 set "STATUS_LOG=%TEMP%\palm_status.log"
 echo ===== P.A.L.M launch log %DATE% %TIME% ===== > "%LAUNCH_LOG%"
 
@@ -100,7 +100,7 @@ echo  ============================================================
 echo              P.A.L.M  One-Click Launcher
 echo  ============================================================
 echo.
-echo   [1] One-click  =  backend + frontend（dev） + voice + cosy + auto browser
+REM [removed] echo   [1] One-click  =  backend + frontend（dev） + voice + cosy + auto browser
 echo   [2] Backend only   （web.py, port 8080）
 echo   [3] Frontend only  （vite dev, port 43210）
 echo   [4] Stop backend
@@ -125,7 +125,7 @@ REM ---------- one-click (dev mode) ----------
 cls
 call :log "===== all: start one-click launch (dev) ====="
 echo  ============================================================
-echo     One-click: backend + frontend（dev） + voice + cosy + auto browser
+REM [removed] echo     One-click: backend + frontend（dev） + voice + cosy + auto browser
 echo  ============================================================
 echo.
 echo  [hint] Double-click = one-click （no input）. For menu, run with /menu
@@ -134,10 +134,10 @@ echo         For instant open use menu [5] Prod preview.
 echo  [logs] backend : %BACKEND_LOG%
 echo         frontend: %FRONTEND_LOG%
 echo         packages: %PACKAGES_LOG%
-echo         voice    : %VOICE_LOG%
-echo         cosy     : %COSY_LOG%
+REM [removed] echo         voice    : %VOICE_LOG%
+REM [removed] echo         cosy     : %COSY_LOG%
 echo         vosk     : %VOSK_LOG%
-echo         mentalcore: %MENTALCORE_LOG%
+REM [removed] echo         mentalcore: %MENTALCORE_LOG%
 echo         weave    : %WEAVE_LOG%
 echo         status   : %STATUS_LOG%
 echo.
@@ -146,21 +146,21 @@ echo.
 call :launch_hidden "%ENGINE%\run_backend.bat" "%BACKEND_LOG%"
 call :launch_hidden "%FRONTEND%\run_frontend.bat" "%FRONTEND_LOG%"
 call :launch_hidden "%PACKAGES%\run_packages.bat" "%PACKAGES_LOG%"
-call :launch_hidden "%COSY%\run_cosy_api.bat" "%COSY_LOG%"
+REM [removed] call :launch_hidden "%COSY%\run_cosy_api.bat" "%COSY_LOG%"
 REM Voice (9880) is heavy (GPU model load). Launch it async and never
 REM wait for it - it comes up in its own hidden process after the others.
-call :launch_hidden "%VOICE%\run_voice.bat" "%VOICE_LOG%"
+REM [removed] call :launch_hidden "%VOICE%\run_voice.bat" "%VOICE_LOG%"
 call :launch_hidden "%VOSK%\run_server.bat" "%VOSK_LOG%"
-call :launch_hidden "%MENTALCORE%\run_bridge.bat" "%MENTALCORE_LOG%"
+REM [removed] call :launch_hidden "%MENTALCORE%\run_bridge.bat" "%MENTALCORE_LOG%"
 REM 织语层独立服务（默认本地 Mock，端口 7799）——从心智魔方核心拆出，可选运行。
-call :launch_hidden "%MENTALCORE%\run_weave.bat" "%WEAVE_LOG%"
+REM [removed] call :launch_hidden "%MENTALCORE%\run_weave.bat" "%WEAVE_LOG%"
 REM Open the browser ONLY after the frontend port is actually listening.
 call :open_browser
 REM Wait a few seconds, then probe which ports are actually listening.
 powershell -NoProfile -WindowStyle Hidden -Command "Start-Sleep -Seconds 4; Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue | Where-Object {$_.LocalPort -in 8080,43210,5000,9880,7861,2700,7788,7799} | Select-Object -ExpandProperty LocalPort | Sort-Object -Unique | Out-File '%STATUS_LOG%' -Encoding utf8"
-echo  Launched backend + frontend + packages + cosy + voice as HIDDEN background
+REM [removed] echo  Launched backend + frontend + packages + cosy + voice as HIDDEN background
 echo  services （no cmd windows）. Browser opens once the frontend is ready.
-echo  Voice （9880） loads models on GPU and may take 30-90s; that is normal.
+REM [removed] echo  Voice （9880） loads models on GPU and may take 30-90s; that is normal.
 echo  You may close this window; the services keep running in background.
 echo.
 echo  [Waiting ~6s for services to bind, then showing listening ports...]
@@ -177,7 +177,7 @@ REM ---------- one-click (prod preview mode: instant open) ----------
 cls
 call :log "===== prod: build+preview launch ====="
 echo  ============================================================
-echo     Prod preview: backend + frontend（preview） + voice + cosy
+REM [removed] echo     Prod preview: backend + frontend（preview） + voice + cosy
 echo  ============================================================
 echo.
 echo  [mode] PROD PREVIEW - frontend is built once then served statically,
@@ -187,10 +187,10 @@ echo          run_frontend_preview.bat /rebuild）。
 echo  [logs] backend : %BACKEND_LOG%
 echo         frontend: %FRONTEND_LOG%
 echo         packages: %PACKAGES_LOG%
-echo         voice    : %VOICE_LOG%
-echo         cosy     : %COSY_LOG%
+REM [removed] echo         voice    : %VOICE_LOG%
+REM [removed] echo         cosy     : %COSY_LOG%
 echo         vosk     : %VOSK_LOG%
-echo         mentalcore: %MENTALCORE_LOG%
+REM [removed] echo         mentalcore: %MENTALCORE_LOG%
 echo         weave    : %WEAVE_LOG%
 echo         status   : %STATUS_LOG%
 echo.
@@ -199,11 +199,11 @@ echo.
 call :launch_hidden "%ENGINE%\run_backend.bat" "%BACKEND_LOG%"
 call :launch_hidden "%FRONTEND%\run_frontend_preview.bat" "%FRONTEND_LOG%"
 call :launch_hidden "%PACKAGES%\run_packages.bat" "%PACKAGES_LOG%"
-call :launch_hidden "%COSY%\run_cosy_api.bat" "%COSY_LOG%"
-call :launch_hidden "%VOICE%\run_voice.bat" "%VOICE_LOG%"
+REM [removed] call :launch_hidden "%COSY%\run_cosy_api.bat" "%COSY_LOG%"
+REM [removed] call :launch_hidden "%VOICE%\run_voice.bat" "%VOICE_LOG%"
 call :launch_hidden "%VOSK%\run_server.bat" "%VOSK_LOG%"
-call :launch_hidden "%MENTALCORE%\run_bridge.bat" "%MENTALCORE_LOG%"
-call :launch_hidden "%MENTALCORE%\run_weave.bat" "%WEAVE_LOG%"
+REM [removed] call :launch_hidden "%MENTALCORE%\run_bridge.bat" "%MENTALCORE_LOG%"
+REM [removed] call :launch_hidden "%MENTALCORE%\run_weave.bat" "%WEAVE_LOG%"
 call :open_browser
 powershell -NoProfile -WindowStyle Hidden -Command "Start-Sleep -Seconds 4; Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue | Where-Object {$_.LocalPort -in 8080,43210,5000,9880,7861,2700,7788,7799} | Select-Object -ExpandProperty LocalPort | Sort-Object -Unique | Out-File '%STATUS_LOG%' -Encoding utf8"
 echo  Launched in PROD PREVIEW mode （frontend opens instantly once ready）.

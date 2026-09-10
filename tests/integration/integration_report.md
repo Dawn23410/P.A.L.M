@@ -5,7 +5,7 @@
 
 ## [key_discovery] PASS
 
-- **checks**: `[{'item': 'llm_key_file', 'status': 'PASS', 'path': 'C:\\Users\\Dawn\\Desktop\\可用API.json'}, {'item': 'llm_key_valid', 'status': 'PASS', 'provider': 'nonelinear', 'fmt': 'openai', 'base_url': 'https://api.nonelinear.com/v1', 'default_model': 'GLM-4.5-Flash-nothink', 'redacted_key': 'sk-5d9…1275', 'recommended_models': ['GLM-4.5-Flash-nothink', 'GLM-4-9B-0414:free', 'GLM-4-Flash']}, {'item': 'gsv_config', 'status': 'PASS', 'url': 'http://127.0.0.1:9880', 'port': '9880', 'refer_wav': 'ref_audio.wav'}]`
+- **checks**: `[{'item': 'llm_key_file', 'status': 'PASS', 'path': 'C:\\Users\\Dawn\\Desktop\\可用API.json'}, {'item': 'llm_key_valid', 'status': 'PASS', 'provider': 'nonelinear', 'fmt': 'openai', 'base_url': 'https://api.nonelinear.com/v1', 'default_model': 'GLM-4.5-Flash-nothink', 'redacted_key': 'sk-5d9…1275', 'recommended_models': ['GLM-4.5-Flash-nothink', 'GLM-4-9B-0414:free', 'GLM-4-Flash']}, {'item': 'gsv_config', 'status': 'PASS', 'url': 'http://127.0.0.1:10080', 'port': '10080', 'refer_wav': 'ref_audio.wav'}]`
 
 ## [tts_stt_crosscheck] PASS
 

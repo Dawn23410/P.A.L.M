@@ -1,11 +1,9 @@
-"""GUI 自动化执行器包：由多个 mixin 组合而成，对外保持原 executor 模块的公共 API。
+"""薄桥接层：实现已迁至独立项目「GUI自动化」（`palm_gui`）。
 
-历史遗留单文件 executor.py(790 行) 已按职责拆分为：
-  constants / state_mixin / locator_mixin / click_mixin / verify_mixin / vlc_mixin / prefetch_mixin
-  core(AutomationExecutor 组合) / tool(RunAutomationTool) 。
-外部仍通过 `from .executor import AutomationExecutor / RunAutomationTool` 使用，行为不变。
+原模块路径与导出**完整保留**（含下划线私有符号），调用面不变。
 """
-from .core import AutomationExecutor, _EXECUTOR
-from .tool import RunAutomationTool
+import palm_boot  # noqa: F401,E402  自举：挂载独立项目
 
-__all__ = ["AutomationExecutor", "_EXECUTOR", "RunAutomationTool"]
+import palm_gui.adapters_gui.executor as _impl  # noqa: E402
+
+globals().update({k: v for k, v in vars(_impl).items() if not k.startswith("__")})

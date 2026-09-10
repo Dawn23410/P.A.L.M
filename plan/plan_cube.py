@@ -1,41 +1,9 @@
-"""计划魔方（微内核之一）：把目标拆成 ReAct 步骤并跟踪进度。
+"""薄桥接层：实现已迁至独立项目「计划引擎」（`palm_plan`）。
 
-worker 不强行照搬大型 Planner；这里做轻量分解——默认三段式步骤，
-并允许从专业记忆召回相似经验来丰富计划。进度仅供通信魔方审计展示。
+原模块路径与导出**完整保留**（含下划线私有符号），调用面不变。
 """
-from dataclasses import dataclass, field
+import palm_boot  # noqa: F401,E402  自举：挂载独立项目
 
+import palm_plan.plan_cube as _impl  # noqa: E402
 
-@dataclass
-class PlanStep:
-    """计划步骤。"""
-    text: str
-    done: bool = False
-
-
-class PlanCube:
-    """计划魔方：分解目标 + 跟踪执行进度。"""
-
-    def __init__(self):
-        self.steps: list[PlanStep] = []
-
-    def build_plan(self, goal: str, memory_hint: str = "") -> list[str]:
-        """生成步骤清单（默认三段式；memory_hint 非空时作为首条经验注入）。"""
-        plan = []
-        if memory_hint:
-            plan.append(f"参考既往经验：{memory_hint}")
-        plan += ["明确目标与验收标准", "选择工具并执行", "核对结果并汇总结论"]
-        self.steps = [PlanStep(text=t) for t in plan]
-        return plan
-
-    def mark_done(self, index: int) -> None:
-        if 0 <= index < len(self.steps):
-            self.steps[index].done = True
-
-    def progress(self) -> str:
-        total = len(self.steps) or 1
-        done = sum(s.done for s in self.steps)
-        lines = [f"进度 {done}/{total}"] + [
-            f"  [{'x' if s.done else ' '}] {s.text}" for s in self.steps
-        ]
-        return "\n".join(lines)
+globals().update({k: v for k, v in vars(_impl).items() if not k.startswith("__")})

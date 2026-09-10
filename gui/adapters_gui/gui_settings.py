@@ -1,25 +1,9 @@
-"""GUI 工具组共享设置读取：中立模块，供 executor 与 automation 砖共用。
+"""薄桥接层：实现已迁至独立项目「GUI自动化」（`palm_gui`）。
 
-通过 registry 拿 settings 砖的 load_app_settings capability 读取用户设置，避免与各砖
-形成模块级循环依赖（capability 解耦，运行时查找而非 import 时绑定）。
+原模块路径与导出**完整保留**（含下划线私有符号），调用面不变。
 """
-from __future__ import annotations
+import palm_boot  # noqa: F401,E402  自举：挂载独立项目
 
-import logging
+import palm_gui.adapters_gui.gui_settings as _impl  # noqa: E402
 
-from palm._core.container import registry
-
-_LOGGER = logging.getLogger(__name__)
-_SETTING_KEY = "gui_llm_enhance"
-
-
-def is_llm_enhance_enabled() -> bool:
-    """读取用户设置：是否允许 GUI LLM 增强（文本/视觉兜底）。默认关闭=纯逻辑模式。"""
-    try:
-        settings_brick = container.get("settings")
-        loader = (getattr(settings_brick, "capabilities", {}) or {}).get("load_app_settings")
-        if callable(loader):
-            return bool((loader() or {}).get(_SETTING_KEY, False))
-    except Exception as exc:
-        _LOGGER.warning("读取 gui_llm_enhance 失败，按关闭处理: %s", exc)
-    return False
+globals().update({k: v for k, v in vars(_impl).items() if not k.startswith("__")})

@@ -248,3 +248,12 @@ mentalcore/run50_resource.csv
 /gsv_model_bench.py
 /gsv_model_bench.json
 /gsv_llm_bench_report.md
+
+# ---------- 梦瑶本地对话引擎 local_reply_engine（2026-09-07 迁入）----------
+# 模型权重 ~583MB（bge_m3.onnx / bge_small.onnx 等），部署时下载，非源码，绝不入库
+local_reply_engine/local_reply/engine/models/weights/
+# 运行期语义索引缓存（stitching_vectors_*.npy，生成物，非源码）
+local_reply_engine/local_reply/engine/data/
+# 独立包内一次性临时探针/跑分脚本与产物（已归并至发布文档，运行期自动生成不入库）
+local_reply_engine/_bench_lite_tmp.py
+local_reply_engine/_bench_lite_result.txt

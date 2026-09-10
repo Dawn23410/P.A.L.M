@@ -1,5 +1,9 @@
-"""GUI 世界模型·动态认知 Atlas 子包。"""
-from .integration import derive_and_merge
-from .registry import SoftwareRegistry
+"""薄桥接层：实现已迁至独立项目「GUI自动化」（`palm_gui`）。
 
-__all__ = ["derive_and_merge", "SoftwareRegistry"]
+原模块路径与导出**完整保留**（含下划线私有符号），调用面不变。
+"""
+import palm_boot  # noqa: F401,E402  自举：挂载独立项目
+
+import palm_gui.adapters_gui.world_model_cache as _impl  # noqa: E402
+
+globals().update({k: v for k, v in vars(_impl).items() if not k.startswith("__")})

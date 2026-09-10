@@ -1,3 +1,7 @@
+# 自包含微内核：palm-llm/ palm-memory/ palm-crypto/ palm-budget/ palm-ollama/
+# 五个内嵌独立项目由根目录 palm_boot.py 挂进 sys.path，不需要 pip install。
+# 它们是源码目录（目录名带连字符，非 Python 包），故不在下方 packages 白名单内。
+# 详见 docs/自包含微内核_内嵌项目说明_v1.0.md
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
@@ -14,7 +18,7 @@ dependencies = ["pydantic>=2.10"]
 
 [tool.setuptools]
 # ONLY the kernel microkernel packages are installed as importable by name.
-# Other domains (engine/, ui/, speech/, tools/, knowledge/, docs/, tests/,
+# Other domains (engine/, ui/, tools/, knowledge/, docs/, tests/,
 # devlogs/, archive/) are standalone apps launched from their own folders and
 # must NOT be crawled by setuptools (archive/ alone is 473k files).
 packages = {find = {include = [
@@ -26,7 +30,6 @@ packages = {find = {include = [
     "llm", "llm.*", "llm.*.*",
     "sandbox", "sandbox.*", "sandbox.*.*",
     "security", "security.*", "security.*.*",
-    "speech", "speech.*", "speech.*.*",
     "mentalcore", "mentalcore.*", "mentalcore.*.*", "mentalcore.*.*.*",
     "mentalcore_data", "mentalcore_data.*", "mentalcore_data.*.*",
 ], namespaces = true}}

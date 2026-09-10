@@ -1,13 +1,9 @@
-def _filter_by_rect(boxes: list, rect) -> list:
-    """只保留中心点落在目标窗口矩形内的 OCR 结果，排除其他窗口（如 WorkBuddy）文字干扰。"""
-    if not rect:
-        return boxes
-    l, t, r, b = rect
-    out = []
-    for item in boxes:
-        btxt, box = (item[0], item[1])
-        bl, bt, br, bb = box
-        cx, cy = ((bl + br) // 2, (bt + bb) // 2)
-        if l <= cx <= r and t <= cy <= b:
-            out.append(item)
-    return out
+"""薄桥接层：实现已迁至独立项目「GUI自动化」（`palm_gui`）。
+
+原模块路径与导出**完整保留**（含下划线私有符号），调用面不变。
+"""
+import palm_boot  # noqa: F401,E402  自举：挂载独立项目
+
+import palm_gui.adapters_gui.desktop_utils as _impl  # noqa: E402
+
+globals().update({k: v for k, v in vars(_impl).items() if not k.startswith("__")})

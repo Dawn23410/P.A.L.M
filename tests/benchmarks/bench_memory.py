@@ -7,6 +7,8 @@
 - latency:      关键词提取 / 相关度计算时延。
 - idempotency:  同文本关键词集合稳定。
 """
+
+import palm_boot  # noqa: E402,F401  自举：挂载内嵌项目
 from __future__ import annotations
 
 import traceback
@@ -24,7 +26,7 @@ def bench(col):
                                                 CoreMemoryData, Conversation,
                                                 ArchivedItem, ProgramRule,
                                                 ScheduledTask)
-        from memory.domain_memory.token_budget import TokenBudgetAllocator
+        from palm_memory.domain_memory.token_budget import TokenBudgetAllocator
         COL = dict(Memory=Memory, create_memory=create_memory,
                    SafetyLevel=SafetyLevel, Personality=Personality,
                    UserProfile=UserProfile, SafetyConstraints=SafetyConstraints,

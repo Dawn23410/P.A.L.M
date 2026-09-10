@@ -5,7 +5,7 @@
 真实 api.py 字段（与 .env 默认参考分离，使用显式 refer_wav_path）：
   POST /  {refer_wav_path, prompt_text, prompt_language, text, text_language}
 
-依赖：本地 GSV 推理服务需在 :9880 运行。未运行 → SKIP（不伪造结果）。
+依赖：本地 GSV 推理服务需在 :10080 运行。未运行 → SKIP（不伪造结果）。
 """
 from __future__ import annotations
 

@@ -22,7 +22,7 @@ services:
       # 语音模型与源码：仅在使用 GSV 时挂载；Linux 下需自行准备 torch 环境
       - ./speech:/opt/palm/speech:ro
     ports:
-      - "9880:9880"   # GSV TTS（启用时）
+      - "10080:10080"   # GSV TTS（启用时）
       - "8000:8000"   # 预留 Web/API
     restart: unless-stopped
     command: ["python", "-c", "import palm.bootstrap.app as a; a.build_app(); import time; print('P.A.L.M 内核就绪'); time.sleep(1e9)"]

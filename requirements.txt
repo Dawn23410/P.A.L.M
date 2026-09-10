@@ -1,0 +1,30 @@
+# P.A.L.M 全量依赖（主后端 + 五个内嵌独立项目）
+# 自包含微内核：源码自带，依赖装进主目录 .venv 即可离线运行。
+# 安装：  .venv\Scripts\python.exe -m pip install -r requirements.txt
+# 国内源：末尾加 -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+# ---- 主后端 engine/（engine/requirements.txt 精确版本）----
+httpx==0.28.1
+pydantic==2.10.4
+textual==8.2.8
+h2==4.3.0
+httpcore[asyncio]
+
+# ---- LLM内核（palm_llm：流式微内核 + 对话服务层 / WebUI / API）----
+fastapi>=0.110
+uvicorn>=0.29
+
+# ---- 国密加解密（palm_crypto：SM2/SM3/SM4 + vault）----
+gmssl>=3.2.2
+
+# ---- 记忆（palm_memory：向量记忆可选后端，本地 ONNX bge-m3）----
+chromadb>=0.5
+onnxruntime>=1.17
+tokenizers>=0.15
+
+# ---- 可选（按需取消注释）----
+# tongsuopy>=1.0.1        # 国密 C 加速后端（铜锁），SM4 ~166MB/s；未装则回退纯 Python gmssl
+# rich>=13                # palm-llm 终端 TUI 渲染
+# pyautogui               # GUI 自动化砖块
+# opencv-python           # GUI 世界模型 / 截图
+# playwright              # 浏览器自动化（装完还需 playwright install 下浏览器）

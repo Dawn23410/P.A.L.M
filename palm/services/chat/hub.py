@@ -1,270 +1,37 @@
 # -*- coding: utf-8 -*-
-"""垂直小模型中心：真实权重(本地) + 离线占位(零依赖) 双后端。
+"""薄桥接层：垂直小模型中心 —— 实现已演进至独立包 local_reply_engine。
 
-移植自桌面 _stitching_demo/models/hub.py，适配为砖内模块。
+历史背景：本文件曾是独立包的同源副本；独立包此后演进（bge-m3 权重自包含、
+模型注册表、缓存指纹隔离等），P.A.L.M 内留副本只会双份漂移，故收敛为再导出 shim。
+真实实现：Desktop/local_reply_engine/local_reply/engine/hub.py。
 
-设计原则（对应约束）：
-- 垂直领域小模型可用，禁用对话式 LLM：这里只有「嵌入 / 情感分类 / 改写」三类单任务小模型。
-- 运行期绝对零联网：权重与语料全部本地；真实权重缺失时自动降级为离线实现，
-  接口不变，权重就位即获得完整能力（无需改业务代码）。
-- 真实模型权重放入本砖 models/weights/ 即生效：bge_small.onnx / sentiment.onnx / t5_rewrite.onnx。
-  缺省（默认 mock 模式）全部走离线实现，零模型零下载即可运行。
+与旧副本的差异（来自独立包演进，非回归）：
+- MODEL_DIR 随独立包走（local_reply/engine/models/weights，含 bge_m3/bge_small 权重），
+  不再指向本砖 palm/services/chat/models/weights。
 """
+from __future__ import annotations
+
 import os
-import re
-import math
-import random
-import hashlib
+import sys
 
-# 模型目录：本砖包内 models/weights/（真实权重可放置于此，缺省走 mock）
-MODEL_DIR = os.path.join(os.path.dirname(__file__), "models", "weights")
-_OFFLINE_DIM = 4096  # 离线哈希向量维度
-# 语义嵌入统一用 bge-m3（1024 维，与向量记忆同源，避免双份大权重）
-_BGE_M3_DIR = os.path.normpath(os.path.join(
-    os.path.dirname(__file__), "..", "..", "domain", "memory", "weights"))
+# 路径兜底：palm/services/chat -> palm/services -> palm -> P.A.L.M -> Desktop/local_reply_engine
+_HERE = os.path.dirname(os.path.abspath(__file__))
+_PKG_ROOT = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(_HERE)))),
+    "local_reply_engine")
 
+try:
+    import local_reply  # 已 pip install / 已在 sys.path
+except ImportError:
+    if _PKG_ROOT not in sys.path:
+        sys.path.insert(0, _PKG_ROOT)
+    import local_reply  # 本地开发兜底（直接挂载目录）
 
-# --------------------------------------------------------------------------
-# 1) 语义嵌入：bge-m3（真实，1024 维，本地 ONNX） / 字 n-gram 哈希 TF-IDF（离线占位）
-# --------------------------------------------------------------------------
-class Embedder:
-    """把文本编码为向量；真实路径用 bge-m3 ONNX，离线路径用哈希 TF-IDF。"""
-
-    def __init__(self, model_dir=MODEL_DIR):
-        self.model_dir = model_dir
-        self._real = None
-        self._tok = None
-        self._idf = {}
-        self._dim = _OFFLINE_DIM
-        self.kind = "offline"
-        self._load_real()
-
-    def _load_real(self):
-        # 统一 bge-m3（1024 维）：权重在 domain/memory/weights（与向量记忆同源）
-        onnx = os.path.join(_BGE_M3_DIR, "bge_m3.onnx")
-        tok = os.path.join(_BGE_M3_DIR, "tokenizer.json")
-        if os.path.exists(onnx) and os.path.exists(tok):
-            try:
-                import onnxruntime as ort  # 惰性导入，离线环境无需安装
-                self._real = ort.InferenceSession(onnx)
-                self._dim = 1024
-                self.kind = "real"
-            except Exception:
-                self._real = None
-
-    def available(self):
-        return self._real is not None
-
-    def fit_corpus(self, texts):
-        """离线路径：在语料上估算 idf 供运行期复用（真实路径不需要）。"""
-        df = {}
-        for t in texts:
-            for h in set(self._hash_vec(t).keys()):
-                df[h] = df.get(h, 0) + 1
-        n = max(1, len(texts))
-        self._idf = {h: math.log((n - df[h] + 0.5) / (df[h] + 0.5) + 1) for h in df}
-
-    def load_idf(self, idf_map, dim=None):
-        # JSON 序列化会把 int 键变成 str，必须转回 int 才能与哈希维度对齐
-        self._idf = {int(k): v for k, v in (idf_map or {}).items()}
-        if dim:
-            self._dim = dim
-
-    def _hash_vec(self, text):
-        # 用稳定哈希（md5），否则跨进程 hash() 随机化会导致构建/运行期维度错配
-        text = re.sub(r"\s+", "", text)
-        grams = [c for c in text] + [text[i:i + 2] for i in range(len(text) - 1)]
-        vec = {}
-        for g in grams:
-            h = int(hashlib.md5(g.encode("utf-8")).hexdigest(), 16) % _OFFLINE_DIM
-            vec[h] = vec.get(h, 0) + 1
-        return vec
-
-    def encode(self, texts):
-        """返回 list[向量]；离线=稀疏 dict，真实=稠密 list。"""
-        if self.available():
-            return self._encode_real(texts)
-        out = []
-        for t in texts:
-            vec = self._hash_vec(t)
-            if self._idf:
-                vec = {h: cnt * self._idf.get(h, 0.0) for h, cnt in vec.items()}
-            norm = math.sqrt(sum(x * x for x in vec.values())) or 1.0
-            out.append({h: x / norm for h, x in vec.items()})
-        return out
-
-    def _encode_real(self, texts):
-        # 真实 bge-m3：权重在 domain/memory/weights（与向量记忆同源）。
-        # 取 [CLS] 池化 + L2 归一化（bge 标准做法），输出 1024 维稠密向量。
-        import numpy as np
-        if self._tok is None:
-            from tokenizers import Tokenizer
-            self._tok = Tokenizer.from_file(
-                os.path.join(_BGE_M3_DIR, "tokenizer.json"))
-        encs = self._tok.encode_batch(texts, add_special_tokens=True)
-        maxlen = min(max((len(e.ids) for e in encs), default=1), 8192)
-        ids, masks = [], []
-        for e in encs:
-            seq = e.ids[:8192]
-            ids.append(seq + [0] * (maxlen - len(seq)))
-            masks.append([1] * len(seq) + [0] * (maxlen - len(seq)))
-        inputs = {
-            "input_ids": np.array(ids, dtype=np.int64),
-            "attention_mask": np.array(masks, dtype=np.int64),
-        }
-        if any(i.name == "token_type_ids" for i in self._real.get_inputs()):
-            inputs["token_type_ids"] = np.zeros_like(inputs["input_ids"])
-        out = self._real.run(None, inputs)
-        pooled = np.asarray(out[0])[:, 0, :]  # [CLS] 位置句向量
-        norms = np.linalg.norm(pooled, axis=1, keepdims=True) + 1e-9
-        return [(pooled[i] / norms[i]).tolist() for i in range(len(texts))]
-
-
-# --------------------------------------------------------------------------
-# 2) 情感分类：中文情感 tiny-BERT（真实） / 词典（离线占位）
-# --------------------------------------------------------------------------
-class Sentiment:
-    """识别用户情绪 → 驱动回复语气（共情维度）。"""
-
-    EMOTIONS = ["happy", "sad", "angry", "urgent", "calm"]
-    LEXICON = {
-        "happy": ["开心", "高兴", "快乐", "喜欢", "爱", "笑", "棒", "美", "中奖",
-                  "及格", "发财", "生日", "可爱", "温柔", "缘分", "陪", "想你", "赢"],
-        "sad": ["难过", "伤心", "哭", "累", "困", "失眠", "感冒", "心情不好", "想哭",
-                "失恋", "病", "疼", "哑", "无聊", "孤单", "怕"],
-        "angry": ["生气", "火大", "讨厌", "恼", "炸毛", "烦", "烂", "迟", "嫌弃"],
-        "urgent": ["快", "急", "马上", "赶紧", "坏了", "雷", "虫", "蛇", "鬼", "救命"],
-        "calm": ["睡", "晚安", "散步", "晴天", "音乐", "花", "牛奶", "看书", "海边"],
-    }
-    # 情绪 → 人格调味偏好（傲娇猫娘基调 + 情绪微调）
-    TONE = {
-        "happy": {"manner": ["眼睛发亮", "尾巴翘高", "笑嘻嘻"], "inner": ["和你一起才开心", "难得你也有趣"]},
-        "sad": {"manner": ["放柔声调", "轻轻靠过来", "难得正经"], "inner": ["看你这样我不爽", "别怕有我在"]},
-        "angry": {"manner": ["叉腰", "眯眼瞪你", "尾巴拍地"], "inner": ["气死我了", "你真烦"]},
-        "urgent": {"manner": ["耳朵竖起", "干脆利落", "急晃尾巴"], "inner": ["快快快", "别磨蹭"]},
-        "calm": {"manner": ["懒懒的", "眯眼", "歪头"], "inner": ["难得清静", "就这样挺好"]},
-    }
-
-    def __init__(self, model_dir=MODEL_DIR):
-        self.model_dir = model_dir
-        self._real = None
-        self._tok = None
-        onnx = os.path.join(self.model_dir, "sentiment.onnx")
-        if os.path.exists(onnx):
-            try:
-                import onnxruntime as ort
-                self._real = ort.InferenceSession(onnx)
-            except Exception:
-                self._real = None
-
-    def available(self):
-        return self._real is not None
-
-    def classify(self, text):
-        if self.available():
-            return self._classify_real(text)
-        # 离线词典版：与真实版对齐的优先逻辑（急迫 > 情绪词精准 > 中性兜底）
-        if any(w in text for w in self.LEXICON["urgent"]):
-            return "urgent", 1.0
-        for e in ("sad", "angry", "calm", "happy"):
-            if any(w in text for w in self.LEXICON[e]):
-                return e, 1.0
-        return "calm", 0.0
-
-    def _classify_real(self, text):
-        # 真实多语情感（Xenova/bert-base-multilingual-uncased-sentiment，5 类星级极性）
-        # 作为模糊兜底；角色扮演情绪词用专用词典精准优先，避免短口语被极性模型误判。
-        import numpy as np
-        if self._tok is None:
-            from tokenizers import Tokenizer
-            self._tok = Tokenizer.from_file(os.path.join(self.model_dir, "sentiment_tokenizer.json"))
-        # 1) 急迫维度模型无覆盖，关键词最高优先
-        if any(w in text for w in self.LEXICON["urgent"]):
-            return "urgent", 1.0
-        # 2) 对话情绪词专用词典精准命中（happy/sad/angry/calm），命中即返回
-        for e in ("happy", "sad", "angry", "calm"):
-            if any(w in text for w in self.LEXICON[e]):
-                return e, 1.0
-        # 3) 模糊句：用模型星级极性兜底（正→happy / 中→calm / 负→sad）
-        enc = self._tok.encode(text, add_special_tokens=True)
-        seq = enc.ids[:512]
-        inputs = {
-            "input_ids": np.array([seq], dtype=np.int64),
-            "attention_mask": np.array([[1] * len(seq)], dtype=np.int64),
-        }
-        if any(i.name == "token_type_ids" for i in self._real.get_inputs()):
-            inputs["token_type_ids"] = np.zeros((1, len(seq)), dtype=np.int64)
-        logits = np.asarray(self._real.run(None, inputs)[0][0])
-        idx = int(np.argmax(logits))
-        score = float(logits[idx])
-        if idx >= 3:
-            return "happy", score
-        if idx == 2:
-            return "calm", score
-        # 负面极性兜底：有愤怒词归 angry，否则归 calm（中性问句不应误判 sad）
-        return ("angry" if any(w in text for w in self.LEXICON["angry"]) else "calm"), score
-
-    def tone_for(self, emotion):
-        return self.TONE.get(emotion, self.TONE["calm"])
-
-
-# --------------------------------------------------------------------------
-# 3) 多样性改写：Randeng-T5-77M（真实） / 模板变体（离线占位）
-# --------------------------------------------------------------------------
-_REWRITE_OPENERS = ["[歪头]", "[尾巴轻晃]", "[戳了戳你]", "[猫耳抖了抖]", "[眯眼看你]", "[蹭过来]", "[托腮]"]
-_REWRITE_TICS = ["喵", "呀", "呜", "杂鱼", "哼"]
-
-
-class Rewriter:
-    """对选中骨架生成多个表面表达，轮换避免复读机（多样性维度）。"""
-
-    def __init__(self, model_dir=MODEL_DIR):
-        self.model_dir = model_dir
-        self._real = None
-        onnx = os.path.join(self.model_dir, "t5_rewrite.onnx")
-        if os.path.exists(onnx):
-            try:
-                import onnxruntime as ort
-                self._real = ort.InferenceSession(onnx)
-            except Exception:
-                self._real = None
-
-    def available(self):
-        return self._real is not None
-
-    def rewrite(self, text, n=3):
-        if self.available():
-            return self._rewrite_real(text, n)
-        return self._rewrite_offline(text, n)
-
-    def _rewrite_offline(self, text, n):
-        body = re.sub(r"^\[[^\]]*\]\s*（[^）]*）\s*<[^>]*>\s*", "", text).strip()
-        variants = [text]
-        for i in range(1, n):
-            v = body
-            if i % 2 == 1:
-                v = random.choice(_REWRITE_OPENERS) + v
-            if i % 3 == 2 and not v.endswith(tuple(_REWRITE_TICS)):
-                v = v.rstrip("。！？") + random.choice(_REWRITE_TICS)
-            if v != text and v not in variants:
-                variants.append(v)
-        return variants[:n]
-
-    def _rewrite_real(self, text, n):
-        raise NotImplementedError("请于 models/weights/ 放置 t5_rewrite.onnx 与 tokenizer.json")
-
-
-class Hub:
-    """三件套聚合，供引擎统一调用。缺省全部 offline（默认 mock 模式）。"""
-
-    def __init__(self, model_dir=MODEL_DIR):
-        self.embedder = Embedder(model_dir)
-        self.sentiment = Sentiment(model_dir)
-        self.rewriter = Rewriter(model_dir)
-
-    def status(self):
-        return {
-            "embedder": self.embedder.kind,
-            "sentiment": "real" if self.sentiment.available() else "offline",
-            "rewriter": "real" if self.rewriter.available() else "offline",
-        }
+from local_reply.engine.hub import (  # noqa: E402,F401
+    MODEL_DIR,
+    Embedder,
+    Hub,
+    Rewriter,
+    Sentiment,
+    _OFFLINE_DIM,
+)

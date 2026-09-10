@@ -1,20 +1,9 @@
-def _win_error(msg: str) -> str:
-    """统一错误前缀，便于 AI 识别。"""
-    return f'[window_tools] {msg}'
+"""薄桥接层：实现已迁至独立项目「工具集」（`palm_tool`）。
 
-def _parse_color(text: str) -> tuple[int, int, int] | None:
-    """解析颜色字符串为 (r,g,b)；支持 #RRGGBB / RRGGBB / #RGB。无法解析返回 None。"""
-    if not text:
-        return None
-    s = text.strip().lstrip('#')
-    if len(s) == 3:
-        s = ''.join((c * 2 for c in s))
-    if len(s) != 6:
-        return None
-    try:
-        return (int(s[0:2], 16), int(s[2:4], 16), int(s[4:6], 16))
-    except ValueError:
-        return None
+原模块路径与导出**完整保留**（含下划线私有符号），调用面不变。
+"""
+import palm_boot  # noqa: F401,E402  自举：挂载独立项目
 
-def _rgb_to_hex(rgb: tuple[int, int, int]) -> str:
-    return '#%02X%02X%02X' % rgb
+import palm_tool.agent_tools.window_api as _impl  # noqa: E402
+
+globals().update({k: v for k, v in vars(_impl).items() if not k.startswith("__")})

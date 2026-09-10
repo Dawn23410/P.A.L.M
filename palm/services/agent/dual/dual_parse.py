@@ -1,18 +1,9 @@
-def _normalize_native_chunk(chunk) -> tuple[str, str, object]:
-    """把 native 流式 chunk 统一为 (正文, 推理链, 原始 tool_calls)。"""
-    if isinstance(chunk, dict):
-        return (chunk.get('content') or '', chunk.get('reasoning') or '', chunk.get('tool_calls'))
-    if isinstance(chunk, str):
-        return (chunk, '', None)
-    return (getattr(chunk, 'content', None) or getattr(chunk, 'delta', '') or '', getattr(chunk, 'reasoning', None) or '', getattr(chunk, 'tool_calls', None))
+"""薄桥接层：实现已迁至独立项目「智能体框架」（`palm_agent`）。
 
-def _should_reflect(agent, state: dict) -> bool:
-    """仅在「反思开关开启且本轮用过工具」时自检（纯闲聊不浪费 LLM 调用）。
+原模块路径与导出**完整保留**（含下划线私有符号），调用面不变。
+"""
+import palm_boot  # noqa: F401,E402  自举：挂载独立项目
 
-    开关通过 agent._enable_reflection 控制（缺省视为开启）。
-    """
-    if state.get('skip_reflect'):
-        return False
-    if not getattr(agent, '_enable_reflection', True):
-        return False
-    return bool(state.get('used_tools'))
+import palm_agent.dual.dual_parse as _impl  # noqa: E402
+
+globals().update({k: v for k, v in vars(_impl).items() if not k.startswith("__")})

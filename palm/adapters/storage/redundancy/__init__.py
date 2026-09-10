@@ -1,11 +1,9 @@
-"""存储砖·冗余子包：删除前保险库归档 + 删除路由回收站。
+"""薄桥接层：实现已迁至独立项目「存储芯片」（`palm_storage`）。
 
-原 sandbox 砖的 vault / safe_delete 整体迁入此处（M0 冗余层迁移，行为不变仅移动）。
-存储砖作为主板自带组件直接持有冗余能力，sandbox 砖改为委托本子包，杜绝跨砖重复逻辑。
+原模块路径与导出**完整保留**（含下划线私有符号），调用面不变。
 """
-from __future__ import annotations
+import palm_boot  # noqa: F401,E402  自举：挂载独立项目
 
-from . import vault as vault
-from .recycle import send_to_recycle_bin
+import palm_storage.redundancy as _impl  # noqa: E402
 
-__all__ = ["vault", "send_to_recycle_bin"]
+globals().update({k: v for k, v in vars(_impl).items() if not k.startswith("__")})

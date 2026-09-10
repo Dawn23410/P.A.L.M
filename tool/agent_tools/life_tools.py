@@ -1,9 +1,9 @@
-"""生活/信息/生产力工具中转层（精简后仅 re-export 国内特色与产能工具）。"""
-from __future__ import annotations
+"""薄桥接层：实现已迁至独立项目「工具集」（`palm_tool`）。
 
-from .life_domestic_prod_tools import (
-    ChengyuTool, FestivalTool, ChineseDictTool, QRCodeTool,
-    PROD_TOOLS,
-)
+原模块路径与导出**完整保留**（含下划线私有符号），调用面不变。
+"""
+import palm_boot  # noqa: F401,E402  自举：挂载独立项目
 
-__all__ = ["PROD_TOOLS", "ChengyuTool", "FestivalTool", "ChineseDictTool", "QRCodeTool"]
+import palm_tool.agent_tools.life_tools as _impl  # noqa: E402
+
+globals().update({k: v for k, v in vars(_impl).items() if not k.startswith("__")})

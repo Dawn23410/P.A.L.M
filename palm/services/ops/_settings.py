@@ -1,18 +1,9 @@
-"""monitor 砖内部共享：经 settings 砖能力读取应用设置（零跨砖 import 依赖）。"""
-from __future__ import annotations
+"""薄桥接层：实现已迁至独立项目「运维服务」（`palm_ops`）。
 
-from palm._core.container import registry
+原模块路径与导出**完整保留**（含下划线私有符号），调用面不变。
+"""
+import palm_boot  # noqa: F401,E402  自举：挂载独立项目
 
+import palm_ops._settings as _impl  # noqa: E402
 
-def load_settings() -> dict:
-    # 经 settings 砖的 load_app_settings 能力读取；缺砖/异常降级空字典，绝不阻断调用方。
-    brick = container.get("settings")
-    if not brick:
-        return {}
-    fn = (getattr(brick, "capabilities", {}) or {}).get("load_app_settings")
-    if not fn:
-        return {}
-    try:
-        return fn() or {}
-    except Exception:
-        return {}
+globals().update({k: v for k, v in vars(_impl).items() if not k.startswith("__")})

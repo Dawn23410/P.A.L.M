@@ -174,7 +174,7 @@ def run(project_root=".", speech_dir="speech/vosk") -> dict:
     base = cfg.get("SOVITS_API_URL", "").rstrip("/")
     if not base or not _server_up(f"{base}/"):
         return {"name": "tts_stt_crosscheck", "status": "SKIP",
-                "reason": "GSV 服务未运行（:9880），无法生成语音"}
+                "reason": "GSV 服务未运行（:10080），无法生成语音"}
     try:
         import vosk  # noqa: F401
     except Exception as e:

@@ -23,10 +23,10 @@ _DEFAULTS = {
     "UPLOAD_DIR": str(_ROOT / "Data" / "uploads"),
     # GSV 语音合成（独立态默认：砖内源码 + 内聚权重，可被 .env 覆盖）。
     "SOVITS_ROOT": str(_GSV_SRC),
-    "SOVITS_API_PORT": "9880",
+    "SOVITS_API_PORT": "10080",
     "SOVITS_INFER_DEVICE": "cuda",
     "SOVITS_API_ROUTE": "/",
-    "SOVITS_API_URL": "http://127.0.0.1:9880",
+    "SOVITS_API_URL": "http://127.0.0.1:10080",
     "SOVITS_SOVITS_MODEL": "pretrained_models/gsv-v2final-pretrained/s2G2333k.pth",
     "SOVITS_GPT_MODEL": "pretrained_models/gsv-v2final-pretrained/s1bert25hz-5kh-longer-epoch=12-step=369668.ckpt",
     "SOVITS_HUBERT_DIR": "pretrained_models/chinese-hubert-base",

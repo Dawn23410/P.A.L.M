@@ -34,8 +34,8 @@
         {
           "item": "gsv_config",
           "status": "PASS",
-          "url": "http://127.0.0.1:9880",
-          "port": "9880",
+          "url": "http://127.0.0.1:10080",
+          "port": "10080",
           "refer_wav": "ref_audio.wav"
         }
       ]

@@ -1,9 +1,9 @@
-"""存储砖管理芯片：配额 / 生命周期 / 审计 / 健康监测。
+"""薄桥接层：实现已迁至独立项目「存储芯片」（`palm_storage`）。
 
-各模块只操作 PoolStore（经 transaction 落盘），不跨砖 import；对外经砖 capabilities 暴露，
-消费方（含 sandbox）一律经存储砖 capability 取用，依赖方向 sandbox → 存储砖。
-
-子模块按需直接导入（如 `from .controller.quota import reserve_bytes`），本包不急于全部加载，
-避免尚未实现的生命周期/审计/健康模块拖慢启动或形成导入环。
+原模块路径与导出**完整保留**（含下划线私有符号），调用面不变。
 """
-from __future__ import annotations
+import palm_boot  # noqa: F401,E402  自举：挂载独立项目
+
+import palm_storage.controller as _impl  # noqa: E402
+
+globals().update({k: v for k, v in vars(_impl).items() if not k.startswith("__")})
