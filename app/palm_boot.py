@@ -35,6 +35,19 @@ from __future__ import annotations
 import os
 import sys
 
+# ── OpenBLAS / OMP 线程封顶（2026-09-11）──────────────────────────
+# 本机 numpy 的 OpenBLAS 是 DYNAMIC_ARCH 构建（MAX_THREADS=24），导入即按 24 核
+# 预分配线程工作区 → 私有内存 ~745MB，直接击穿「常态 <256MB」预算。
+# 桌面助手的小矩阵运算单线程足够，故常态封顶 1 线程；狂暴模式（PALM_MODE=brutal，
+# 4GB 预算可承受）放开到全核。可用 PALM_OPENBLAS_THREADS 显式覆盖本逻辑。
+_PALM_MODE = os.environ.get("PALM_MODE", "normal").lower()
+_PALM_OBT = os.environ.get("PALM_OPENBLAS_THREADS")
+if _PALM_OBT is None:
+    _PALM_OBT = "1" if _PALM_MODE != "brutal" else str(os.cpu_count() or 1)
+for _obt in ("OPENBLAS_NUM_THREADS", "OMP_NUM_THREADS",
+             "MKL_NUM_THREADS", "NUMEXPR_NUM_THREADS"):
+    os.environ.setdefault(_obt, _PALM_OBT)
+
 # 独立项目（中文目录名，容器内才是英文包名）。顺序即 sys.path 优先级。
 EMBEDDED_PROJECTS = (
     "游戏生态",
