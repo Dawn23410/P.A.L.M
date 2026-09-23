@@ -1,0 +1,25 @@
+{
+ "tool": "dynprobe",
+ "version": "0.1.0",
+ "target": "path:palm_llm",
+ "kind": [
+  "security"
+ ],
+ "args": null,
+ "scores": {
+  "security": 50
+ },
+ "findings": [
+  {
+   "severity": "high",
+   "loc": "palm_llm/providers/gemini_wire.py:41",
+   "detail": "字典密钥 'MAX_TOKENS': 'length' [A07]（生产代码）"
+  },
+  {
+   "severity": "high",
+   "loc": "palm_llm/providers/telemetry.py:37",
+   "detail": "字典密钥 'max_tokens': 'length' [A07]（生产代码）"
+  }
+ ],
+ "ts": "2026-09-23T12:17:27"
+}

@@ -3,6 +3,16 @@
 RAG/
 嵌入服务/
 8_归档/
-1_Demo_LLM/
+# 1_Demo_LLM/  ← 2026-09-23 解忽略：内核纳入 palm 顶层仓库独立管理（用户决定，palm 目录均为项目内容）
 2_实验/
 3_文档/
+
+# 1_Demo_LLM 下只忽略缓存 / 虚拟环境 / 临时产物，源码与文档纳入版本控制
+1_Demo_LLM/**/__pycache__/
+1_Demo_LLM/**/*.pyc
+1_Demo_LLM/**/.venv/
+1_Demo_LLM/**/.gwbench_venv/
+1_Demo_LLM/**/_nul
+1_Demo_LLM/**/results_*/
+1_Demo_LLM/**/results/
+1_Demo_LLM/**/*.log
