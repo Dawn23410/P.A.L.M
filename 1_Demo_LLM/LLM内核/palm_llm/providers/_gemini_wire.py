@@ -30,8 +30,8 @@ import re
 from typing import Any, Optional
 
 from ..models import Tool
-from .multimodal import split_data_uri
-from .telemetry import Meter, usage_from_gemini
+from ._multimodal import split_data_uri
+from ._telemetry import Meter, usage_from
 
 # 真·原生 id 的特征：我们自己补的 id 用 `fc_<n>`，回传前要剥掉
 # （模型没给 id 时凭空塞一个，服务端会认不出来 —— 与 tooltext 的 call_txt_ 同一约定）
@@ -284,7 +284,7 @@ def finish_events(st: dict, meter: Meter) -> list[dict]:
     reason = finish_reason(raw, bool(st["tools"]))
     extra = _finish_extra(st, raw)
     out.append({"done": True, "usage": st["usage"],
-                "stats": meter.finish(usage_from_gemini(st["usage"]), reason, "", extra)})
+                "stats": meter.finish(usage_from(st["usage"], "gemini"), reason, "", extra)})
     return out
 
 

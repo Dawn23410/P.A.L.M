@@ -1,5 +1,9 @@
 # palm_llm 内核架构 v1.5（四通道 + 能力闸门 + 对照实测版）
 
+> **API 面已统一（2026-09-23）**：对外入口收敛为 `palm_llm`（等价 `palm_llm.api`），
+> 内部实现件全部加下划线私有。下文若出现旧函数名/旧模块路径，那是当时的形态；
+> **当前清单与改名对照见 [《API函数库重构_v1.0》](API函数库重构_v1.0.md)。**
+
 > 版本：v1.5　｜　日期：2026-09-23　｜　来源：**逐文件实读 + 180 项单元测试实测 + ollama 实机联调 + 网关控制变量对照实跑**
 > 取代：`LLM内核架构_v1.4.md`（v1.4 及更早版本保留作历史版本）
 > 关联：`适配层决策说明_v1.0.md`、`Anthropic原生通道_v1.0.md`、`回传拆分器字段说明_v1.0.md`、
@@ -96,7 +100,7 @@ total_tokens = input + cache_read + cache_write + output
 
 v1.5 补了两个归一入口：
 
-- `usage_from_gemini`：`promptTokenCount` **含缓存命中**，要减掉 `cachedContentTokenCount`
+- `usage_from(raw, "gemini")`：`promptTokenCount` **含缓存命中**，要减掉 `cachedContentTokenCount`
   才是非缓存输入（官方原文口径）；思考 token 单列在 `thoughtsTokenCount`。
 - `mark_finish_tool_calls(stats)`：有工具调用时把 `finish_reason` 归为 `tool_calls`，
   原值存进 `extra.finish_reason_vendor`。**不归一的后果是工具静默不执行** ——

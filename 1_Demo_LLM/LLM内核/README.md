@@ -15,7 +15,7 @@ P.A.L.M 的 **LLM 全栈内嵌独立项目**：多厂商流式调用微内核 + 
     内容一律 `parts[]`、system 走 `systemInstruction`、鉴权 `x-goog-api-key`、**无 `[DONE]` 收尾**
     （连接关闭即结束）。思考参数 **3 系列 `thinkingLevel` 与 2.5 系列 `thinkingBudget` 两套并存、
     同传即 400**，档位用**最近邻夹取**（`minimal` → `low`，不是最高档）。
-- **能力矩阵前置拦截**（`providers/capability.py`）：发请求**前**按模型能力挡掉注定失败的调用
+- **能力矩阵前置拦截**（`providers/_capability.py`）：发请求**前**按模型能力挡掉注定失败的调用
   （视觉/文档/体积）。三条铁律：① 只拦**已知不支持**（`capabilities_known=False` 的未知档位
   只记账不硬拦，宁可放过不可错杀）；② 只看内核 `Message`、不看各家 payload 方言；
   ③ 报错必须可照着改（第几条消息 / 什么类型 / 超多少 / 支持什么 / 命中哪条规则）。
@@ -27,6 +27,11 @@ P.A.L.M 的 **LLM 全栈内嵌独立项目**：多厂商流式调用微内核 + 
 - **类型化异常 + 有界重试 + 结构化日志**：错误分类（据错决策能不能重试）、重试策略
   （`ProviderConfig.retry`，个人低延迟档 / 企业高稳档同一个旋钮）、`request_id` 贯通的结构化
   异步日志。见 `docs/可观测与异常_v1.0.md`
+- **函数库入口**：`palm_llm/api.py` 收敛全部公开符号（37 个 `__all__`）——两个动词
+  `stream()` / `complete()` 即可调用，`resolve()` 拿配置、`classify_error()` 判错、
+  `usage_from()` 归一用量；`palm_llm/__init__.py` 只做再导出。内部件（wire/telemetry/
+  profiles/tooltext/capability/multimodal）一律 `_` 前缀、**不对外承诺**。
+  见 `docs/API函数库重构_v1.0.md`
 - 纯异步流式接口：`async for chunk in provider.complete(...)`
 - 事件循环安全的 httpx 客户端复用（按 loop 对象身份缓存，跨循环不串号）
 - HTTP/2 优先；未装 `h2` 时自动降级 HTTP/1.1（仅一次警告）
@@ -72,7 +77,7 @@ P.A.L.M 的 **LLM 全栈内嵌独立项目**：多厂商流式调用微内核 + 
 
 ```python
 import palm_boot            # 自动把 palm-llm/ 等内嵌项目挂进 sys.path
-from palm_llm import OpenAICompatProvider
+from palm_llm import stream, complete, resolve   # 函数库入口（等价于 from palm_llm.api import ...）
 ```
 
 需要的功能按需装第三方依赖（都已在环境里则零安装）：
@@ -94,6 +99,34 @@ palm-llm-api      # FastAPI 服务入口（默认端口 10083，/health 健康�
 ```
 
 ## 快速开始
+
+**最简（函数库直调）**：两个动词 —— `stream`（流式）/ `complete`（一次性），不用自己建 Provider。
+`cfg` 传字典或 `ProviderConfig` 都行；`model` 留空则用 `cfg.default_model`。
+
+```python
+import asyncio
+from palm_llm import stream, complete, Message
+
+CFG = {"type": "openai_compat", "base_url": "https://api.openai.com/v1",
+       "api_key": "sk-xxx", "default_model": "gpt-4o-mini"}
+
+async def main():
+    msgs = [Message(role="user", content="你好")]
+    async for ev in stream(msgs, model="gpt-4o-mini", cfg=CFG):     # 流式
+        if "content" in ev:
+            print(ev["content"], end="", flush=True)
+        if ev.get("done"):
+            print("\n[完成]", (ev.get("stats") or {}).get("tps"), "tok/s")
+    out = await complete(msgs, model="gpt-4o-mini", cfg=CFG)        # 一次性
+    print(out["content"], "| total:", out["stats"]["total_tokens"])
+
+asyncio.run(main())
+```
+
+> 也可 `prov=` 直接传入已建好的 Provider 实例（复用连接 / 自定义传输），
+> 或 `resolve(model=..., type_hint=...)` 先拿到命中的 `(Profile, ModelRule)` 再决定参数。
+
+**进阶（直接持 Provider）** —— 需要精细控制传输/参数时：
 
 ```python
 import asyncio
@@ -128,7 +161,9 @@ asyncio.run(main())
 
 ## 接口约定
 
-`BaseProvider.complete(messages, params, model, stream=True)` 是异步生成器，依次产出字典：
+**对外只需认函数库**：`palm_llm.stream(...)` / `palm_llm.complete(...)`（薄封装，自动 `resolve`
+配置并建/复用 Provider）。它们与底层 `BaseProvider.complete(...)` 产出**同一套事件字典**，
+契约如下（异步生成器，依次产出）：
 
 | chunk | 含义 |
 |---|---|
@@ -164,28 +199,33 @@ asyncio.run(main())
 
 ```
 palm_llm/
-  __init__.py         # 内核公共 API：get_provider_instance / ProviderConfig / Message / ModelParameters ...
+  api.py              # ★ 内核函数库【唯一公开入口】：stream / complete / resolve / classify_error /
+                      #   usage_from + 数据类型(ProviderConfig/Message/ModelParameters/Tool/TurnStats)
+                      #   + 四类 Provider + 错误层级 + 重试策略；共 37 个 __all__
+  __init__.py         # 纯再导出：from .api import *，__all__ = list(api.__all__)（不再各自 import）
   __main__.py         # python -m palm_llm 演示入口
   models.py           # 内核数据模型（dataclass）：ProviderConfig / Message / Tool / ModelParameters
   errors.py           # 类型化异常层级（PalmLLMError + 8 类）与状态码/传输分类器
   retry.py            # 有界重试策略（LOW_LATENCY / STABLE 两档预设 + 退避/抖动/Retry-After）
   obs.py              # 结构化异步日志（队列非阻塞）+ request_id contextvar 贯通
   providers/
+    __init__.py       # PROTOCOLS 协议表 + DEFAULT_PROTOCOL + get_provider_instance 工厂
     base.py           # BaseProvider 抽象基类 + 事件循环安全的 httpx 客户端复用
-                      # + 共享件（首字节超时 / 行流拼接 / message 归一）
+                      # + 共享件（首字节超时 / 行流拼接 / message 归一 / normalize_tool_calls）
     openai_compat.py  # OpenAI 兼容协议（含原生 Tool Calling + 三级容错降级）
     anthropic.py      # Anthropic 原生 /v1/messages（传输 + 思考配置）
-    anthropic_wire.py # 内核 Message ↔ 原生内容块/SSE 双向转换
+    _anthropic_wire.py# 内核 Message ↔ 原生内容块/SSE 双向转换（内部件，下划线 = 不公开）
     gemini.py         # Gemini 原生 generateContent（传输 + 思考双 API 夹档）
-    gemini_wire.py    # 内核 Message ↔ parts[]/systemInstruction/SSE 双向转换
+    _gemini_wire.py   # 内核 Message ↔ parts[]/systemInstruction/SSE 双向转换（内部件）
     ollama.py         # Ollama 原生 /api/chat（think 一等参数、message.thinking、分段耗时）
-    tooltext.py       # 正文文本工具调用降级（五族形态 + 三条安全阀；无原生 tool_calls 时兜底）
-    profiles.py       # 两级匹配引擎（Profile / ModelRule / apply_rule）
-    profiles_data.py  # 10 家 Profile 规则数据（唯一事实来源）
-    capability.py     # 能力矩阵前置拦截（视觉/文档/体积，发请求前挡）
-    telemetry.py      # 回传拆分器（字段+口径归一：缓存 token / TTFT / 输出速度…）
-    multimodal.py     # 多模态内容块（文本 / 图片 / 文档附件，openai / anthropic 两模式）
+    _tooltext.py      # 正文文本工具调用降级（五族形态 + 三条安全阀；无原生 tool_calls 时兜底）
+    _profiles.py      # 两级匹配引擎（Profile / ModelRule / apply_rule / resolve）
+    _profiles_data.py # 10 家 Profile 规则数据（唯一事实来源）
+    _capability.py    # 能力矩阵前置拦截（视觉/文档/体积，发请求前挡）
+    _telemetry.py     # 回传拆分器（字段+口径归一：usage_from / 缓存 token / TTFT / 输出速度…）
+    _multimodal.py    # 多模态内容块（文本 / 图片 / 文档附件；content_blocks / data_uri / split_data_uri）
   tests/              # 内核测试（.bench_venv 无 pytest，一律 -m unittest）
+    test_api_surface.py            # 函数库契约：__all__ 一致 / 旧名硬切 ImportError / 合并等价 / stream+complete 端到端
     test_ollama_provider.py        # OllamaProvider：纯逻辑用例 + 联调用例（无服务时自动跳过）
     test_openai_compat_degrade.py  # 通用通道 → 降级通道 + stats 挂载（MockTransport）
     test_profiles_matching.py      # 两级匹配 + apply_rule 顺序
@@ -200,6 +240,7 @@ palm_llm/
     test_obs.py                    # 可观测：request_id 传播与隔离 / 日志装配幂等
     test_retry_wiring.py           # 端到端：策略真的接在 provider 上（重试 / 429 / 流中断）
   docs/               # 设计/实测文档（纯中文 + 版本号）
+    API函数库重构_v1.0.md            # ★ 函数库化：5 组同类合并 15→6、8 内部模块私有化、api.py 37 导出
     LLM内核架构_v1.5.md              # 最新架构（四通道 + 能力闸门 + 对照实测）
     能力矩阵前置拦截_v1.0.md          # 能力矩阵怎么接进内核、三条铁律、规则逐项复审
     可观测与异常_v1.0.md              # 类型化异常 + 有界重试 + 结构化日志（企业/个人平衡点）

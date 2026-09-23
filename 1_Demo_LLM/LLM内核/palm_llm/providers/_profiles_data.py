@@ -19,7 +19,7 @@
 """
 from __future__ import annotations
 
-from .profiles import ModelRule, Profile
+from ._profiles import ModelRule, Profile
 
 AS_OF = "2026-09-23"
 

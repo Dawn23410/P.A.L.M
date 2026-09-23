@@ -10,7 +10,7 @@
    错误与重试可见，`INFO`/`DEBUG` 需显式打开）—— 与"个人低延迟"一致：想看细节，
    才为它付代价。
 3. **一次请求一个 `request_id`**：靠 `contextvars` 跨 `await` 传播，无需逐层传参。
-   provider 被直接调用（无服务层）时，`ensure_request_id()` 兜底生成。
+   provider 被直接调用（无服务层）时，`request_id()` 自带兜底生成。
 4. **绝不记录密钥与正文**：`log_event` 只落显式传入的结构化字段，不自动抓取
    messages —— prompt 正文可能含用户隐私与人设，不进日志是纪律不是偏好。
 """
@@ -41,27 +41,28 @@ _listener: Optional[logging.handlers.QueueListener] = None
 
 
 # ─────────────────────────── request_id ───────────────────────────
-def new_request_id() -> str:
-    """生成短请求 id（12 位十六进制，够用且不喧宾夺主）。"""
-    return uuid.uuid4().hex[:12]
+def request_id() -> str:
+    """本次请求的 id；尚未设置则生成一个并落定（provider 直连场景的兜底）。
 
-
-def get_request_id() -> str:
-    return _request_id.get()
-
-
-def set_request_id(rid: Optional[str]) -> contextvars.Token:
-    """显式设置本次请求 id（服务层在回合边界调用）；空值则新生成。"""
-    return _request_id.set(rid or new_request_id())
-
-
-def ensure_request_id() -> str:
-    """返回本次请求 id；尚未设置时新生成一个（provider 直连场景的兜底）。"""
+    合并了原 `get_request_id`（只读）与 `ensure_request_id`（读或建）：两者在
+    "已有 id 时"行为完全一致，分开只会让调用方在"只读"与"读不到就建"之间选错，
+    而选错的后果是日志里出现 `-`（排障时关联不上）。
+    """
     rid = _request_id.get()
     if rid == "-":
-        rid = new_request_id()
+        rid = _new_request_id()
         _request_id.set(rid)
     return rid
+
+
+def set_request_id(rid: Optional[str] = None) -> contextvars.Token:
+    """显式设置本次请求 id（服务层在回合边界调用）；空值则新生成。"""
+    return _request_id.set(rid or _new_request_id())
+
+
+def _new_request_id() -> str:
+    """生成短请求 id（12 位十六进制，够用且不喧宾夺主）。"""
+    return uuid.uuid4().hex[:12]
 
 
 # ─────────────────────────── 日志装配 ───────────────────────────
@@ -126,10 +127,8 @@ def log_event(event: str, *, level: str = "info", **ctx) -> None:
 
 
 __all__ = [
-    "new_request_id",
-    "get_request_id",
+    "request_id",
     "set_request_id",
-    "ensure_request_id",
     "configure_logging",
     "log_event",
 ]

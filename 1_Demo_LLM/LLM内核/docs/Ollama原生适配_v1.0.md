@@ -144,7 +144,7 @@ async for ev in prov.complete([Message(role="user", content="你好")], params, 
 ### 4.4 `palm_boot.py` 挂不上内核（本次额外发现）
 
 `app/palm_boot.py` 的候选根只覆盖 `ROOT` / `../P.A.L.M` / `../P.A.L.M/实验`，
-而现网里项目实际躺在 **`1_Demo_LLM/`**（LLM内核 / 记忆 / 国密加解密 / Ollama嵌入 …）
+而现网里项目实际躺在 **`1_Demo_LLM/`**（LLM内核 / 记忆 / 加解密内核 / Ollama嵌入 …）
 与 **`2_实验/`**（模型适配 / 智能体框架 / 工具集 …）下 —— 两者都不在候选根里。
 
 **后果（实测）**：`cd app && python -c "import llm"` → `ModuleNotFoundError: No module named 'palm_llm'`。

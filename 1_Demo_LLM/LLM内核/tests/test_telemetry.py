@@ -1,7 +1,8 @@
 """回传拆分器用例（纯逻辑，无需网络）。
 
 覆盖：
-  - 三家 usage 口径归一（含缓存字段方言与"总输入是否含缓存"的陷阱）
+  - `usage_from(raw, protocol)` 的口径归一 —— 四种协议共用**同一个入口**，
+    含缓存字段方言与"总输入是否含缓存"的陷阱
   - 派生指标的算式（TTFT/TTFA/TPOT/NTPOT/ITL 分位/输出速度/缓存命中率）
   - 停止原因映射
 """
@@ -13,63 +14,60 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from palm_llm.providers.telemetry import (
+from palm_llm.providers._telemetry import (
     Meter,
     TurnStats,
     _derive,
     _pct,
     map_stop_reason,
     mark_finish_tool_calls,
-    usage_from_anthropic,
-    usage_from_gemini,
-    usage_from_ollama,
-    usage_from_openai,
+    usage_from,
 )
 
 
 class UsageNormalizeTest(unittest.TestCase):
     def test_openai_standard_splits_cache_out_of_prompt(self):
         """OpenAI 的 prompt_tokens 含缓存命中，统一口径要把它拆出来。"""
-        got = usage_from_openai({
+        got = usage_from({
             "prompt_tokens": 1000, "completion_tokens": 200, "total_tokens": 1200,
             "prompt_tokens_details": {"cached_tokens": 900},
             "completion_tokens_details": {"reasoning_tokens": 120},
-        })
+        }, "openai")
         self.assertEqual(got["input_tokens"], 100)      # 非缓存输入
         self.assertEqual(got["cache_read_tokens"], 900)
         self.assertEqual(got["output_tokens"], 200)
         self.assertEqual(got["reasoning_tokens"], 120)
 
     def test_openai_deepseek_dialect(self):
-        got = usage_from_openai({
+        got = usage_from({
             "prompt_tokens": 1000, "completion_tokens": 50,
             "prompt_cache_hit_tokens": 800, "prompt_cache_miss_tokens": 200,
-        })
+        }, "openai")
         self.assertEqual(got["input_tokens"], 200)      # 直接用 miss 数，最准
         self.assertEqual(got["cache_read_tokens"], 800)
 
     def test_openai_without_details_passes_through(self):
-        got = usage_from_openai({"prompt_tokens": 10, "completion_tokens": 5})
+        got = usage_from({"prompt_tokens": 10, "completion_tokens": 5}, "openai")
         self.assertEqual(got["input_tokens"], 10)
         self.assertEqual(got["cache_read_tokens"], 0)
 
     def test_anthropic_input_excludes_cache(self):
         """Anthropic 的 input_tokens 已排除缓存，不能再减一次。"""
-        got = usage_from_anthropic({
+        got = usage_from({
             "input_tokens": 100, "output_tokens": 200,
             "cache_read_input_tokens": 900, "cache_creation_input_tokens": 50,
-        })
+        }, "anthropic")
         self.assertEqual(got["input_tokens"], 100)
         self.assertEqual(got["cache_read_tokens"], 900)
         self.assertEqual(got["cache_write_tokens"], 50)
         self.assertEqual(got["total_tokens"], 1250)     # 100+900+50+200
 
     def test_ollama_carries_engine_timings(self):
-        got = usage_from_ollama({
+        got = usage_from({
             "prompt_eval_count": 20, "eval_count": 30,
             "load_duration": 2_000_000_000, "prompt_eval_duration": 60_000_000,
             "eval_duration": 500_000_000, "total_duration": 3_000_000_000,
-        })
+        }, "ollama")
         self.assertEqual(got["total_tokens"], 50)
         self.assertEqual(got["extra"]["load_ms"], 2000.0)
         self.assertEqual(got["extra"]["eval_ms"], 500.0)
@@ -86,9 +84,9 @@ class UsageNormalizeTest(unittest.TestCase):
 
     def test_gemini_usage_subtracts_cached_from_prompt(self):
         """Gemini 的 promptTokenCount 含缓存命中，要减出去才是非缓存输入。"""
-        got = usage_from_gemini({"promptTokenCount": 100, "cachedContentTokenCount": 60,
+        got = usage_from({"promptTokenCount": 100, "cachedContentTokenCount": 60,
                                  "candidatesTokenCount": 5, "thoughtsTokenCount": 7,
-                                 "totalTokenCount": 172})
+                                 "totalTokenCount": 172}, "gemini")
         self.assertEqual(got["input_tokens"], 40)
         self.assertEqual(got["cache_read_tokens"], 60)
         self.assertEqual(got["output_tokens"], 5)
@@ -177,7 +175,7 @@ class MeterTest(unittest.TestCase):
         m.feed("reasoning", "想一下")
         m.feed("content", "你好")
         m.feed("content", "世界")
-        got = m.finish(usage_from_openai({"prompt_tokens": 3, "completion_tokens": 2}),
+        got = m.finish(usage_from({"prompt_tokens": 3, "completion_tokens": 2}, "openai"),
                        finish_reason="stop", extra={"response_id": "r1"})
         self.assertEqual(got["reasoning_text"], "想一下")
         self.assertEqual(got["content_text"], "你好世界")

@@ -32,7 +32,7 @@ import json
 
 import httpx
 
-from ..errors import PalmLLMError, error_for_status, error_for_transport
+from ..errors import PalmLLMError, classify_error
 from ..models import Message, ModelParameters, Tool
 from ..obs import log_event
 from .base import (
@@ -44,10 +44,10 @@ from .base import (
     normalize_tool_calls,
     to_chat_message,
 )
-from .capability import check_capabilities
-from .profiles import apply_rule, resolve_model, resolve_provider
-from .telemetry import Meter, feed, usage_from_openai
-from .tooltext import TextToolFilter, declared_names, filter_events, text_tool_events
+from ._capability import check_capabilities
+from ._profiles import apply_rule, resolve
+from ._telemetry import Meter, feed, usage_from
+from ._tooltext import TextToolFilter, declared_names, filter_events, text_tool_events
 
 _FirstByteTimeout = FirstByteTimeout
 
@@ -73,8 +73,7 @@ class OpenAICompatProvider(BaseProvider):
     async def complete(self, messages, params: ModelParameters, model: str, stream: bool = True):
         self._begin(model)
         # 两级匹配：端点 → 供应商 Profile；model id → 模型子规则（未命中回落且不报错）
-        profile, rule = resolve_model(
-            resolve_provider(self.cfg.base_url, self.cfg.type), model)
+        profile, rule = resolve(self.cfg.base_url, model, self.cfg.type)
         # 能力矩阵前置拦截：已知不支持视觉/文档/超限 → 在此抛错，不产生任何网络往返
         cap_notes = check_capabilities(messages, profile, model, self.name, rule)
         payload = apply_rule(
@@ -191,7 +190,7 @@ class OpenAICompatProvider(BaseProvider):
                             yield ev
                 if tc_acc:
                     yield {"tool_calls": [tc_acc[k] for k in sorted(tc_acc)]}
-                stats = meter.finish(usage_from_openai(usage),
+                stats = meter.finish(usage_from(usage, "openai"),
                                      meta.get("finish_reason", ""),
                                      extra=_meta_extra(meta))
                 if tc_acc:
@@ -240,7 +239,7 @@ class OpenAICompatProvider(BaseProvider):
                     # 与流式路径共用同一份归一：分片拼装的与非流式整包下发的必须是同一形状
                     yield {"tool_calls": normalize_tool_calls(tool_calls)}
                 usage = obj.get("usage", {})
-                stats = meter.finish(usage_from_openai(usage), _finish_reason(obj),
+                stats = meter.finish(usage_from(usage, "openai"), _finish_reason(obj),
                                      extra=_meta_extra({"response_id": obj.get("id"),
                                                         "model": obj.get("model")}))
                 if tool_calls:
@@ -376,13 +375,13 @@ def _as_error(name: str, model: str, exc: BaseException | None, degraded: bool,
     """内部异常 → 类型化错误。文案与历史保持一致，便于既有调用方对号入座。"""
     suffix = "（已降级为基础字段重试）" if degraded else ""
     if isinstance(exc, _HttpStatus):
-        return error_for_status(exc.status, f"[{name}] {exc.status}: {exc.text}{suffix}",
-                                provider=name, model=model, text=exc.text)
+        return classify_error(f"[{name}] {exc.status}: {exc.text}{suffix}",
+                              status=exc.status, provider=name, model=model,
+                              text=exc.text)
     if exc is None:
-        return error_for_transport(None, f"[{name}] 请求失败{suffix}",
-                                   provider=name, model=model)
-    return error_for_transport(
-        exc,
+        return classify_error(f"[{name}] 请求失败{suffix}",
+                              exc=None, provider=name, model=model)
+    return classify_error(
         f"[{name}] 连接失败（已自动重试）：{type(exc).__name__}: "
         f"{exc or '未知连接错误'}{suffix}",
-        provider=name, model=model, interrupted=interrupted)
+        exc=exc, provider=name, model=model, interrupted=interrupted)

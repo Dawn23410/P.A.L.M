@@ -67,9 +67,9 @@ class Message:
                 out["name"] = self.name
             return out
         if self.images or self.files:
-            # 多模态：统一走 providers.multimodal（兼容 str URL 与 {"data","mime"} 字典）。
+            # 多模态：统一走 providers._multimodal（兼容 str URL 与 {"data","mime"} 字典）。
             # 仅在正文非空时加 text block —— 纯附件消息不塞空文本块（部分网关视为空消息）。
-            from .providers.multimodal import content_blocks  # 延迟导入，避免与 providers 循环
+            from .providers._multimodal import content_blocks  # 延迟导入，避免与 providers 循环
 
             blocks = content_blocks(self.content or "", self.images, files=self.files)
             if not self.content:

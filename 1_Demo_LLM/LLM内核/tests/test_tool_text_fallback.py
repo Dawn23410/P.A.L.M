@@ -29,8 +29,8 @@ from palm_llm.providers import ollama as ol
 from palm_llm.providers import openai_compat as oc
 from palm_llm.providers.anthropic import _tool_choice_setup
 from palm_llm.providers.base import normalize_tool_calls, to_chat_message
-from palm_llm.providers.profiles import ModelRule
-from palm_llm.providers.tooltext import (
+from palm_llm.providers._profiles import ModelRule
+from palm_llm.providers._tooltext import (
     TextToolFilter,
     declared_names,
     filter_events,

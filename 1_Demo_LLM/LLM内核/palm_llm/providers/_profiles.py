@@ -5,10 +5,13 @@
 - **一级**（骨架层）：`cfg.type` ＞ 端点/域名特征 ＞ generic → `Profile`
 - **二级**（模型层）：model id 正则 → `ModelRule`，**未命中回落 Profile 且不报错**
 
+两级由**同一个入口** `resolve(base_url, model, type_hint)` 一次完成 —— 调用方永远两级连用，
+拆成两个函数只会多出一个可以被传错的中间值。
+
 为什么规则是数据而不是类
 ------------------------
 厂商月月上新型号，模型级差异（思考开关写法、档位枚举、禁参、固定参）变化频率远高于
-协议骨架。做成数据后，新增供应商/模型只改 `profiles_data.py`，不会让 provider 类 O(N) 爆炸。
+协议骨架。做成数据后，新增供应商/模型只改 `_profiles_data.py`，不会让 provider 类 O(N) 爆炸。
 
 设计要点
 --------
@@ -93,23 +96,26 @@ _MERGE_FIELDS = (
 )
 
 
-def resolve_provider(base_url: str = "", type_hint: str = "") -> Profile:
-    """一级匹配：显式 type ＞ 端点/域名特征 ＞ generic。"""
-    from .profiles_data import PROFILES, DOMAIN_HINTS
+def resolve(base_url: str = "", model: str = "",
+            type_hint: str = "") -> tuple[Profile, Optional[ModelRule]]:
+    """两级匹配一次到位：返回 (生效后的 Profile, 命中的 ModelRule 或 None)。
 
-    if type_hint and type_hint in PROFILES:
-        return PROFILES[type_hint]
-    host = (base_url or "").lower()
-    for frag, name in DOMAIN_HINTS:
-        if frag in host:
-            return PROFILES[name]
-    return PROFILES["generic"]
+    为什么合并成**一个**函数：调用方永远是嵌套调用
+    （原 `resolve_model(resolve_provider(...), model)`），分开只多出一个"可以被传错"的
+    中间值，且两级都只对"没命中就回落"这一条语义负责。
+      - 一级（骨架）：显式 type ＞ 端点/域名特征 ＞ generic
+      - 二级（模型）：model id 正则；**未命中原样返回 profile 且不报错**（厂商上新模型
+        时硬报错会把新模型直接打死）
+    """
+    profile = _resolve_profile(base_url, type_hint)
+    return _match_rule(profile, model)
 
 
-def resolve_model(profile: Profile, model_id: str):
-    """二级匹配：返回 (生效 Profile, 命中的 ModelRule 或 None)。
+def _match_rule(profile: Profile, model_id: str) -> tuple[Profile, Optional[ModelRule]]:
+    """二级匹配：在给定 Profile 的规则表里取第一条命中（priority 降序）。
 
-    未命中时原样返回 profile —— 不报错，行为等同现状。
+    独立成函数是给"Profile 已经在手上"的调用方留的口子（本模块的二级单测即走这里）；
+    常规调用一律走 `resolve()` 一次拿两级结果。
     """
     name = (model_id or "").lower()
     for rule in sorted(profile.model_rules, key=lambda r: -r.priority):
@@ -120,6 +126,19 @@ def resolve_model(profile: Profile, model_id: str):
         if hit:
             return _merge(profile, rule), rule
     return profile, None
+
+
+def _resolve_profile(base_url: str, type_hint: str) -> Profile:
+    """一级匹配：显式 type ＞ 端点/域名特征 ＞ generic。"""
+    from ._profiles_data import PROFILES, DOMAIN_HINTS
+
+    if type_hint and type_hint in PROFILES:
+        return PROFILES[type_hint]
+    host = (base_url or "").lower()
+    for frag, name in DOMAIN_HINTS:
+        if frag in host:
+            return PROFILES[name]
+    return PROFILES["generic"]
 
 
 def apply_rule(payload: dict, profile: Profile, rule: Optional[ModelRule] = None) -> dict:

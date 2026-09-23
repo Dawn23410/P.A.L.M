@@ -25,7 +25,7 @@ import httpx
 from palm_llm.models import Message, ModelParameters, ProviderConfig, Tool
 from palm_llm.providers import gemini as gm
 from palm_llm.providers.gemini import GeminiProvider
-from palm_llm.providers.profiles_data import PROFILES
+from palm_llm.providers._profiles_data import PROFILES
 
 GEMINI_RULE = PROFILES["gemini"].model_rules
 
@@ -381,7 +381,7 @@ class GeminiReasoningEchoTest(unittest.TestCase):
         gm.events_from({"candidates": [{"content": {"parts": [
             {"text": "推理", "thought": True, "thoughtSignature": "SIG-1"},
             {"text": "答案"}]}, "finishReason": "STOP"}]}, st, "g")
-        from palm_llm.providers.telemetry import Meter
+        from palm_llm.providers._telemetry import Meter
         done = gm.finish_events(st, Meter(model="m"))[-1]
         stored = json.loads(done["stats"]["extra"]["native_blocks"])
         self.assertEqual(stored, [{"text": "推理", "thought": True, "thoughtSignature": "SIG-1"}])
@@ -405,7 +405,7 @@ class GeminiReasoningEchoTest(unittest.TestCase):
         st = gm.new_state()
         gm.events_from({"candidates": [{"content": {"parts": [{"text": "hi"}]},
                                         "finishReason": "STOP"}]}, st, "g")
-        from palm_llm.providers.telemetry import Meter
+        from palm_llm.providers._telemetry import Meter
         done = gm.finish_events(st, Meter(model="m"))[-1]
         self.assertNotIn("native_blocks", done["stats"]["extra"])
 

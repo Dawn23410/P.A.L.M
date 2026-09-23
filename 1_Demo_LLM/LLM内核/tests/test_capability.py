@@ -19,14 +19,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import httpx  # noqa: E402
 
 from palm_llm.models import Message, ModelParameters, ProviderConfig  # noqa: E402
-from palm_llm.providers.capability import (  # noqa: E402
+from palm_llm.providers._capability import (  # noqa: E402
     CapabilityError,
     _b64_len,
     capabilities_for,
     check_capabilities,
 )
-from palm_llm.providers.multimodal import content_blocks  # noqa: E402
-from palm_llm.providers.profiles import resolve_model, resolve_provider  # noqa: E402
+from palm_llm.providers._multimodal import content_blocks  # noqa: E402
+from palm_llm.providers._profiles import resolve  # noqa: E402
 
 # 造一个"已知能力"的模型对：DeepSeek 全系不吃文档，只有 flash 支持图像
 VISION_MODEL = "deepseek-flash"
@@ -35,7 +35,7 @@ GENERIC_MODEL = "llama3.2:3b"
 
 
 def _merged(base_url: str, type_hint: str, model: str):
-    return resolve_model(resolve_provider(base_url, type_hint), model)[0]
+    return resolve(base_url, model, type_hint)[0]
 
 
 def _pdf(b64_chars: int = 40) -> str:

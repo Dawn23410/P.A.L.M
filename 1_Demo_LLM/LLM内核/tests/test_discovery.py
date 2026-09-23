@@ -1,4 +1,4 @@
-"""palm_llm.server.discovery + palm_llm.providers.multimodal 回归测试。
+"""palm_llm.server.discovery + palm_llm.providers._multimodal 回归测试。
 
 目的：守护「抽公共脚手架后行为逐字不变」——
 - 三个原生协议的模型发现错误文案（404/401/403/连接失败）必须与重构前**完全一致**；
@@ -19,7 +19,11 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from palm_llm.providers.multimodal import data_uri, file_uri, image_url  # noqa: E402
+from palm_llm.providers._multimodal import (  # noqa: E402
+    DEFAULT_FILE_MIME,
+    DEFAULT_MIME,
+    data_uri,
+)
 from palm_llm.server.discovery import (  # noqa: E402
     _discover_anthropic,
     _discover_gemini,
@@ -138,26 +142,26 @@ class DiscoveryTests(unittest.TestCase):
 
 class MultimodalTests(unittest.TestCase):
     def test_data_uri_equiv(self):
-        # str 原样（URL / data URI）
-        self.assertEqual(image_url("http://x/y.png"), "http://x/y.png")
-        self.assertEqual(file_uri("data:application/pdf;base64,ZZZ"),
+        """图像与文档只差**默认 mime**，故共用一个 `data_uri(media, default_mime)`。"""
+        # str 原样（URL / data URI），与 kind 无关
+        self.assertEqual(data_uri("http://x/y.png"), "http://x/y.png")
+        self.assertEqual(data_uri("data:application/pdf;base64,ZZZ", DEFAULT_FILE_MIME),
                          "data:application/pdf;base64,ZZZ")
-        # dict → data URI，默认 mime 不同
-        self.assertEqual(image_url({"data": "AAA", "mime": "image/png"}),
+        # dict → data URI；显式 mime 覆盖默认
+        self.assertEqual(data_uri({"data": "AAA", "mime": "image/png"}),
                          "data:image/png;base64,AAA")
-        self.assertEqual(file_uri({"data": "BBB", "mime": "application/pdf"}),
+        self.assertEqual(data_uri({"data": "BBB", "mime": "application/pdf"},
+                                  DEFAULT_FILE_MIME),
                          "data:application/pdf;base64,BBB")
-        # 默认值兜底
-        self.assertEqual(image_url({"data": "CCC"}), "data:image/png;base64,CCC")
-        self.assertEqual(file_uri({"data": "DDD"}),
+        # 默认值兜底：图像 image/png、文档 octet-stream
+        self.assertEqual(data_uri({"data": "CCC"}), "data:image/png;base64,CCC")
+        self.assertEqual(data_uri({"data": "DDD"}, DEFAULT_FILE_MIME),
                          "data:application/octet-stream;base64,DDD")
-        # 公共件与薄包装等价
-        self.assertEqual(image_url({"data": "E", "mime": "image/png"}),
-                         data_uri({"data": "E"}, "image/png"))
-        self.assertEqual(file_uri({"data": "F", "mime": "application/pdf"}),
-                         data_uri({"data": "F"}, "application/pdf"))
+        # 两个常量确实是各自的默认值（避免有人改常量时漏改调用方）
+        self.assertEqual(DEFAULT_MIME, "image/png")
+        self.assertEqual(DEFAULT_FILE_MIME, "application/octet-stream")
         # 非 dict/str 退化为 str()
-        self.assertEqual(image_url(123), "123")
+        self.assertEqual(data_uri(123), "123")
 
 
 if __name__ == "__main__":

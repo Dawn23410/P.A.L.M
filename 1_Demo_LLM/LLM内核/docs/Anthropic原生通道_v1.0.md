@@ -1,7 +1,11 @@
 # Anthropic 原生通道 v1.0
 
+> **API 面已统一（2026-09-23）**：对外入口收敛为 `palm_llm`（等价 `palm_llm.api`），
+> 内部实现件全部加下划线私有。下文若出现旧函数名/旧模块路径，那是当时的形态；
+> **当前清单与改名对照见 [《API函数库重构_v1.0》](API函数库重构_v1.0.md)。**
+
 > 落码：`palm_llm/providers/anthropic.py`（传输 + 思考配置，295 行）
-> 　　　`palm_llm/providers/anthropic_wire.py`（线格式双向转换，299 行）
+> 　　　`palm_llm/providers/_anthropic_wire.py`（线格式双向转换，299 行）
 > 用例：`tests/test_anthropic_provider.py`（15 个）
 > 启用方式：`ProviderConfig(type="anthropic", base_url="https://api.anthropic.com")`
 

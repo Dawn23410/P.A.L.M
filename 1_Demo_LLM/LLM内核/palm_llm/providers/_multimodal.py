@@ -45,7 +45,9 @@ def data_uri(media: Any, default_mime: str = DEFAULT_MIME) -> str:
 
     `str` 原样返回（已是 URL 或 data URI）；`dict` 取 `data` + `mime`，已是 data URI 就透传，
     否则按 `default_mime` 拼 `data:<mime>;base64,<data>`；其余类型退化为 `str()`。
-    `image_url` / `file_uri` 只是带不同默认 mime 的薄包装——两者逻辑完全一致。
+
+    图像与文档**只差默认 mime**（`DEFAULT_MIME` / `DEFAULT_FILE_MIME`），故合成一个函数、
+    由调用方传 `default_mime`；原先的 `image_url` / `file_uri` 是它的两个薄包装，已合并掉。
     """
     if isinstance(media, str):
         return media
@@ -58,11 +60,6 @@ def data_uri(media: Any, default_mime: str = DEFAULT_MIME) -> str:
     return str(media)
 
 
-def image_url(img: Any) -> str:
-    """把任意形态的图像入参归一为 URL / data URI（默认 mime = image/png）。"""
-    return data_uri(img, DEFAULT_MIME)
-
-
 def split_data_uri(uri: str) -> tuple[str, str]:
     """拆 data URI → (mime, base64)；非 data URI 原样作为 data 返回。"""
     if uri.startswith("data:"):
@@ -72,16 +69,11 @@ def split_data_uri(uri: str) -> tuple[str, str]:
     return DEFAULT_MIME, uri
 
 
-def file_uri(doc: Any) -> str:
-    """把任意形态的文档入参归一为 data URI（OpenAI 的 `file_data` 只吃这个；默认 mime = octet-stream）。"""
-    return data_uri(doc, DEFAULT_FILE_MIME)
-
-
 def file_name(doc: Any) -> str:
     """文档显示名：调用方给了就用；否则按 mime 反推一个（网关/模型侧靠它判断类型）。"""
     if isinstance(doc, dict) and doc.get("name"):
         return str(doc["name"])
-    mime, _ = split_data_uri(file_uri(doc))
+    mime, _ = split_data_uri(data_uri(doc, DEFAULT_FILE_MIME))
     return f"document.{_EXT_BY_MIME.get(mime, 'bin')}"
 
 
@@ -93,7 +85,7 @@ def content_blocks(text: str, images: Any, mode: str = "openai",
     """
     blocks: list[dict] = [{"type": "text", "text": text or ""}]
     for img in images or []:
-        uri = image_url(img)
+        uri = data_uri(img)                      # 图像：默认 mime = image/*
         if mode == "anthropic":
             mime, data = split_data_uri(uri)
             blocks.append({
@@ -103,7 +95,7 @@ def content_blocks(text: str, images: Any, mode: str = "openai",
         else:
             blocks.append({"type": "image_url", "image_url": {"url": uri}})
     for doc in files or []:
-        uri = file_uri(doc)
+        uri = data_uri(doc, DEFAULT_FILE_MIME)   # 文档：默认 mime = octet-stream
         mime, data = split_data_uri(uri)
         if mode == "anthropic":
             blocks.append({

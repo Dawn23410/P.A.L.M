@@ -40,6 +40,10 @@ class RetryPolicy:
 
         优先级：上游明示的 `Retry-After` ＞ 指数退避。上游既然说了等多久，
         我们就该照做（既不打脸，也能最快恢复）。
+
+        注：内核当前只在**传输层失败**路径调本函数（`base.py::_backoff`），而传输异常
+        不带 `Retry-After` —— 故该优先级分支在内核内**实际不触发**；状态码错误（429/5xx）
+        内核不重试（只分类+标记），若上层要按 `Retry-After` 退避，可复用本策略。
         """
         if self.respect_retry_after:
             retry_after = getattr(exc, "retry_after", None)

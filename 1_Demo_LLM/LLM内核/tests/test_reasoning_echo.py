@@ -20,20 +20,20 @@ import httpx
 
 from palm_llm.models import Message, ModelParameters, ProviderConfig
 from palm_llm.providers import openai_compat as oc
-from palm_llm.providers.anthropic_wire import (
+from palm_llm.providers._anthropic_wire import (
     finish_events,
     new_state,
     on_event,
     to_native_messages,
 )
 from palm_llm.providers.base import to_chat_message
-from palm_llm.providers.profiles import resolve_model, resolve_provider
-from palm_llm.providers.telemetry import Meter
+from palm_llm.providers._profiles import resolve
+from palm_llm.providers._telemetry import Meter
 
 
 def _echo_of(base: str, model: str) -> bool:
     """走真实链路取该端点+模型组合生效的 echo 契约。"""
-    profile, _ = resolve_model(resolve_provider(base, "openai_compat"), model)
+    profile, _ = resolve(base, model, "openai_compat")
     return profile.needs_reasoning_echo
 
 

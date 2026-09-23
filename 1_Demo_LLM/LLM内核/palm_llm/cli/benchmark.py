@@ -163,8 +163,11 @@ ADV_TESTS = [
 
 
 # ============================ 提供方解析 ============================
-def resolve_provider(args) -> tuple[ProviderConfig, Optional[str]]:
-    """按优先级解析提供方配置：--provider > config 中自动识别的 BigModel > 激活提供方 > 兜底默认。"""
+def provider_from_args(args) -> tuple[ProviderConfig, Optional[str]]:
+    """按优先级解析提供方配置：--provider > config 中自动识别的 BigModel > 激活提供方 > 兜底默认。
+
+    （与内核的 `resolve`/`get_provider_instance` 无关：这里只是"CLI 参数 → ProviderConfig"。）
+    """
     cfg = load_config()
     if args.provider:
         pc = get_provider(args.provider)
@@ -390,7 +393,7 @@ def main() -> None:
         _list_cases()
         return
 
-    pc, note = resolve_provider(args)
+    pc, note = provider_from_args(args)
     if not pc.api_key:
         pc.api_key = os.getenv("BIGMODEL_API_KEY") or DEFAULT_API_KEY
     if not pc.api_key or pc.api_key.startswith("替换为"):

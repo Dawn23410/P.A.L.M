@@ -87,16 +87,41 @@ class CapabilityError(PalmLLMError):
     """输入超出目标模型能力 —— 在**发请求之前**拦截，未产生任何网络往返。"""
 
 
-def error_for_status(
-    status: int,
+def classify_error(
     message: str,
     *,
+    status: Optional[int] = None,
+    exc: Optional[BaseException] = None,
+    retry_after: Optional[float] = None,
     provider: Optional[str] = None,
     model: Optional[str] = None,
     text: Optional[str] = None,
-    retry_after: Optional[float] = None,
+    interrupted: bool = False,
 ) -> PalmLLMError:
-    """按 HTTP 状态码选类型；`message` 由调用方给定（保留各家可读文案）。"""
+    """把一个失败信号 → 类型化错误（**唯一**入口，`message` 由调用方给定）。
+
+    两条来源互斥，共用同一个返回契约（都是 `PalmLLMError` 子类）：
+
+    - `status` 给定 → 按 HTTP 状态码分类：429 限流 / 401,403 鉴权 / 其余 4xx 参数
+      / 5xx 上游。
+    - 否则 → 传输层分类。`interrupted=True` 表示"**已向调用方产出内容后**才断"，
+      一律归不可重试的 `StreamInterruptedError` 而不是可重试的 `TransportError` ——
+      这个区分是防重复生成、防重复计费的关键，不是可选细节。
+
+    合并成一个入口的理由：两者回答的是**同一个问题**（"这次失败值不值得再试一次"），
+    调用方不该因为错误来自 HTTP 还是 socket 而去记两个函数名。
+    """
+    if status is not None:
+        return _for_status(status, message, provider=provider, model=model,
+                           text=text, retry_after=retry_after)
+    return _for_transport(exc, message, provider=provider, model=model,
+                          interrupted=interrupted)
+
+
+def _for_status(status: int, message: str, *, provider: Optional[str] = None,
+                model: Optional[str] = None, text: Optional[str] = None,
+                retry_after: Optional[float] = None) -> PalmLLMError:
+    """HTTP 状态码 → 类型（`message` 保留各家可读文案）。"""
     if status == 429:
         cls = RateLimitError
     elif status in (401, 403):
@@ -111,19 +136,10 @@ def error_for_status(
                text=text, retry_after=retry_after)
 
 
-def error_for_transport(
-    exc: Optional[BaseException],
-    message: str,
-    *,
-    provider: Optional[str] = None,
-    model: Optional[str] = None,
-    interrupted: bool = False,
-) -> PalmLLMError:
-    """传输层异常 → 类型化错误。
-
-    `interrupted=True` 表示"已产出内容后才断"，一律归为 `StreamInterruptedError`
-    （不可重试），而不是可重试的 `TransportError` —— 这个区分是防重复生成的关键。
-    """
+def _for_transport(exc: Optional[BaseException], message: str, *,
+                   provider: Optional[str] = None, model: Optional[str] = None,
+                   interrupted: bool = False) -> PalmLLMError:
+    """传输层异常 → 类型；`interrupted=True` → 不可重试的 `StreamInterruptedError`。"""
     if interrupted:
         return StreamInterruptedError(message, provider=provider, model=model)
     return TransportError(message, provider=provider, model=model)
@@ -139,6 +155,5 @@ __all__ = [
     "NotConfiguredError",
     "StreamInterruptedError",
     "CapabilityError",
-    "error_for_status",
-    "error_for_transport",
+    "classify_error",
 ]

@@ -33,7 +33,7 @@ from palm_llm.providers.ollama import (  # noqa: E402
     _tool_stats,
     _usage,
 )
-from palm_llm.providers.telemetry import Meter  # noqa: E402
+from palm_llm.providers._telemetry import Meter  # noqa: E402
 
 BASE = "http://127.0.0.1:11434"
 PREFER_MODEL = "spark-x2.5:1.7b"

@@ -44,7 +44,7 @@ import json
 import re
 from typing import Optional
 
-from .telemetry import mark_finish_tool_calls
+from ._telemetry import mark_finish_tool_calls
 
 # (开始标记, 结束标记)；结束标记为 None 表示"其后全部属于该区域"（如 [TOOL_CALLS]）
 MARKERS: tuple[tuple[str, Optional[str]], ...] = (

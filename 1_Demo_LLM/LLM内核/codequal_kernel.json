@@ -1,25 +1,25 @@
 {
   "project": {
-    "score": 91.8,
+    "score": 92.3,
     "grade": "A",
     "stars": "★★★★★",
     "parts": {
       "complexity": 90.1,
-      "unit_size": 96.7,
-      "duplication": 85.9,
+      "unit_size": 96.8,
+      "duplication": 89.5,
       "coupling": 100.0,
-      "readability": 75.2,
-      "efficiency": 98.7,
+      "readability": 75.4,
+      "efficiency": 98.8,
       "dead_code": 100.0,
       "naming": 100.0,
-      "clones": 89.4
+      "clones": 89.6
     },
     "raw": {
       "complexity": "最大CC 44 / 最大认知 99 / 最大嵌套 4",
-      "unit_size": "函数 323 个，超长 6",
-      "duplication": "3.40% (阈值 2.0%)",
+      "unit_size": "函数 329 个，超长 6",
+      "duplication": "2.48% (阈值 2.0%)",
       "coupling": "平均扇出 4.8",
-      "readability": "注释占比 5.3%",
+      "readability": "注释占比 5.4%",
       "efficiency": "循环内风险 2 处",
       "dead_code": "未用 import 0 · 私有未用 0",
       "naming": "违规 0 处 · 函数风格 snake 100% / camel 0% / other 0%",
@@ -45,19 +45,19 @@
       "root": "palm_llm",
       "profile": "default",
       "dims": "all",
-      "files": 32,
-      "code_lines": 6032,
+      "files": 33,
+      "code_lines": 6155,
       "langs": {
-        "python": 32
+        "python": 33
       },
-      "func_count": 323,
+      "func_count": 329,
       "over_loc": 6,
       "over_cc": 34,
       "over_cognitive": 19,
-      "over_params": 29,
-      "duplication_pct": 3.4,
+      "over_params": 32,
+      "duplication_pct": 2.48,
       "efficiency_hits": 2,
-      "avg_mi": 28.2,
+      "avg_mi": 28.5,
       "unused_imports": 0,
       "dead_private_total": 0,
       "naming_violations": 0,
@@ -71,26 +71,155 @@
   "files": [
     {
       "metrics": {
-        "path": "palm_llm\\errors.py",
+        "path": "palm_llm\\api.py",
         "lang": "python",
-        "loc": 144,
-        "code_lines": 109,
-        "comment_lines": 0,
-        "blank_lines": 35,
+        "loc": 190,
+        "code_lines": 154,
+        "comment_lines": 11,
+        "blank_lines": 25,
         "funcs": [
           {
-            "name": "error_for_status",
+            "name": "protocols",
+            "lineno": 70,
+            "loc": 6,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "_instance",
+            "lineno": 79,
+            "loc": 8,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "_model_of",
+            "lineno": 89,
+            "loc": 2,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "stream",
+            "lineno": 93,
+            "loc": 15,
+            "cc": 3,
+            "cognitive": 1,
+            "params": 5,
+            "nesting": 1
+          },
+          {
+            "name": "complete",
+            "lineno": 110,
+            "loc": 36,
+            "cc": 9,
+            "cognitive": 15,
+            "params": 5,
+            "nesting": 2
+          },
+          {
+            "name": "describe",
+            "lineno": 149,
+            "loc": 18,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 0,
+            "nesting": 0
+          }
+        ],
+        "fanout": 3,
+        "halstead_volume": 4961.738601950006,
+        "mi": 25.956281557440878,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "ev"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 6,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 6,
+        "clone_hits": 0,
+        "clone_partners": [],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 9,
+        "max_cognitive": 15,
+        "max_nesting": 2
+      },
+      "result": {
+        "parts": {
+          "complexity": 95.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 85.8,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 100.0
+        },
+        "score": 96.6,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_llm\\errors.py",
+        "lang": "python",
+        "loc": 159,
+        "code_lines": 120,
+        "comment_lines": 0,
+        "blank_lines": 39,
+        "funcs": [
+          {
+            "name": "classify_error",
             "lineno": 90,
-            "loc": 22,
+            "loc": 29,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 8,
+            "nesting": 1
+          },
+          {
+            "name": "_for_status",
+            "lineno": 121,
+            "loc": 16,
             "cc": 5,
             "cognitive": 8,
             "params": 6,
             "nesting": 1
           },
           {
-            "name": "error_for_transport",
-            "lineno": 114,
-            "loc": 16,
+            "name": "_for_transport",
+            "lineno": 139,
+            "loc": 7,
             "cc": 2,
             "cognitive": 1,
             "params": 5,
@@ -107,19 +236,19 @@
           }
         ],
         "fanout": 2,
-        "halstead_volume": 2681.1353287841557,
-        "mi": 31.191844316990906,
-        "dup_lines": 7,
+        "halstead_volume": 3472.2933286983643,
+        "mi": 29.517115131143438,
+        "dup_lines": 0,
         "long_lines": 0,
         "vague_names": [],
         "efficiency_hits": [],
         "unused_imports": [],
         "dead_private": [],
         "naming_violations": [],
-        "naming_fn_snake": 2,
+        "naming_fn_snake": 3,
         "naming_fn_camel": 0,
         "naming_fn_other": 0,
-        "naming_idents": 11,
+        "naming_idents": 12,
         "clone_hits": 0,
         "clone_partners": [],
         "error": null,
@@ -147,17 +276,17 @@
         "parts": {
           "complexity": 85.0,
           "unit_size": 100.0,
-          "duplication": 64.6,
+          "duplication": 100.0,
           "coupling": 100.0,
-          "readability": 80.3,
+          "readability": 79.8,
           "efficiency": 100.0,
           "dead_code": 100.0,
           "naming": 100.0,
           "clones": 100.0
         },
-        "score": 88.0,
-        "grade": "B",
-        "stars": "★★★★"
+        "score": 93.2,
+        "grade": "A",
+        "stars": "★★★★★"
       }
     },
     {
@@ -259,32 +388,23 @@
       "metrics": {
         "path": "palm_llm\\obs.py",
         "lang": "python",
-        "loc": 135,
+        "loc": 134,
         "code_lines": 105,
         "comment_lines": 3,
-        "blank_lines": 27,
+        "blank_lines": 26,
         "funcs": [
           {
-            "name": "new_request_id",
+            "name": "request_id",
             "lineno": 44,
-            "loc": 3,
-            "cc": 1,
-            "cognitive": 0,
+            "loc": 12,
+            "cc": 2,
+            "cognitive": 1,
             "params": 0,
-            "nesting": 0
-          },
-          {
-            "name": "get_request_id",
-            "lineno": 49,
-            "loc": 2,
-            "cc": 1,
-            "cognitive": 0,
-            "params": 0,
-            "nesting": 0
+            "nesting": 1
           },
           {
             "name": "set_request_id",
-            "lineno": 53,
+            "lineno": 58,
             "loc": 3,
             "cc": 2,
             "cognitive": 1,
@@ -292,17 +412,17 @@
             "nesting": 0
           },
           {
-            "name": "ensure_request_id",
-            "lineno": 58,
-            "loc": 7,
-            "cc": 2,
-            "cognitive": 1,
+            "name": "_new_request_id",
+            "lineno": 63,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
             "params": 0,
-            "nesting": 1
+            "nesting": 0
           },
           {
             "name": "configure_logging",
-            "lineno": 89,
+            "lineno": 90,
             "loc": 22,
             "cc": 4,
             "cognitive": 3,
@@ -311,7 +431,7 @@
           },
           {
             "name": "log_event",
-            "lineno": 113,
+            "lineno": 114,
             "loc": 13,
             "cc": 4,
             "cognitive": 4,
@@ -320,7 +440,7 @@
           },
           {
             "name": "filter",
-            "lineno": 71,
+            "lineno": 72,
             "loc": 3,
             "cc": 1,
             "cognitive": 0,
@@ -329,7 +449,7 @@
           },
           {
             "name": "format",
-            "lineno": 79,
+            "lineno": 80,
             "loc": 8,
             "cc": 3,
             "cognitive": 2,
@@ -338,8 +458,8 @@
           }
         ],
         "fanout": 10,
-        "halstead_volume": 4234.704403869606,
-        "mi": 30.212154698732444,
+        "halstead_volume": 4104.17548719732,
+        "mi": 30.28334394140818,
         "dup_lines": 0,
         "long_lines": 0,
         "vague_names": [],
@@ -347,10 +467,10 @@
         "unused_imports": [],
         "dead_private": [],
         "naming_violations": [],
-        "naming_fn_snake": 8,
+        "naming_fn_snake": 7,
         "naming_fn_camel": 0,
         "naming_fn_other": 0,
-        "naming_idents": 10,
+        "naming_idents": 9,
         "clone_hits": 0,
         "clone_partners": [],
         "error": null,
@@ -477,15 +597,15 @@
       "metrics": {
         "path": "palm_llm\\__init__.py",
         "lang": "python",
-        "loc": 96,
-        "code_lines": 84,
-        "comment_lines": 5,
-        "blank_lines": 7,
+        "loc": 49,
+        "code_lines": 37,
+        "comment_lines": 3,
+        "blank_lines": 9,
         "funcs": [],
         "fanout": 2,
-        "halstead_volume": 818.5422772082746,
-        "mi": 37.492185737755875,
-        "dup_lines": 17,
+        "halstead_volume": 134.88627376126118,
+        "mi": 50.74273881852887,
+        "dup_lines": 0,
         "long_lines": 0,
         "vague_names": [],
         "efficiency_hits": [],
@@ -523,27 +643,27 @@
         "parts": {
           "complexity": 100.0,
           "unit_size": 100.0,
-          "duplication": 0.0,
+          "duplication": 100.0,
           "coupling": 100.0,
-          "readability": 89.3,
+          "readability": 95.7,
           "efficiency": 100.0,
           "dead_code": 100.0,
           "naming": 100.0,
           "clones": 100.0
         },
-        "score": 83.4,
-        "grade": "B",
-        "stars": "★★★★"
+        "score": 99.4,
+        "grade": "A",
+        "stars": "★★★★★"
       }
     },
     {
       "metrics": {
         "path": "palm_llm\\cli\\benchmark.py",
         "lang": "python",
-        "loc": 418,
-        "code_lines": 349,
+        "loc": 421,
+        "code_lines": 351,
         "comment_lines": 17,
-        "blank_lines": 52,
+        "blank_lines": 53,
         "funcs": [
           {
             "name": "supports_thinking",
@@ -591,9 +711,9 @@
             "nesting": 1
           },
           {
-            "name": "resolve_provider",
+            "name": "provider_from_args",
             "lineno": 166,
-            "loc": 21,
+            "loc": 24,
             "cc": 10,
             "cognitive": 11,
             "params": 1,
@@ -601,7 +721,7 @@
           },
           {
             "name": "_run_one",
-            "lineno": 190,
+            "lineno": 193,
             "loc": 27,
             "cc": 8,
             "cognitive": 11,
@@ -610,7 +730,7 @@
           },
           {
             "name": "_build_params",
-            "lineno": 219,
+            "lineno": 222,
             "loc": 12,
             "cc": 4,
             "cognitive": 5,
@@ -619,7 +739,7 @@
           },
           {
             "name": "run_matrix",
-            "lineno": 234,
+            "lineno": 237,
             "loc": 25,
             "cc": 8,
             "cognitive": 14,
@@ -628,7 +748,7 @@
           },
           {
             "name": "run_adv",
-            "lineno": 262,
+            "lineno": 265,
             "loc": 29,
             "cc": 9,
             "cognitive": 16,
@@ -637,7 +757,7 @@
           },
           {
             "name": "_print_summary",
-            "lineno": 294,
+            "lineno": 297,
             "loc": 18,
             "cc": 11,
             "cognitive": 11,
@@ -646,7 +766,7 @@
           },
           {
             "name": "_select_cases",
-            "lineno": 315,
+            "lineno": 318,
             "loc": 17,
             "cc": 9,
             "cognitive": 18,
@@ -655,7 +775,7 @@
           },
           {
             "name": "_list_cases",
-            "lineno": 334,
+            "lineno": 337,
             "loc": 8,
             "cc": 5,
             "cognitive": 6,
@@ -664,7 +784,7 @@
           },
           {
             "name": "_should_pause",
-            "lineno": 345,
+            "lineno": 348,
             "loc": 10,
             "cc": 3,
             "cognitive": 2,
@@ -673,7 +793,7 @@
           },
           {
             "name": "_run_all",
-            "lineno": 358,
+            "lineno": 361,
             "loc": 16,
             "cc": 5,
             "cognitive": 3,
@@ -682,7 +802,7 @@
           },
           {
             "name": "main",
-            "lineno": 376,
+            "lineno": 379,
             "loc": 39,
             "cc": 12,
             "cognitive": 10,
@@ -692,7 +812,7 @@
         ],
         "fanout": 14,
         "halstead_volume": 22090.416444360235,
-        "mi": 13.23845572434195,
+        "mi": 13.184320238688324,
         "dup_lines": 0,
         "long_lines": 0,
         "vague_names": [
@@ -1475,14 +1595,14 @@
       "metrics": {
         "path": "palm_llm\\providers\\anthropic.py",
         "lang": "python",
-        "loc": 302,
-        "code_lines": 246,
+        "loc": 301,
+        "code_lines": 245,
         "comment_lines": 17,
         "blank_lines": 39,
         "funcs": [
           {
             "name": "_tool_choice_setup",
-            "lineno": 210,
+            "lineno": 209,
             "loc": 26,
             "cc": 8,
             "cognitive": 6,
@@ -1491,7 +1611,7 @@
           },
           {
             "name": "_thinking_setup",
-            "lineno": 239,
+            "lineno": 238,
             "loc": 22,
             "cc": 7,
             "cognitive": 9,
@@ -1500,7 +1620,7 @@
           },
           {
             "name": "_caller_intent",
-            "lineno": 263,
+            "lineno": 262,
             "loc": 18,
             "cc": 9,
             "cognitive": 16,
@@ -1509,7 +1629,7 @@
           },
           {
             "name": "_effort_setup",
-            "lineno": 283,
+            "lineno": 282,
             "loc": 10,
             "cc": 8,
             "cognitive": 6,
@@ -1518,7 +1638,7 @@
           },
           {
             "name": "_fill_budget",
-            "lineno": 295,
+            "lineno": 294,
             "loc": 5,
             "cc": 3,
             "cognitive": 1,
@@ -1564,7 +1684,7 @@
           {
             "name": "_build_payload",
             "lineno": 113,
-            "loc": 42,
+            "loc": 41,
             "cc": 12,
             "cognitive": 15,
             "params": 6,
@@ -1572,7 +1692,7 @@
           },
           {
             "name": "_stream",
-            "lineno": 157,
+            "lineno": 156,
             "loc": 16,
             "cc": 7,
             "cognitive": 10,
@@ -1581,7 +1701,7 @@
           },
           {
             "name": "_iter_events",
-            "lineno": 174,
+            "lineno": 173,
             "loc": 12,
             "cc": 5,
             "cognitive": 4,
@@ -1590,7 +1710,7 @@
           },
           {
             "name": "_fetch_once",
-            "lineno": 187,
+            "lineno": 186,
             "loc": 20,
             "cc": 10,
             "cognitive": 9,
@@ -1599,9 +1719,9 @@
           }
         ],
         "fanout": 3,
-        "halstead_volume": 12837.81629164287,
-        "mi": 18.25915453310902,
-        "dup_lines": 20,
+        "halstead_volume": 12788.755706660286,
+        "mi": 18.309387335502404,
+        "dup_lines": 19,
         "long_lines": 0,
         "vague_names": [
           "ev",
@@ -1623,9 +1743,9 @@
           "gemini.py:93 (_root, dice 0.97)",
           "gemini.py:115 (complete, dice 1.00)",
           "gemini.py:126 (_build_payload, dice 0.84)",
-          "gemini.py:178 (_stream, dice 0.90)",
-          "gemini.py:191 (_iter_events, dice 0.97)",
-          "gemini.py:204 (_fetch_once, dice 0.91)"
+          "gemini.py:177 (_stream, dice 0.90)",
+          "gemini.py:190 (_iter_events, dice 0.97)",
+          "gemini.py:203 (_fetch_once, dice 0.91)"
         ],
         "error": null,
         "th": {
@@ -1652,7 +1772,7 @@
         "parts": {
           "complexity": 89.2,
           "unit_size": 100.0,
-          "duplication": 51.0,
+          "duplication": 54.0,
           "coupling": 100.0,
           "readability": 77.2,
           "efficiency": 100.0,
@@ -1660,14 +1780,937 @@
           "naming": 100.0,
           "clones": 60.3
         },
-        "score": 86.5,
+        "score": 87.0,
         "grade": "B",
         "stars": "★★★★"
       }
     },
     {
       "metrics": {
-        "path": "palm_llm\\providers\\anthropic_wire.py",
+        "path": "palm_llm\\providers\\base.py",
+        "lang": "python",
+        "loc": 322,
+        "code_lines": 258,
+        "comment_lines": 13,
+        "blank_lines": 51,
+        "funcs": [
+          {
+            "name": "get_client",
+            "lineno": 30,
+            "loc": 45,
+            "cc": 13,
+            "cognitive": 11,
+            "params": 0,
+            "nesting": 2
+          },
+          {
+            "name": "close_client",
+            "lineno": 77,
+            "loc": 10,
+            "cc": 4,
+            "cognitive": 6,
+            "params": 0,
+            "nesting": 3
+          },
+          {
+            "name": "chain",
+            "lineno": 111,
+            "loc": 8,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "iter_sse_lines",
+            "lineno": 121,
+            "loc": 15,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "to_chat_message",
+            "lineno": 138,
+            "loc": 18,
+            "cc": 5,
+            "cognitive": 2,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "normalize_tool_calls",
+            "lineno": 158,
+            "loc": 28,
+            "cc": 11,
+            "cognitive": 12,
+            "params": 1,
+            "nesting": 2
+          },
+          {
+            "name": "__init__",
+            "lineno": 103,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "__str__",
+            "lineno": 106,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "__init__",
+            "lineno": 205,
+            "loc": 6,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "complete",
+            "lineno": 212,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 5,
+            "nesting": 0
+          },
+          {
+            "name": "prewarm",
+            "lineno": 219,
+            "loc": 17,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "_check_key",
+            "lineno": 237,
+            "loc": 4,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "_begin",
+            "lineno": 242,
+            "loc": 11,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "_backoff",
+            "lineno": 254,
+            "loc": 11,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 4,
+            "nesting": 1
+          },
+          {
+            "name": "_run_with_retry",
+            "lineno": 266,
+            "loc": 45,
+            "cc": 11,
+            "cognitive": 22,
+            "params": 5,
+            "nesting": 3
+          },
+          {
+            "name": "image_to_b64",
+            "lineno": 312,
+            "loc": 11,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 1
+          }
+        ],
+        "fanout": 9,
+        "halstead_volume": 10989.609958618472,
+        "mi": 18.568398147397122,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "c",
+          "ev",
+          "fn",
+          "item",
+          "r",
+          "t0",
+          "tc"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 13,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 15,
+        "clone_hits": 1,
+        "clone_partners": [
+          "ollama.py:84 (prewarm, dice 0.88)"
+        ],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 13,
+        "max_cognitive": 22,
+        "max_nesting": 3
+      },
+      "result": {
+        "parts": {
+          "complexity": 87.5,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 72.0,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 94.2
+        },
+        "score": 92.7,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_llm\\providers\\gemini.py",
+        "lang": "python",
+        "loc": 331,
+        "code_lines": 268,
+        "comment_lines": 20,
+        "blank_lines": 43,
+        "funcs": [
+          {
+            "name": "_thinking_config",
+            "lineno": 221,
+            "loc": 20,
+            "cc": 6,
+            "cognitive": 5,
+            "params": 3,
+            "nesting": 1
+          },
+          {
+            "name": "_read_intent",
+            "lineno": 243,
+            "loc": 28,
+            "cc": 13,
+            "cognitive": 11,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "_level_for",
+            "lineno": 273,
+            "loc": 11,
+            "cc": 6,
+            "cognitive": 5,
+            "params": 4,
+            "nesting": 2
+          },
+          {
+            "name": "_clamp_level",
+            "lineno": 286,
+            "loc": 13,
+            "cc": 5,
+            "cognitive": 2,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "_budget_for",
+            "lineno": 301,
+            "loc": 19,
+            "cc": 5,
+            "cognitive": 5,
+            "params": 4,
+            "nesting": 2
+          },
+          {
+            "name": "_wants_thoughts",
+            "lineno": 322,
+            "loc": 7,
+            "cc": 3,
+            "cognitive": 3,
+            "params": 1,
+            "nesting": 2
+          },
+          {
+            "name": "__init__",
+            "lineno": 81,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "_root",
+            "lineno": 93,
+            "loc": 8,
+            "cc": 5,
+            "cognitive": 5,
+            "params": 1,
+            "nesting": 2
+          },
+          {
+            "name": "_url",
+            "lineno": 102,
+            "loc": 7,
+            "cc": 4,
+            "cognitive": 3,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "_headers",
+            "lineno": 110,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "complete",
+            "lineno": 115,
+            "loc": 9,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 5,
+            "nesting": 1
+          },
+          {
+            "name": "_build_payload",
+            "lineno": 126,
+            "loc": 29,
+            "cc": 11,
+            "cognitive": 15,
+            "params": 6,
+            "nesting": 2
+          },
+          {
+            "name": "_generation_config",
+            "lineno": 156,
+            "loc": 19,
+            "cc": 8,
+            "cognitive": 6,
+            "params": 5,
+            "nesting": 2
+          },
+          {
+            "name": "_stream",
+            "lineno": 177,
+            "loc": 12,
+            "cc": 5,
+            "cognitive": 5,
+            "params": 5,
+            "nesting": 2
+          },
+          {
+            "name": "_iter_events",
+            "lineno": 190,
+            "loc": 12,
+            "cc": 5,
+            "cognitive": 4,
+            "params": 4,
+            "nesting": 2
+          },
+          {
+            "name": "_fetch_once",
+            "lineno": 203,
+            "loc": 15,
+            "cc": 4,
+            "cognitive": 3,
+            "params": 5,
+            "nesting": 1
+          }
+        ],
+        "fanout": 3,
+        "halstead_volume": 15585.354253246724,
+        "mi": 16.96915726289615,
+        "dup_lines": 19,
+        "long_lines": 0,
+        "vague_names": [
+          "ev",
+          "obj",
+          "r",
+          "st",
+          "value"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 15,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 17,
+        "clone_hits": 6,
+        "clone_partners": [
+          "anthropic.py:83 (_url, dice 0.97)",
+          "anthropic.py:102 (complete, dice 1.00)",
+          "anthropic.py:113 (_build_payload, dice 0.84)",
+          "anthropic.py:156 (_stream, dice 0.90)",
+          "anthropic.py:173 (_iter_events, dice 0.97)",
+          "anthropic.py:186 (_fetch_once, dice 0.91)"
+        ],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 13,
+        "max_cognitive": 15,
+        "max_nesting": 2
+      },
+      "result": {
+        "parts": {
+          "complexity": 89.7,
+          "unit_size": 100.0,
+          "duplication": 59.3,
+          "coupling": 100.0,
+          "readability": 77.4,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 65.5
+        },
+        "score": 87.9,
+        "grade": "B",
+        "stars": "★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_llm\\providers\\ollama.py",
+        "lang": "python",
+        "loc": 401,
+        "code_lines": 316,
+        "comment_lines": 24,
+        "blank_lines": 61,
+        "funcs": [
+          {
+            "name": "_emit_tool_calls",
+            "lineno": 261,
+            "loc": 9,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "_parse_line",
+            "lineno": 277,
+            "loc": 10,
+            "cc": 5,
+            "cognitive": 4,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "_native_message",
+            "lineno": 289,
+            "loc": 18,
+            "cc": 5,
+            "cognitive": 6,
+            "params": 1,
+            "nesting": 2
+          },
+          {
+            "name": "_native_call",
+            "lineno": 309,
+            "loc": 11,
+            "cc": 8,
+            "cognitive": 8,
+            "params": 1,
+            "nesting": 2
+          },
+          {
+            "name": "_resolve_think",
+            "lineno": 322,
+            "loc": 19,
+            "cc": 8,
+            "cognitive": 5,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "_stats",
+            "lineno": 343,
+            "loc": 3,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "_tool_stats",
+            "lineno": 348,
+            "loc": 11,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 3,
+            "nesting": 1
+          },
+          {
+            "name": "_http_fail",
+            "lineno": 361,
+            "loc": 5,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "_connect_fail",
+            "lineno": 368,
+            "loc": 7,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "_usage",
+            "lineno": 377,
+            "loc": 17,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "_ns_to_ms",
+            "lineno": 396,
+            "loc": 3,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "_root",
+            "lineno": 74,
+            "loc": 6,
+            "cc": 4,
+            "cognitive": 3,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "_chat_url",
+            "lineno": 81,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "prewarm",
+            "lineno": 84,
+            "loc": 15,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "list_models",
+            "lineno": 100,
+            "loc": 9,
+            "cc": 5,
+            "cognitive": 3,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "_check_key",
+            "lineno": 110,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "complete",
+            "lineno": 114,
+            "loc": 72,
+            "cc": 18,
+            "cognitive": 39,
+            "params": 5,
+            "nesting": 4
+          },
+          {
+            "name": "_fetch_once",
+            "lineno": 187,
+            "loc": 18,
+            "cc": 4,
+            "cognitive": 3,
+            "params": 3,
+            "nesting": 1
+          },
+          {
+            "name": "_build_payload",
+            "lineno": 207,
+            "loc": 32,
+            "cc": 7,
+            "cognitive": 7,
+            "params": 5,
+            "nesting": 2
+          },
+          {
+            "name": "_emit",
+            "lineno": 241,
+            "loc": 18,
+            "cc": 5,
+            "cognitive": 4,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "_meter",
+            "lineno": 127,
+            "loc": 5,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 0,
+            "nesting": 1
+          }
+        ],
+        "fanout": 6,
+        "halstead_volume": 15393.192694930041,
+        "mi": 15.575744112984477,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "ev",
+          "fn",
+          "obj",
+          "r",
+          "t0",
+          "tc"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 21,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 22,
+        "clone_hits": 1,
+        "clone_partners": [
+          "base.py:219 (prewarm, dice 0.88)"
+        ],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 18,
+        "max_cognitive": 39,
+        "max_nesting": 4
+      },
+      "result": {
+        "parts": {
+          "complexity": 89.8,
+          "unit_size": 95.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 75.7,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 95.1
+        },
+        "score": 92.8,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_llm\\providers\\openai_compat.py",
+        "lang": "python",
+        "loc": 387,
+        "code_lines": 320,
+        "comment_lines": 25,
+        "blank_lines": 42,
+        "funcs": [
+          {
+            "name": "_emit_stream_event",
+            "lineno": 263,
+            "loc": 40,
+            "cc": 16,
+            "cognitive": 13,
+            "params": 4,
+            "nesting": 1
+          },
+          {
+            "name": "_accumulate_tool_frag",
+            "lineno": 305,
+            "loc": 22,
+            "cc": 6,
+            "cognitive": 5,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "_meta_extra",
+            "lineno": 329,
+            "loc": 4,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "_finish_reason",
+            "lineno": 335,
+            "loc": 6,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "_downgrade",
+            "lineno": 343,
+            "loc": 5,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "_plain_messages",
+            "lineno": 350,
+            "loc": 16,
+            "cc": 9,
+            "cognitive": 7,
+            "params": 1,
+            "nesting": 2
+          },
+          {
+            "name": "_degradable",
+            "lineno": 368,
+            "loc": 3,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "_as_error",
+            "lineno": 373,
+            "loc": 15,
+            "cc": 5,
+            "cognitive": 4,
+            "params": 5,
+            "nesting": 1
+          },
+          {
+            "name": "__init__",
+            "lineno": 66,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "complete",
+            "lineno": 73,
+            "loc": 47,
+            "cc": 12,
+            "cognitive": 27,
+            "params": 5,
+            "nesting": 4
+          },
+          {
+            "name": "_build_payload",
+            "lineno": 122,
+            "loc": 28,
+            "cc": 6,
+            "cognitive": 5,
+            "params": 6,
+            "nesting": 1
+          },
+          {
+            "name": "_url",
+            "lineno": 151,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "_headers",
+            "lineno": 154,
+            "loc": 5,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "_stream",
+            "lineno": 161,
+            "loc": 48,
+            "cc": 13,
+            "cognitive": 23,
+            "params": 3,
+            "nesting": 3
+          },
+          {
+            "name": "_oneshot",
+            "lineno": 210,
+            "loc": 45,
+            "cc": 12,
+            "cognitive": 18,
+            "params": 3,
+            "nesting": 3
+          },
+          {
+            "name": "_conv",
+            "lineno": 257,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          }
+        ],
+        "fanout": 5,
+        "halstead_volume": 18081.028810164305,
+        "mi": 14.753411393748877,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "b",
+          "data",
+          "ev",
+          "fn",
+          "item",
+          "obj",
+          "r"
+        ],
+        "efficiency_hits": [
+          [
+            98,
+            "io-in-loop",
+            "meter.stats.extra.update(cap_notes)"
+          ]
+        ],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 15,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 17,
+        "clone_hits": 0,
+        "clone_partners": [],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 16,
+        "max_cognitive": 27,
+        "max_nesting": 4
+      },
+      "result": {
+        "parts": {
+          "complexity": 74.4,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 74.2,
+          "efficiency": 88,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 100.0
+        },
+        "score": 87.9,
+        "grade": "B",
+        "stars": "★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_llm\\providers\\_anthropic_wire.py",
         "lang": "python",
         "loc": 425,
         "code_lines": 355,
@@ -1892,8 +2935,8 @@
           }
         ],
         "fanout": 4,
-        "halstead_volume": 21696.146552015533,
-        "mi": 13.126129099710493,
+        "halstead_volume": 21726.286310608102,
+        "mi": 13.121907637404409,
         "dup_lines": 28,
         "long_lines": 0,
         "vague_names": [
@@ -1915,15 +2958,15 @@
         "naming_idents": 24,
         "clone_hits": 9,
         "clone_partners": [
-          "gemini_wire.py:84 (_append_content, dice 1.00)",
-          "gemini_wire.py:278 (finish_events, dice 0.91)",
-          "gemini_wire.py:331 (_echoed_parts, dice 1.00)",
-          "gemini_wire.py:178 (function_declarations, dice 0.92)",
-          "gemini_wire.py:343 (parse_sse, dice 0.96)",
-          "gemini_wire.py:357 (error_text, dice 0.86)",
-          "gemini_wire.py:59 (to_contents, dice 0.96)",
-          "gemini_wire.py:92 (_parts_for, dice 0.85)",
-          "gemini_wire.py:135 (_inline_data, dice 0.89)"
+          "_gemini_wire.py:331 (_echoed_parts, dice 1.00)",
+          "_gemini_wire.py:178 (function_declarations, dice 0.92)",
+          "_gemini_wire.py:84 (_append_content, dice 1.00)",
+          "_gemini_wire.py:278 (finish_events, dice 0.91)",
+          "_gemini_wire.py:343 (parse_sse, dice 0.96)",
+          "_gemini_wire.py:357 (error_text, dice 0.86)",
+          "_gemini_wire.py:59 (to_contents, dice 0.96)",
+          "_gemini_wire.py:92 (_parts_for, dice 0.85)",
+          "_gemini_wire.py:135 (_inline_data, dice 0.89)"
         ],
         "error": null,
         "th": {
@@ -1965,225 +3008,7 @@
     },
     {
       "metrics": {
-        "path": "palm_llm\\providers\\base.py",
-        "lang": "python",
-        "loc": 322,
-        "code_lines": 258,
-        "comment_lines": 13,
-        "blank_lines": 51,
-        "funcs": [
-          {
-            "name": "get_client",
-            "lineno": 30,
-            "loc": 45,
-            "cc": 13,
-            "cognitive": 11,
-            "params": 0,
-            "nesting": 2
-          },
-          {
-            "name": "close_client",
-            "lineno": 77,
-            "loc": 10,
-            "cc": 4,
-            "cognitive": 6,
-            "params": 0,
-            "nesting": 3
-          },
-          {
-            "name": "chain",
-            "lineno": 111,
-            "loc": 8,
-            "cc": 2,
-            "cognitive": 1,
-            "params": 2,
-            "nesting": 1
-          },
-          {
-            "name": "iter_sse_lines",
-            "lineno": 121,
-            "loc": 15,
-            "cc": 3,
-            "cognitive": 2,
-            "params": 1,
-            "nesting": 1
-          },
-          {
-            "name": "to_chat_message",
-            "lineno": 138,
-            "loc": 18,
-            "cc": 5,
-            "cognitive": 2,
-            "params": 2,
-            "nesting": 1
-          },
-          {
-            "name": "normalize_tool_calls",
-            "lineno": 158,
-            "loc": 28,
-            "cc": 11,
-            "cognitive": 12,
-            "params": 1,
-            "nesting": 2
-          },
-          {
-            "name": "__init__",
-            "lineno": 103,
-            "loc": 2,
-            "cc": 1,
-            "cognitive": 0,
-            "params": 1,
-            "nesting": 0
-          },
-          {
-            "name": "__str__",
-            "lineno": 106,
-            "loc": 3,
-            "cc": 1,
-            "cognitive": 0,
-            "params": 1,
-            "nesting": 0
-          },
-          {
-            "name": "__init__",
-            "lineno": 205,
-            "loc": 6,
-            "cc": 2,
-            "cognitive": 1,
-            "params": 2,
-            "nesting": 0
-          },
-          {
-            "name": "complete",
-            "lineno": 212,
-            "loc": 4,
-            "cc": 1,
-            "cognitive": 0,
-            "params": 5,
-            "nesting": 0
-          },
-          {
-            "name": "prewarm",
-            "lineno": 219,
-            "loc": 17,
-            "cc": 2,
-            "cognitive": 1,
-            "params": 1,
-            "nesting": 1
-          },
-          {
-            "name": "_check_key",
-            "lineno": 237,
-            "loc": 4,
-            "cc": 2,
-            "cognitive": 1,
-            "params": 1,
-            "nesting": 1
-          },
-          {
-            "name": "_begin",
-            "lineno": 242,
-            "loc": 11,
-            "cc": 1,
-            "cognitive": 0,
-            "params": 2,
-            "nesting": 0
-          },
-          {
-            "name": "_backoff",
-            "lineno": 254,
-            "loc": 11,
-            "cc": 2,
-            "cognitive": 1,
-            "params": 4,
-            "nesting": 1
-          },
-          {
-            "name": "_run_with_retry",
-            "lineno": 266,
-            "loc": 45,
-            "cc": 11,
-            "cognitive": 22,
-            "params": 5,
-            "nesting": 3
-          },
-          {
-            "name": "image_to_b64",
-            "lineno": 312,
-            "loc": 11,
-            "cc": 2,
-            "cognitive": 1,
-            "params": 2,
-            "nesting": 1
-          }
-        ],
-        "fanout": 9,
-        "halstead_volume": 10940.803400697147,
-        "mi": 18.581933491728197,
-        "dup_lines": 0,
-        "long_lines": 0,
-        "vague_names": [
-          "c",
-          "ev",
-          "fn",
-          "item",
-          "r",
-          "t0",
-          "tc"
-        ],
-        "efficiency_hits": [],
-        "unused_imports": [],
-        "dead_private": [],
-        "naming_violations": [],
-        "naming_fn_snake": 13,
-        "naming_fn_camel": 0,
-        "naming_fn_other": 0,
-        "naming_idents": 15,
-        "clone_hits": 1,
-        "clone_partners": [
-          "ollama.py:84 (prewarm, dice 0.88)"
-        ],
-        "error": null,
-        "th": {
-          "func_loc": 50,
-          "func_cc": 10,
-          "func_cognitive": 15,
-          "func_params": 4,
-          "max_nesting": 3,
-          "file_loc": 500,
-          "duplication_pct": 2.0,
-          "comment_min": 0.08,
-          "comment_max": 0.35,
-          "line_width": 120,
-          "fanout": 15,
-          "clone_min_lines": 6,
-          "clone_min_tokens": 8,
-          "clone_sim": 0.8
-        },
-        "max_cc": 13,
-        "max_cognitive": 22,
-        "max_nesting": 3
-      },
-      "result": {
-        "parts": {
-          "complexity": 87.5,
-          "unit_size": 100.0,
-          "duplication": 100.0,
-          "coupling": 100.0,
-          "readability": 72.0,
-          "efficiency": 100.0,
-          "dead_code": 100.0,
-          "naming": 100.0,
-          "clones": 94.2
-        },
-        "score": 92.7,
-        "grade": "A",
-        "stars": "★★★★★"
-      }
-    },
-    {
-      "metrics": {
-        "path": "palm_llm\\providers\\capability.py",
+        "path": "palm_llm\\providers\\_capability.py",
         "lang": "python",
         "loc": 243,
         "code_lines": 190,
@@ -2327,8 +3152,8 @@
           }
         ],
         "fanout": 3,
-        "halstead_volume": 8647.631091352048,
-        "mi": 22.016763191169883,
+        "halstead_volume": 8601.383752197726,
+        "mi": 22.033069690023385,
         "dup_lines": 0,
         "long_lines": 0,
         "vague_names": [
@@ -2386,228 +3211,7 @@
     },
     {
       "metrics": {
-        "path": "palm_llm\\providers\\gemini.py",
-        "lang": "python",
-        "loc": 332,
-        "code_lines": 269,
-        "comment_lines": 20,
-        "blank_lines": 43,
-        "funcs": [
-          {
-            "name": "_thinking_config",
-            "lineno": 222,
-            "loc": 20,
-            "cc": 6,
-            "cognitive": 5,
-            "params": 3,
-            "nesting": 1
-          },
-          {
-            "name": "_read_intent",
-            "lineno": 244,
-            "loc": 28,
-            "cc": 13,
-            "cognitive": 11,
-            "params": 1,
-            "nesting": 1
-          },
-          {
-            "name": "_level_for",
-            "lineno": 274,
-            "loc": 11,
-            "cc": 6,
-            "cognitive": 5,
-            "params": 4,
-            "nesting": 2
-          },
-          {
-            "name": "_clamp_level",
-            "lineno": 287,
-            "loc": 13,
-            "cc": 5,
-            "cognitive": 2,
-            "params": 2,
-            "nesting": 1
-          },
-          {
-            "name": "_budget_for",
-            "lineno": 302,
-            "loc": 19,
-            "cc": 5,
-            "cognitive": 5,
-            "params": 4,
-            "nesting": 2
-          },
-          {
-            "name": "_wants_thoughts",
-            "lineno": 323,
-            "loc": 7,
-            "cc": 3,
-            "cognitive": 3,
-            "params": 1,
-            "nesting": 2
-          },
-          {
-            "name": "__init__",
-            "lineno": 81,
-            "loc": 4,
-            "cc": 1,
-            "cognitive": 0,
-            "params": 3,
-            "nesting": 0
-          },
-          {
-            "name": "_root",
-            "lineno": 93,
-            "loc": 8,
-            "cc": 5,
-            "cognitive": 5,
-            "params": 1,
-            "nesting": 2
-          },
-          {
-            "name": "_url",
-            "lineno": 102,
-            "loc": 7,
-            "cc": 4,
-            "cognitive": 3,
-            "params": 3,
-            "nesting": 0
-          },
-          {
-            "name": "_headers",
-            "lineno": 110,
-            "loc": 3,
-            "cc": 1,
-            "cognitive": 0,
-            "params": 1,
-            "nesting": 0
-          },
-          {
-            "name": "complete",
-            "lineno": 115,
-            "loc": 9,
-            "cc": 2,
-            "cognitive": 1,
-            "params": 5,
-            "nesting": 1
-          },
-          {
-            "name": "_build_payload",
-            "lineno": 126,
-            "loc": 30,
-            "cc": 11,
-            "cognitive": 15,
-            "params": 6,
-            "nesting": 2
-          },
-          {
-            "name": "_generation_config",
-            "lineno": 157,
-            "loc": 19,
-            "cc": 8,
-            "cognitive": 6,
-            "params": 5,
-            "nesting": 2
-          },
-          {
-            "name": "_stream",
-            "lineno": 178,
-            "loc": 12,
-            "cc": 5,
-            "cognitive": 5,
-            "params": 5,
-            "nesting": 2
-          },
-          {
-            "name": "_iter_events",
-            "lineno": 191,
-            "loc": 12,
-            "cc": 5,
-            "cognitive": 4,
-            "params": 4,
-            "nesting": 2
-          },
-          {
-            "name": "_fetch_once",
-            "lineno": 204,
-            "loc": 15,
-            "cc": 4,
-            "cognitive": 3,
-            "params": 5,
-            "nesting": 1
-          }
-        ],
-        "fanout": 3,
-        "halstead_volume": 15635.796764583942,
-        "mi": 16.924047286611916,
-        "dup_lines": 20,
-        "long_lines": 0,
-        "vague_names": [
-          "ev",
-          "obj",
-          "r",
-          "st",
-          "value"
-        ],
-        "efficiency_hits": [],
-        "unused_imports": [],
-        "dead_private": [],
-        "naming_violations": [],
-        "naming_fn_snake": 15,
-        "naming_fn_camel": 0,
-        "naming_fn_other": 0,
-        "naming_idents": 17,
-        "clone_hits": 6,
-        "clone_partners": [
-          "anthropic.py:83 (_url, dice 0.97)",
-          "anthropic.py:102 (complete, dice 1.00)",
-          "anthropic.py:113 (_build_payload, dice 0.84)",
-          "anthropic.py:157 (_stream, dice 0.90)",
-          "anthropic.py:174 (_iter_events, dice 0.97)",
-          "anthropic.py:187 (_fetch_once, dice 0.91)"
-        ],
-        "error": null,
-        "th": {
-          "func_loc": 50,
-          "func_cc": 10,
-          "func_cognitive": 15,
-          "func_params": 4,
-          "max_nesting": 3,
-          "file_loc": 500,
-          "duplication_pct": 2.0,
-          "comment_min": 0.08,
-          "comment_max": 0.35,
-          "line_width": 120,
-          "fanout": 15,
-          "clone_min_lines": 6,
-          "clone_min_tokens": 8,
-          "clone_sim": 0.8
-        },
-        "max_cc": 13,
-        "max_cognitive": 15,
-        "max_nesting": 2
-      },
-      "result": {
-        "parts": {
-          "complexity": 89.7,
-          "unit_size": 100.0,
-          "duplication": 56.5,
-          "coupling": 100.0,
-          "readability": 77.4,
-          "efficiency": 100.0,
-          "dead_code": 100.0,
-          "naming": 100.0,
-          "clones": 65.5
-        },
-        "score": 87.5,
-        "grade": "B",
-        "stars": "★★★★"
-      }
-    },
-    {
-      "metrics": {
-        "path": "palm_llm\\providers\\gemini_wire.py",
+        "path": "palm_llm\\providers\\_gemini_wire.py",
         "lang": "python",
         "loc": 375,
         "code_lines": 308,
@@ -2814,8 +3418,8 @@
           }
         ],
         "fanout": 5,
-        "halstead_volume": 17970.96014561319,
-        "mi": 15.11114879794666,
+        "halstead_volume": 17998.344778177412,
+        "mi": 15.106518465372302,
         "dup_lines": 28,
         "long_lines": 0,
         "vague_names": [
@@ -2837,15 +3441,15 @@
         "naming_idents": 22,
         "clone_hits": 9,
         "clone_partners": [
-          "anthropic_wire.py:65 (_append_native, dice 1.00)",
-          "anthropic_wire.py:332 (finish_events, dice 0.91)",
-          "anthropic_wire.py:98 (_echoed_blocks, dice 1.00)",
-          "anthropic_wire.py:140 (native_tools, dice 0.92)",
-          "anthropic_wire.py:390 (parse_sse, dice 0.96)",
-          "anthropic_wire.py:408 (error_text, dice 0.86)",
-          "anthropic_wire.py:41 (to_native_messages, dice 0.96)",
-          "anthropic_wire.py:73 (_blocks_for, dice 0.85)",
-          "anthropic_wire.py:114 (_image_block, dice 0.89)"
+          "_anthropic_wire.py:98 (_echoed_blocks, dice 1.00)",
+          "_anthropic_wire.py:140 (native_tools, dice 0.92)",
+          "_anthropic_wire.py:65 (_append_native, dice 1.00)",
+          "_anthropic_wire.py:332 (finish_events, dice 0.91)",
+          "_anthropic_wire.py:390 (parse_sse, dice 0.96)",
+          "_anthropic_wire.py:408 (error_text, dice 0.86)",
+          "_anthropic_wire.py:41 (to_native_messages, dice 0.96)",
+          "_anthropic_wire.py:73 (_blocks_for, dice 0.85)",
+          "_anthropic_wire.py:114 (_image_block, dice 0.89)"
         ],
         "error": null,
         "th": {
@@ -2887,34 +3491,25 @@
     },
     {
       "metrics": {
-        "path": "palm_llm\\providers\\multimodal.py",
+        "path": "palm_llm\\providers\\_multimodal.py",
         "lang": "python",
-        "loc": 118,
-        "code_lines": 94,
+        "loc": 110,
+        "code_lines": 89,
         "comment_lines": 1,
-        "blank_lines": 23,
+        "blank_lines": 20,
         "funcs": [
           {
             "name": "data_uri",
             "lineno": 43,
-            "loc": 16,
+            "loc": 18,
             "cc": 6,
             "cognitive": 6,
             "params": 2,
             "nesting": 2
           },
           {
-            "name": "image_url",
-            "lineno": 61,
-            "loc": 3,
-            "cc": 1,
-            "cognitive": 0,
-            "params": 1,
-            "nesting": 0
-          },
-          {
             "name": "split_data_uri",
-            "lineno": 66,
+            "lineno": 63,
             "loc": 7,
             "cc": 3,
             "cognitive": 2,
@@ -2922,17 +3517,8 @@
             "nesting": 1
           },
           {
-            "name": "file_uri",
-            "lineno": 75,
-            "loc": 3,
-            "cc": 1,
-            "cognitive": 0,
-            "params": 1,
-            "nesting": 0
-          },
-          {
             "name": "file_name",
-            "lineno": 80,
+            "lineno": 72,
             "loc": 6,
             "cc": 3,
             "cognitive": 1,
@@ -2941,7 +3527,7 @@
           },
           {
             "name": "content_blocks",
-            "lineno": 88,
+            "lineno": 80,
             "loc": 31,
             "cc": 8,
             "cognitive": 9,
@@ -2950,8 +3536,8 @@
           }
         ],
         "fanout": 2,
-        "halstead_volume": 3227.9272236377383,
-        "mi": 31.895552443369976,
+        "halstead_volume": 2987.1966818260603,
+        "mi": 32.46971892865154,
         "dup_lines": 0,
         "long_lines": 0,
         "vague_names": [
@@ -2961,10 +3547,10 @@
         "unused_imports": [],
         "dead_private": [],
         "naming_violations": [],
-        "naming_fn_snake": 6,
+        "naming_fn_snake": 4,
         "naming_fn_camel": 0,
         "naming_fn_other": 0,
-        "naming_idents": 6,
+        "naming_idents": 4,
         "clone_hits": 0,
         "clone_partners": [],
         "error": null,
@@ -2994,531 +3580,56 @@
           "unit_size": 100.0,
           "duplication": 100.0,
           "coupling": 100.0,
-          "readability": 80.2,
+          "readability": 80.5,
           "efficiency": 100.0,
           "dead_code": 100.0,
           "naming": 100.0,
           "clones": 100.0
         },
-        "score": 97.0,
+        "score": 97.1,
         "grade": "A",
         "stars": "★★★★★"
       }
     },
     {
       "metrics": {
-        "path": "palm_llm\\providers\\ollama.py",
+        "path": "palm_llm\\providers\\_profiles.py",
         "lang": "python",
-        "loc": 402,
-        "code_lines": 317,
-        "comment_lines": 24,
-        "blank_lines": 61,
-        "funcs": [
-          {
-            "name": "_emit_tool_calls",
-            "lineno": 261,
-            "loc": 9,
-            "cc": 3,
-            "cognitive": 2,
-            "params": 1,
-            "nesting": 1
-          },
-          {
-            "name": "_parse_line",
-            "lineno": 277,
-            "loc": 10,
-            "cc": 5,
-            "cognitive": 4,
-            "params": 1,
-            "nesting": 1
-          },
-          {
-            "name": "_native_message",
-            "lineno": 289,
-            "loc": 18,
-            "cc": 5,
-            "cognitive": 6,
-            "params": 1,
-            "nesting": 2
-          },
-          {
-            "name": "_native_call",
-            "lineno": 309,
-            "loc": 11,
-            "cc": 8,
-            "cognitive": 8,
-            "params": 1,
-            "nesting": 2
-          },
-          {
-            "name": "_resolve_think",
-            "lineno": 322,
-            "loc": 19,
-            "cc": 8,
-            "cognitive": 5,
-            "params": 1,
-            "nesting": 1
-          },
-          {
-            "name": "_stats",
-            "lineno": 343,
-            "loc": 3,
-            "cc": 2,
-            "cognitive": 1,
-            "params": 2,
-            "nesting": 0
-          },
-          {
-            "name": "_tool_stats",
-            "lineno": 348,
-            "loc": 11,
-            "cc": 2,
-            "cognitive": 1,
-            "params": 3,
-            "nesting": 1
-          },
-          {
-            "name": "_http_fail",
-            "lineno": 361,
-            "loc": 5,
-            "cc": 1,
-            "cognitive": 0,
-            "params": 3,
-            "nesting": 0
-          },
-          {
-            "name": "_connect_fail",
-            "lineno": 368,
-            "loc": 8,
-            "cc": 2,
-            "cognitive": 1,
-            "params": 3,
-            "nesting": 0
-          },
-          {
-            "name": "_usage",
-            "lineno": 378,
-            "loc": 17,
-            "cc": 3,
-            "cognitive": 2,
-            "params": 1,
-            "nesting": 0
-          },
-          {
-            "name": "_ns_to_ms",
-            "lineno": 397,
-            "loc": 3,
-            "cc": 2,
-            "cognitive": 1,
-            "params": 1,
-            "nesting": 0
-          },
-          {
-            "name": "_root",
-            "lineno": 74,
-            "loc": 6,
-            "cc": 4,
-            "cognitive": 3,
-            "params": 1,
-            "nesting": 1
-          },
-          {
-            "name": "_chat_url",
-            "lineno": 81,
-            "loc": 2,
-            "cc": 1,
-            "cognitive": 0,
-            "params": 1,
-            "nesting": 0
-          },
-          {
-            "name": "prewarm",
-            "lineno": 84,
-            "loc": 15,
-            "cc": 2,
-            "cognitive": 1,
-            "params": 1,
-            "nesting": 1
-          },
-          {
-            "name": "list_models",
-            "lineno": 100,
-            "loc": 9,
-            "cc": 5,
-            "cognitive": 3,
-            "params": 1,
-            "nesting": 1
-          },
-          {
-            "name": "_check_key",
-            "lineno": 110,
-            "loc": 2,
-            "cc": 1,
-            "cognitive": 0,
-            "params": 1,
-            "nesting": 0
-          },
-          {
-            "name": "complete",
-            "lineno": 114,
-            "loc": 72,
-            "cc": 18,
-            "cognitive": 39,
-            "params": 5,
-            "nesting": 4
-          },
-          {
-            "name": "_fetch_once",
-            "lineno": 187,
-            "loc": 18,
-            "cc": 4,
-            "cognitive": 3,
-            "params": 3,
-            "nesting": 1
-          },
-          {
-            "name": "_build_payload",
-            "lineno": 207,
-            "loc": 32,
-            "cc": 7,
-            "cognitive": 7,
-            "params": 5,
-            "nesting": 2
-          },
-          {
-            "name": "_emit",
-            "lineno": 241,
-            "loc": 18,
-            "cc": 5,
-            "cognitive": 4,
-            "params": 2,
-            "nesting": 1
-          },
-          {
-            "name": "_meter",
-            "lineno": 127,
-            "loc": 5,
-            "cc": 2,
-            "cognitive": 1,
-            "params": 0,
-            "nesting": 1
-          }
-        ],
-        "fanout": 6,
-        "halstead_volume": 15310.088673366958,
-        "mi": 15.562273168949288,
-        "dup_lines": 0,
-        "long_lines": 0,
-        "vague_names": [
-          "ev",
-          "fn",
-          "obj",
-          "r",
-          "t0",
-          "tc"
-        ],
-        "efficiency_hits": [],
-        "unused_imports": [],
-        "dead_private": [],
-        "naming_violations": [],
-        "naming_fn_snake": 21,
-        "naming_fn_camel": 0,
-        "naming_fn_other": 0,
-        "naming_idents": 22,
-        "clone_hits": 1,
-        "clone_partners": [
-          "base.py:219 (prewarm, dice 0.88)"
-        ],
-        "error": null,
-        "th": {
-          "func_loc": 50,
-          "func_cc": 10,
-          "func_cognitive": 15,
-          "func_params": 4,
-          "max_nesting": 3,
-          "file_loc": 500,
-          "duplication_pct": 2.0,
-          "comment_min": 0.08,
-          "comment_max": 0.35,
-          "line_width": 120,
-          "fanout": 15,
-          "clone_min_lines": 6,
-          "clone_min_tokens": 8,
-          "clone_sim": 0.8
-        },
-        "max_cc": 18,
-        "max_cognitive": 39,
-        "max_nesting": 4
-      },
-      "result": {
-        "parts": {
-          "complexity": 89.8,
-          "unit_size": 95.0,
-          "duplication": 100.0,
-          "coupling": 100.0,
-          "readability": 75.7,
-          "efficiency": 100.0,
-          "dead_code": 100.0,
-          "naming": 100.0,
-          "clones": 95.1
-        },
-        "score": 92.8,
-        "grade": "A",
-        "stars": "★★★★★"
-      }
-    },
-    {
-      "metrics": {
-        "path": "palm_llm\\providers\\openai_compat.py",
-        "lang": "python",
-        "loc": 388,
-        "code_lines": 321,
-        "comment_lines": 25,
-        "blank_lines": 42,
-        "funcs": [
-          {
-            "name": "_emit_stream_event",
-            "lineno": 264,
-            "loc": 40,
-            "cc": 16,
-            "cognitive": 13,
-            "params": 4,
-            "nesting": 1
-          },
-          {
-            "name": "_accumulate_tool_frag",
-            "lineno": 306,
-            "loc": 22,
-            "cc": 6,
-            "cognitive": 5,
-            "params": 2,
-            "nesting": 1
-          },
-          {
-            "name": "_meta_extra",
-            "lineno": 330,
-            "loc": 4,
-            "cc": 3,
-            "cognitive": 2,
-            "params": 1,
-            "nesting": 0
-          },
-          {
-            "name": "_finish_reason",
-            "lineno": 336,
-            "loc": 6,
-            "cc": 3,
-            "cognitive": 2,
-            "params": 1,
-            "nesting": 1
-          },
-          {
-            "name": "_downgrade",
-            "lineno": 344,
-            "loc": 5,
-            "cc": 3,
-            "cognitive": 2,
-            "params": 1,
-            "nesting": 0
-          },
-          {
-            "name": "_plain_messages",
-            "lineno": 351,
-            "loc": 16,
-            "cc": 9,
-            "cognitive": 7,
-            "params": 1,
-            "nesting": 2
-          },
-          {
-            "name": "_degradable",
-            "lineno": 369,
-            "loc": 3,
-            "cc": 2,
-            "cognitive": 1,
-            "params": 1,
-            "nesting": 0
-          },
-          {
-            "name": "_as_error",
-            "lineno": 374,
-            "loc": 15,
-            "cc": 5,
-            "cognitive": 4,
-            "params": 5,
-            "nesting": 1
-          },
-          {
-            "name": "__init__",
-            "lineno": 66,
-            "loc": 4,
-            "cc": 1,
-            "cognitive": 0,
-            "params": 3,
-            "nesting": 0
-          },
-          {
-            "name": "complete",
-            "lineno": 73,
-            "loc": 48,
-            "cc": 12,
-            "cognitive": 27,
-            "params": 5,
-            "nesting": 4
-          },
-          {
-            "name": "_build_payload",
-            "lineno": 123,
-            "loc": 28,
-            "cc": 6,
-            "cognitive": 5,
-            "params": 6,
-            "nesting": 1
-          },
-          {
-            "name": "_url",
-            "lineno": 152,
-            "loc": 2,
-            "cc": 1,
-            "cognitive": 0,
-            "params": 1,
-            "nesting": 0
-          },
-          {
-            "name": "_headers",
-            "lineno": 155,
-            "loc": 5,
-            "cc": 1,
-            "cognitive": 0,
-            "params": 1,
-            "nesting": 0
-          },
-          {
-            "name": "_stream",
-            "lineno": 162,
-            "loc": 48,
-            "cc": 13,
-            "cognitive": 23,
-            "params": 3,
-            "nesting": 3
-          },
-          {
-            "name": "_oneshot",
-            "lineno": 211,
-            "loc": 45,
-            "cc": 12,
-            "cognitive": 18,
-            "params": 3,
-            "nesting": 3
-          },
-          {
-            "name": "_conv",
-            "lineno": 258,
-            "loc": 3,
-            "cc": 1,
-            "cognitive": 0,
-            "params": 2,
-            "nesting": 0
-          }
-        ],
-        "fanout": 5,
-        "halstead_volume": 18066.821593339897,
-        "mi": 14.726242655259574,
-        "dup_lines": 0,
-        "long_lines": 0,
-        "vague_names": [
-          "b",
-          "data",
-          "ev",
-          "fn",
-          "item",
-          "obj",
-          "r"
-        ],
-        "efficiency_hits": [
-          [
-            99,
-            "io-in-loop",
-            "meter.stats.extra.update(cap_notes)"
-          ]
-        ],
-        "unused_imports": [],
-        "dead_private": [],
-        "naming_violations": [],
-        "naming_fn_snake": 15,
-        "naming_fn_camel": 0,
-        "naming_fn_other": 0,
-        "naming_idents": 17,
-        "clone_hits": 0,
-        "clone_partners": [],
-        "error": null,
-        "th": {
-          "func_loc": 50,
-          "func_cc": 10,
-          "func_cognitive": 15,
-          "func_params": 4,
-          "max_nesting": 3,
-          "file_loc": 500,
-          "duplication_pct": 2.0,
-          "comment_min": 0.08,
-          "comment_max": 0.35,
-          "line_width": 120,
-          "fanout": 15,
-          "clone_min_lines": 6,
-          "clone_min_tokens": 8,
-          "clone_sim": 0.8
-        },
-        "max_cc": 16,
-        "max_cognitive": 27,
-        "max_nesting": 4
-      },
-      "result": {
-        "parts": {
-          "complexity": 74.4,
-          "unit_size": 100.0,
-          "duplication": 100.0,
-          "coupling": 100.0,
-          "readability": 74.2,
-          "efficiency": 88,
-          "dead_code": 100.0,
-          "naming": 100.0,
-          "clones": 100.0
-        },
-        "score": 87.9,
-        "grade": "B",
-        "stars": "★★★★"
-      }
-    },
-    {
-      "metrics": {
-        "path": "palm_llm\\providers\\profiles.py",
-        "lang": "python",
-        "loc": 207,
-        "code_lines": 156,
+        "loc": 226,
+        "code_lines": 171,
         "comment_lines": 17,
-        "blank_lines": 34,
+        "blank_lines": 38,
         "funcs": [
           {
-            "name": "resolve_provider",
-            "lineno": 96,
-            "loc": 11,
-            "cc": 6,
-            "cognitive": 5,
+            "name": "resolve",
+            "lineno": 99,
+            "loc": 13,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "_match_rule",
+            "lineno": 114,
+            "loc": 15,
+            "cc": 5,
+            "cognitive": 6,
             "params": 2,
             "nesting": 2
           },
           {
-            "name": "resolve_model",
-            "lineno": 109,
-            "loc": 14,
-            "cc": 5,
-            "cognitive": 6,
+            "name": "_resolve_profile",
+            "lineno": 131,
+            "loc": 11,
+            "cc": 6,
+            "cognitive": 5,
             "params": 2,
             "nesting": 2
           },
           {
             "name": "apply_rule",
-            "lineno": 125,
+            "lineno": 144,
             "loc": 27,
             "cc": 12,
             "cognitive": 14,
@@ -3527,7 +3638,7 @@
           },
           {
             "name": "_merge",
-            "lineno": 154,
+            "lineno": 173,
             "loc": 4,
             "cc": 3,
             "cognitive": 2,
@@ -3536,7 +3647,7 @@
           },
           {
             "name": "_blank",
-            "lineno": 160,
+            "lineno": 179,
             "loc": 2,
             "cc": 2,
             "cognitive": 1,
@@ -3545,7 +3656,7 @@
           },
           {
             "name": "_read_intent",
-            "lineno": 166,
+            "lineno": 185,
             "loc": 22,
             "cc": 11,
             "cognitive": 23,
@@ -3554,7 +3665,7 @@
           },
           {
             "name": "_clamp_effort",
-            "lineno": 190,
+            "lineno": 209,
             "loc": 9,
             "cc": 5,
             "cognitive": 3,
@@ -3563,7 +3674,7 @@
           },
           {
             "name": "_write_thinking",
-            "lineno": 201,
+            "lineno": 220,
             "loc": 7,
             "cc": 7,
             "cognitive": 10,
@@ -3572,8 +3683,8 @@
           }
         ],
         "fanout": 5,
-        "halstead_volume": 7226.362092175145,
-        "mi": 24.28159612756635,
+        "halstead_volume": 7651.048532576017,
+        "mi": 23.318509939833547,
         "dup_lines": 0,
         "long_lines": 0,
         "vague_names": [
@@ -3583,10 +3694,10 @@
         "unused_imports": [],
         "dead_private": [],
         "naming_violations": [],
-        "naming_fn_snake": 8,
+        "naming_fn_snake": 9,
         "naming_fn_camel": 0,
         "naming_fn_other": 0,
-        "naming_idents": 10,
+        "naming_idents": 11,
         "clone_hits": 0,
         "clone_partners": [],
         "error": null,
@@ -3612,24 +3723,24 @@
       },
       "result": {
         "parts": {
-          "complexity": 84.4,
+          "complexity": 86.1,
           "unit_size": 100.0,
           "duplication": 100.0,
           "coupling": 100.0,
-          "readability": 86.3,
+          "readability": 86.0,
           "efficiency": 100.0,
           "dead_code": 100.0,
           "naming": 100.0,
           "clones": 100.0
         },
-        "score": 94.0,
+        "score": 94.4,
         "grade": "A",
         "stars": "★★★★★"
       }
     },
     {
       "metrics": {
-        "path": "palm_llm\\providers\\profiles_data.py",
+        "path": "palm_llm\\providers\\_profiles_data.py",
         "lang": "python",
         "loc": 435,
         "code_lines": 376,
@@ -3692,16 +3803,25 @@
     },
     {
       "metrics": {
-        "path": "palm_llm\\providers\\telemetry.py",
+        "path": "palm_llm\\providers\\_telemetry.py",
         "lang": "python",
-        "loc": 358,
-        "code_lines": 285,
-        "comment_lines": 10,
-        "blank_lines": 63,
+        "loc": 379,
+        "code_lines": 298,
+        "comment_lines": 13,
+        "blank_lines": 68,
         "funcs": [
           {
-            "name": "usage_from_openai",
-            "lineno": 155,
+            "name": "usage_from",
+            "lineno": 161,
+            "loc": 14,
+            "cc": 5,
+            "cognitive": 4,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "_usage_openai",
+            "lineno": 177,
             "loc": 22,
             "cc": 9,
             "cognitive": 9,
@@ -3709,8 +3829,8 @@
             "nesting": 1
           },
           {
-            "name": "usage_from_anthropic",
-            "lineno": 179,
+            "name": "_usage_anthropic",
+            "lineno": 201,
             "loc": 12,
             "cc": 2,
             "cognitive": 1,
@@ -3718,8 +3838,8 @@
             "nesting": 0
           },
           {
-            "name": "usage_from_gemini",
-            "lineno": 193,
+            "name": "_usage_gemini",
+            "lineno": 215,
             "loc": 16,
             "cc": 5,
             "cognitive": 4,
@@ -3727,8 +3847,8 @@
             "nesting": 0
           },
           {
-            "name": "usage_from_ollama",
-            "lineno": 211,
+            "name": "_usage_ollama",
+            "lineno": 233,
             "loc": 21,
             "cc": 2,
             "cognitive": 1,
@@ -3737,7 +3857,7 @@
           },
           {
             "name": "map_stop_reason",
-            "lineno": 234,
+            "lineno": 256,
             "loc": 5,
             "cc": 2,
             "cognitive": 1,
@@ -3746,7 +3866,7 @@
           },
           {
             "name": "feed",
-            "lineno": 241,
+            "lineno": 263,
             "loc": 9,
             "cc": 3,
             "cognitive": 3,
@@ -3755,7 +3875,7 @@
           },
           {
             "name": "mark_finish_tool_calls",
-            "lineno": 252,
+            "lineno": 274,
             "loc": 17,
             "cc": 4,
             "cognitive": 2,
@@ -3764,7 +3884,7 @@
           },
           {
             "name": "_canonical",
-            "lineno": 272,
+            "lineno": 294,
             "loc": 10,
             "cc": 1,
             "cognitive": 0,
@@ -3773,7 +3893,7 @@
           },
           {
             "name": "_apply_usage",
-            "lineno": 284,
+            "lineno": 306,
             "loc": 12,
             "cc": 6,
             "cognitive": 6,
@@ -3782,7 +3902,7 @@
           },
           {
             "name": "_derive",
-            "lineno": 298,
+            "lineno": 320,
             "loc": 22,
             "cc": 12,
             "cognitive": 12,
@@ -3791,7 +3911,7 @@
           },
           {
             "name": "_pct",
-            "lineno": 322,
+            "lineno": 344,
             "loc": 5,
             "cc": 1,
             "cognitive": 0,
@@ -3800,7 +3920,7 @@
           },
           {
             "name": "_int",
-            "lineno": 329,
+            "lineno": 351,
             "loc": 5,
             "cc": 3,
             "cognitive": 2,
@@ -3809,7 +3929,7 @@
           },
           {
             "name": "_first_int",
-            "lineno": 336,
+            "lineno": 358,
             "loc": 8,
             "cc": 4,
             "cognitive": 6,
@@ -3818,7 +3938,7 @@
           },
           {
             "name": "_ns_to_ms",
-            "lineno": 346,
+            "lineno": 368,
             "loc": 2,
             "cc": 2,
             "cognitive": 1,
@@ -3827,7 +3947,7 @@
           },
           {
             "name": "_round",
-            "lineno": 350,
+            "lineno": 372,
             "loc": 2,
             "cc": 1,
             "cognitive": 0,
@@ -3890,8 +4010,8 @@
           }
         ],
         "fanout": 4,
-        "halstead_volume": 14266.719653829798,
-        "mi": 16.906722360173852,
+        "halstead_volume": 14832.0,
+        "mi": 16.356093665191633,
         "dup_lines": 0,
         "long_lines": 0,
         "vague_names": [
@@ -3903,14 +4023,14 @@
         "unused_imports": [],
         "dead_private": [],
         "naming_violations": [],
-        "naming_fn_snake": 20,
+        "naming_fn_snake": 21,
         "naming_fn_camel": 0,
         "naming_fn_other": 0,
-        "naming_idents": 22,
+        "naming_idents": 23,
         "clone_hits": 2,
         "clone_partners": [
-          "telemetry.py:193 (usage_from_gemini, dice 0.80)",
-          "telemetry.py:179 (usage_from_anthropic, dice 0.80)"
+          "_telemetry.py:215 (_usage_gemini, dice 0.80)",
+          "_telemetry.py:201 (_usage_anthropic, dice 0.80)"
         ],
         "error": null,
         "th": {
@@ -3935,24 +4055,24 @@
       },
       "result": {
         "parts": {
-          "complexity": 96.4,
+          "complexity": 96.6,
           "unit_size": 100.0,
           "duplication": 100.0,
           "coupling": 100.0,
-          "readability": 75.7,
+          "readability": 76.5,
           "efficiency": 100.0,
           "dead_code": 100.0,
           "naming": 100.0,
-          "clones": 90.3
+          "clones": 90.5
         },
-        "score": 95.5,
+        "score": 95.6,
         "grade": "A",
         "stars": "★★★★★"
       }
     },
     {
       "metrics": {
-        "path": "palm_llm\\providers\\tooltext.py",
+        "path": "palm_llm\\providers\\_tooltext.py",
         "lang": "python",
         "loc": 386,
         "code_lines": 319,
@@ -4220,15 +4340,15 @@
       "metrics": {
         "path": "palm_llm\\providers\\__init__.py",
         "lang": "python",
-        "loc": 76,
-        "code_lines": 69,
-        "comment_lines": 2,
-        "blank_lines": 5,
+        "loc": 64,
+        "code_lines": 53,
+        "comment_lines": 3,
+        "blank_lines": 8,
         "funcs": [
           {
             "name": "get_provider_instance",
-            "lineno": 65,
-            "loc": 12,
+            "lineno": 62,
+            "loc": 3,
             "cc": 1,
             "cognitive": 0,
             "params": 1,
@@ -4236,9 +4356,9 @@
           }
         ],
         "fanout": 1,
-        "halstead_volume": 1188.858979619888,
-        "mi": 38.22080604742074,
-        "dup_lines": 17,
+        "halstead_volume": 822.0,
+        "mi": 41.84223447144064,
+        "dup_lines": 0,
         "long_lines": 0,
         "vague_names": [],
         "efficiency_hits": [],
@@ -4276,17 +4396,17 @@
         "parts": {
           "complexity": 100.0,
           "unit_size": 100.0,
-          "duplication": 0.0,
+          "duplication": 100.0,
           "coupling": 100.0,
-          "readability": 85.8,
+          "readability": 90.2,
           "efficiency": 100.0,
           "dead_code": 100.0,
           "naming": 100.0,
           "clones": 100.0
         },
-        "score": 82.9,
-        "grade": "B",
-        "stars": "★★★★"
+        "score": 98.5,
+        "grade": "A",
+        "stars": "★★★★★"
       }
     },
     {
@@ -4522,8 +4642,8 @@
           }
         ],
         "fanout": 7,
-        "halstead_volume": 9668.387025282298,
-        "mi": 23.413161494311954,
+        "halstead_volume": 9683.85644452275,
+        "mi": 23.40829988548668,
         "dup_lines": 0,
         "long_lines": 0,
         "vague_names": [

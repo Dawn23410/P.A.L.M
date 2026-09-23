@@ -152,7 +152,29 @@ class Meter:
 
 
 # ─────────────────────────── 用法归一 ───────────────────────────
-def usage_from_openai(raw: dict) -> dict:
+# 四种协议的字段名与"含不含缓存"的口径各不相同，但**归一后的形状是同一个** ——
+# 所以对外只留一个入口 `usage_from(raw, protocol)`，四种解析各为私有实现。
+# 拆成四个公开函数只会让调用方挑错入口，而挑错的代价是"算出一个不报错的错数"。
+PROTOCOLS = ("openai", "anthropic", "gemini", "ollama")
+
+
+def usage_from(raw: dict, protocol: str) -> dict:
+    """某协议的原始 usage → 统一口径（键见 `_canonical`）。
+
+    `protocol` ∈ `PROTOCOLS`；未知协议按 `openai` 处理 —— 与 provider 工厂
+    "未知 type 一律回落 openai_compat"是同一容错口径。
+    """
+    raw = raw or {}
+    if protocol == "anthropic":
+        return _usage_anthropic(raw)
+    if protocol == "gemini":
+        return _usage_gemini(raw)
+    if protocol == "ollama":
+        return _usage_ollama(raw)
+    return _usage_openai(raw)
+
+
+def _usage_openai(raw: dict) -> dict:
     """OpenAI 兼容 usage → 统一口径（含 DeepSeek / 智谱 的缓存字段方言）。"""
     raw = raw or {}
     prompt = _int(raw.get("prompt_tokens"))
@@ -176,7 +198,7 @@ def usage_from_openai(raw: dict) -> dict:
                       _int(raw.get("total_tokens")) or (prompt + out))
 
 
-def usage_from_anthropic(raw: dict) -> dict:
+def _usage_anthropic(raw: dict) -> dict:
     """Anthropic usage → 统一口径。
 
     `input_tokens` 已排除缓存命中，**不需要**再减；缓存读/写各有独立字段。
@@ -190,7 +212,7 @@ def usage_from_anthropic(raw: dict) -> dict:
                       inp + cached + written + out)
 
 
-def usage_from_gemini(raw: dict) -> dict:
+def _usage_gemini(raw: dict) -> dict:
     """Gemini `usageMetadata` → 统一口径。
 
     口径陷阱（官方 token 计数页）：`promptTokenCount` **包含**缓存命中的部分
@@ -208,7 +230,7 @@ def usage_from_gemini(raw: dict) -> dict:
     return _canonical(inp, cached, 0, out, thoughts, total)
 
 
-def usage_from_ollama(obj: dict) -> dict:
+def _usage_ollama(obj: dict) -> dict:
     """Ollama 原始响应对象 → 统一口径（连带引擎侧分段耗时进 extra）。
 
     引擎侧 `prompt_eval_duration` / `eval_duration` 同时提升为 `prefill_ms` / `decode_ms`：
@@ -352,7 +374,6 @@ def _round(value: float) -> float:
 
 
 __all__ = [
-    "Meter", "TurnStats", "STOP_REASON_MAP",
-    "usage_from_openai", "usage_from_anthropic", "usage_from_ollama", "usage_from_gemini",
-    "map_stop_reason", "feed", "mark_finish_tool_calls",
+    "Meter", "TurnStats", "STOP_REASON_MAP", "PROTOCOLS",
+    "usage_from", "map_stop_reason", "feed", "mark_finish_tool_calls",
 ]

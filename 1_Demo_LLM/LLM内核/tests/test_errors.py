@@ -3,8 +3,8 @@
 覆盖：
   - 兼容契约：全部类型化错误仍可被 `except RuntimeError` 兜住
   - `retryable` 标记：只有传输/5xx/429 可重试
-  - `error_for_status` 状态码 → 类型映射
-  - `error_for_transport` 的 interrupted 分支（已产出后中断 → 绝不重试）
+  - `classify_error(status=…)` 状态码 → 类型映射
+  - `classify_error(exc=…, interrupted=True)` 分支（已产出后中断 → 绝不重试）
 """
 from __future__ import annotations
 
@@ -24,8 +24,7 @@ from palm_llm.errors import (  # noqa: E402
     StreamInterruptedError,
     TransportError,
     UpstreamServerError,
-    error_for_status,
-    error_for_transport,
+    classify_error,
 )
 
 ALL_TYPES = (TransportError, UpstreamServerError, RateLimitError, AuthError,
@@ -68,13 +67,13 @@ class StatusClassifyTest(unittest.TestCase):
                  500: UpstreamServerError, 503: UpstreamServerError, 502: UpstreamServerError}
         for status, cls in cases.items():
             with self.subTest(status=status):
-                err = error_for_status(status, f"[p] {status}: boom")
+                err = classify_error(f"[p] {status}: boom", status=status)
                 self.assertIsInstance(err, cls)
                 self.assertEqual(err.status, status)
 
     def test_message_and_text_kept(self):
-        err = error_for_status(400, "[p] 400: budget_tokens is not supported",
-                               text="budget_tokens is not supported")
+        err = classify_error("[p] 400: budget_tokens is not supported",
+                             status=400, text="budget_tokens is not supported")
         self.assertIn("budget_tokens is not supported", str(err))
         self.assertEqual(err.text, "budget_tokens is not supported")
 
@@ -82,17 +81,17 @@ class StatusClassifyTest(unittest.TestCase):
 class TransportClassifyTest(unittest.TestCase):
     def test_interrupted_is_never_retryable(self):
         """已产出内容后中断 → StreamInterruptedError（防重复生成/重复计费）。"""
-        err = error_for_transport(RuntimeError("reset"), "[p] 连接失败", interrupted=True)
+        err = classify_error("[p] 连接失败", exc=RuntimeError("reset"), interrupted=True)
         self.assertIsInstance(err, StreamInterruptedError)
         self.assertFalse(err.retryable)
 
     def test_transport_is_retryable(self):
-        err = error_for_transport(RuntimeError("reset"), "[p] 连接失败")
+        err = classify_error("[p] 连接失败", exc=RuntimeError("reset"))
         self.assertIsInstance(err, TransportError)
         self.assertTrue(err.retryable)
 
     def test_none_exc_still_typed(self):
-        err = error_for_transport(None, "[p] 请求失败")
+        err = classify_error("[p] 请求失败")
         self.assertIsInstance(err, TransportError)
 
 

@@ -1,7 +1,7 @@
 """可观测层：request_id 传播与结构化日志（纯逻辑 + 轻量线程）。
 
 覆盖：
-  - request_id 生成形态、set/get/ensure、跨 await 传播、跨 context 隔离
+  - request_id 生成形态、读/建语义、跨 await 传播、跨 context 隔离
   - 日志装配幂等、调用不抛错、低级别被丢弃（不是异常）
 """
 from __future__ import annotations
@@ -18,30 +18,36 @@ from palm_llm import obs  # noqa: E402
 
 
 class RequestIdTest(unittest.TestCase):
-    def test_new_id_shape(self):
-        rid = obs.new_request_id()
-        self.assertEqual(len(rid), 12)
-        self.assertNotEqual(rid, obs.new_request_id())
+    def test_generated_id_is_fresh_per_context(self):
+        """未设置 id 的 context 各生成各的 12 位 id（互不串号）。
 
-    def test_set_then_get(self):
+        用**全新** `contextvars.Context()`（不继承当前上下文）—— 否则会读到上一个
+        用例种下的 id，看起来"不新鲜"，实际是测试自己没隔离。
+        """
+        a = contextvars.Context().run(obs.request_id)
+        b = contextvars.Context().run(obs.request_id)
+        self.assertEqual(len(a), 12)
+        self.assertNotEqual(a, b)
+
+    def test_set_then_read(self):
         obs.set_request_id("abc123")
-        self.assertEqual(obs.get_request_id(), "abc123")
+        self.assertEqual(obs.request_id(), "abc123")
 
     def test_set_none_generates(self):
         obs.set_request_id(None)
-        rid = obs.get_request_id()
+        rid = obs.request_id()
         self.assertNotEqual(rid, "-")
         self.assertEqual(len(rid), 12)
 
-    def test_ensure_is_stable(self):
-        """已有 id 时 ensure 不覆盖；未有时生成一次并落定。"""
+    def test_read_is_stable(self):
+        """已有 id 时读取不覆盖；未有时生成一次并落定。"""
         obs.set_request_id("keepme")
-        self.assertEqual(obs.ensure_request_id(), "keepme")
-        self.assertEqual(obs.ensure_request_id(), "keepme")
+        self.assertEqual(obs.request_id(), "keepme")
+        self.assertEqual(obs.request_id(), "keepme")
 
     def test_propagates_across_await(self):
         async def inner():
-            return obs.get_request_id()
+            return obs.request_id()
 
         async def run():
             obs.set_request_id("through-await")
@@ -54,7 +60,7 @@ class RequestIdTest(unittest.TestCase):
         """两个独立 context 的 request_id 互不串号（并发请求不会串日志）。"""
         def worker(rid):
             obs.set_request_id(rid)
-            return obs.get_request_id()
+            return obs.request_id()
 
         ctx_a = contextvars.copy_context()
         ctx_b = contextvars.copy_context()

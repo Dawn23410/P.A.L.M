@@ -40,7 +40,7 @@ from typing import Any, Iterator, Optional
 
 import httpx
 
-from ..errors import PalmLLMError, error_for_status, error_for_transport
+from ..errors import PalmLLMError, classify_error
 from ..models import Message, ModelParameters, Tool
 from .base import (
     BaseProvider,
@@ -50,10 +50,10 @@ from .base import (
     normalize_tool_calls,
     to_chat_message,
 )
-from .capability import check_capabilities
-from .profiles import resolve_provider
-from .telemetry import Meter, feed, mark_finish_tool_calls, usage_from_ollama
-from .tooltext import TextToolFilter, declared_names, filter_events, text_tool_events
+from ._capability import check_capabilities
+from ._profiles import resolve
+from ._telemetry import Meter, feed, mark_finish_tool_calls, usage_from
+from ._tooltext import TextToolFilter, declared_names, filter_events, text_tool_events
 
 DEFAULT_BASE_URL = "http://127.0.0.1:11434"
 # 导出名带前缀：避免与云端 provider 的 base_url 语义混淆
@@ -122,7 +122,7 @@ class OllamaProvider(BaseProvider):
         # 能力矩阵前置拦截。ollama 档位走 generic（模型名不固定），故只做记账不拦——
         # 本机拉的是 llava 还是纯文本模型，内核无从得知，硬拦会打死合法用法。
         cap_notes = check_capabilities(
-            messages, resolve_provider(self.cfg.base_url, self.cfg.type), model, self.name)
+            messages, resolve(self.cfg.base_url, "", self.cfg.type)[0], model, self.name)
 
         def _meter() -> Meter:
             m = Meter(model=model)
@@ -342,7 +342,7 @@ def _resolve_think(extra: dict) -> Optional[Any]:
 
 def _stats(obj: dict, meter: Meter) -> dict:
     """回传拆分器结算：原生 done 帧 → 统一字段（连带引擎侧分段耗时进 extra）。"""
-    return meter.finish(usage_from_ollama(obj), obj.get("done_reason") or "")
+    return meter.finish(usage_from(obj, "ollama"), obj.get("done_reason") or "")
 
 
 def _tool_stats(obj: dict, meter: Meter, has_calls: bool) -> dict:
@@ -361,18 +361,17 @@ def _tool_stats(obj: dict, meter: Meter, has_calls: bool) -> dict:
 def _http_fail(name: str, status: int, raw: bytes) -> PalmLLMError:
     """HTTP 非 200 → 按状态分类的类型化错误（响应体截断，避免把整页塞进日志）。"""
     text = raw.decode("utf-8", "ignore")[:500]
-    return error_for_status(status, f"[{name}] {status}: {text}",
-                            provider=name, text=text)
+    return classify_error(f"[{name}] {status}: {text}",
+                          status=status, provider=name, text=text)
 
 
 def _connect_fail(name: str, err: BaseException | None,
                   attempts: int = 2) -> PalmLLMError:
     """连接类失败 → 可重试的传输错误（保留原始异常类型名，便于对号入座）。"""
-    return error_for_transport(
-        err,
+    return classify_error(
         f"[{name}] 连接失败（已自动重试 {max(0, attempts - 1)} 次）："
         f"{type(err).__name__}: {err or '未知连接错误'}",
-        provider=name)
+        exc=err, provider=name)
 
 
 def _usage(obj: dict) -> dict:

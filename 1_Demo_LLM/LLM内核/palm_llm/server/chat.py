@@ -11,7 +11,7 @@ from typing import AsyncIterator, Optional
 from .config import UPLOAD_DIR, get_provider, load_config
 from .metrics import record_request
 from .models import ChatRequest, Message, ModelParameters, ProviderConfig
-from ..obs import get_request_id, log_event, set_request_id
+from ..obs import log_event, request_id as _obs_request_id, set_request_id
 from ..providers import get_provider_instance
 from . import storage
 
@@ -49,7 +49,7 @@ async def run_chat(req: ChatRequest) -> AsyncIterator[dict]:
     """执行一次流式对话，产出 SSE 事件字典并持久化消息。"""
     # 回合边界种下 request_id：provider 的重试/错误日志都挂在这一条上，便于按请求排障
     set_request_id(None)
-    request_id = get_request_id()
+    request_id = _obs_request_id()
     cfg = load_config()
 
     # 1. 解析 provider / model / 参数

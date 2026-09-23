@@ -10,13 +10,13 @@ from typing import Optional
 import httpx
 
 from ..errors import (
-    NotConfiguredError, TransportError, error_for_status, error_for_transport,
+    NotConfiguredError, TransportError, classify_error,
 )
 from ..models import Message, ModelParameters, ProviderConfig
-from ..obs import ensure_request_id, log_event
+from ..obs import log_event, request_id as _request_id
 from ..retry import DEFAULT as DEFAULT_RETRY, RetryPolicy
-from .telemetry import Meter
-from .tooltext import TextToolFilter, declared_names, filter_events, text_tool_events
+from ._telemetry import Meter
+from ._tooltext import TextToolFilter, declared_names, filter_events, text_tool_events
 
 # ============================ 按事件循环复用的 HTTP 客户端 ============================
 # 早期实现是「全局单例」：在 Web 服务（每请求独立线程 + 独立事件循环）场景下，
@@ -246,7 +246,7 @@ class BaseProvider:
         收在一处，避免每个 provider 各写一份（也保证 request_id 一定被种下）。
         """
         self._check_key()
-        rid = ensure_request_id()
+        rid = _request_id()
         log_event("request.start", level="debug",
                   provider=self.name, type=self.type, model=model)
         return rid
@@ -291,23 +291,23 @@ class BaseProvider:
                         yield out_ev
                 return
             except self._status_cls as e:
-                raise error_for_status(
-                    e.status, f"[{self.name}] {e.status}: {e.text}",
-                    provider=self.name, model=model, text=e.text) from e
+                raise classify_error(
+                    f"[{self.name}] {e.status}: {e.text}",
+                    status=e.status, provider=self.name, model=model, text=e.text) from e
             except (httpx.TransportError, FirstByteTimeout) as e:
                 last = e
                 if emitted:
-                    raise error_for_transport(
-                        e, f"[{self.name}] {type(e).__name__}: {e}",
-                        provider=self.name, model=model, interrupted=True) from e
+                    raise classify_error(
+                        f"[{self.name}] {type(e).__name__}: {e}",
+                        exc=e, provider=self.name, model=model,
+                        interrupted=True) from e
                 if attempt >= self.retry.max_attempts:
                     break
                 await self._backoff(attempt, e, model)
-        raise error_for_transport(
-            last,
+        raise classify_error(
             f"[{self.name}] 连接失败（已自动重试 {self.retry.max_attempts - 1} 次）："
             f"{type(last).__name__}: {last or '未知连接错误'}",
-            provider=self.name, model=model) from last
+            exc=last, provider=self.name, model=model) from last
 
     async def image_to_b64(self, url: str):
         """将图片 URL 解析为 (media_type, base64_str)。支持 data URI 与远程 http(s)。"""

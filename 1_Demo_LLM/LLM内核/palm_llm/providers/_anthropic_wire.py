@@ -25,7 +25,7 @@ import json
 from typing import Any, Optional
 
 from ..models import Tool
-from .telemetry import Meter, map_stop_reason, usage_from_anthropic
+from ._telemetry import Meter, map_stop_reason, usage_from
 
 # 思考块签名的分隔符：多块时按顺序拼接，回传时需原样还原顺序
 SIG_SEP = "\x00"
@@ -336,7 +336,7 @@ def finish_events(st: dict, meter: Meter) -> list[dict]:
         out.append({"tool_calls": [st["tools"][k] for k in sorted(st["tools"])]})
     extra = _finish_extra(st)
     out.append({"done": True, "usage": st["usage"],
-                "stats": meter.finish(usage_from_anthropic(st["usage"]),
+                "stats": meter.finish(usage_from(st["usage"], "anthropic"),
                                       map_stop_reason(st["stop"]),
                                       st["stop_seq"], extra)})
     return out

@@ -33,7 +33,7 @@ from .base import (
     get_client,
     iter_sse_lines,
 )
-from .gemini_wire import (
+from ._gemini_wire import (
     error_text,
     events_from,
     finish_events,
@@ -43,9 +43,9 @@ from .gemini_wire import (
     tool_config,
     to_contents,
 )
-from .capability import check_capabilities
-from .profiles import apply_rule, resolve_model, resolve_provider
-from .telemetry import Meter, feed
+from ._capability import check_capabilities
+from ._profiles import apply_rule, resolve
+from ._telemetry import Meter, feed
 
 DEFAULT_BASE_URL = "https://generativelanguage.googleapis.com"
 GEMINI_DEFAULT_BASE_URL = DEFAULT_BASE_URL
@@ -125,8 +125,7 @@ class GeminiProvider(BaseProvider):
     # ─────────────────────────── 载荷 ───────────────────────────
     async def _build_payload(self, messages, params: ModelParameters, model: str,
                              stream: bool, notes: Optional[dict] = None) -> dict:
-        profile, rule = resolve_model(
-            resolve_provider(self.cfg.base_url, self.cfg.type), model)
+        profile, rule = resolve(self.cfg.base_url, model, self.cfg.type)
         # 能力矩阵前置拦截：已知不支持视觉/文档/超限 → 在此抛错，不产生任何网络往返
         notes = notes if notes is not None else {}
         notes.update(check_capabilities(messages, profile, model, self.name, rule))

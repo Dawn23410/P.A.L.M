@@ -1,5 +1,8 @@
 """两级匹配（端点一级 / 模型二级）的用例。
 
+一级+二级的常规入口是 `resolve(base_url, model, type_hint)`；`_match_rule` 是
+"Profile 已在手上"时的二级单测入口。
+
 覆盖：域名与 type 优先级、模型规则命中、未命中回落不报错、参数卫生、思考参数翻译、
 以及经 `OpenAICompatProvider` 组装后的真实 payload。
 """
@@ -16,15 +19,15 @@ import httpx
 
 from palm_llm.models import Message, ModelParameters, ProviderConfig
 from palm_llm.providers import openai_compat as oc
-from palm_llm.providers.profiles import apply_rule, resolve_model, resolve_provider
-from palm_llm.providers.profiles_data import GLM, KIMI, PROFILES
+from palm_llm.providers._profiles import _match_rule, apply_rule, resolve
+from palm_llm.providers._profiles_data import GLM, KIMI, PROFILES
 
 
 def _payload(model: str, extra_body=None, temperature=0.7, base="http://x.invalid/v1",
              ptype="openai_compat"):
     """走真实链路：resolve → build → apply_rule，返回最终请求体。"""
     cfg = ProviderConfig(name="t", type=ptype, base_url=base, api_key="k")
-    prof, rule = resolve_model(resolve_provider(cfg.base_url, cfg.type), model)
+    prof, rule = resolve(cfg.base_url, model, cfg.type)
     built = oc.OpenAICompatProvider(cfg)._build_payload(
         [Message(role="user", content="你好")],
         ModelParameters(temperature=temperature, extra_body=extra_body),
@@ -34,15 +37,15 @@ def _payload(model: str, extra_body=None, temperature=0.7, base="http://x.invali
 
 class LevelOneTest(unittest.TestCase):
     def test_domain_hint(self):
-        self.assertEqual(resolve_provider("https://open.bigmodel.cn/api/paas/v4").name, "glm")
-        self.assertEqual(resolve_provider("https://api.moonshot.cn/v1").name, "kimi")
-        self.assertEqual(resolve_provider("https://api.deepseek.com").name, "deepseek")
+        self.assertEqual(resolve("https://open.bigmodel.cn/api/paas/v4")[0].name, "glm")
+        self.assertEqual(resolve("https://api.moonshot.cn/v1")[0].name, "kimi")
+        self.assertEqual(resolve("https://api.deepseek.com")[0].name, "deepseek")
 
     def test_type_hint_beats_domain(self):
-        self.assertEqual(resolve_provider("https://open.bigmodel.cn", "kimi").name, "kimi")
+        self.assertEqual(resolve("https://open.bigmodel.cn", "", "kimi")[0].name, "kimi")
 
     def test_unknown_falls_back_to_generic(self):
-        self.assertEqual(resolve_provider("http://unknown.example").name, "generic")
+        self.assertEqual(resolve("http://unknown.example")[0].name, "generic")
 
     def test_all_profiles_registered(self):
         self.assertEqual(set(PROFILES) >=
@@ -52,22 +55,22 @@ class LevelOneTest(unittest.TestCase):
 
 class LevelTwoTest(unittest.TestCase):
     def test_glm53_hits_always_on(self):
-        _, rule = resolve_model(GLM, "glm-5.3")
+        _, rule = _match_rule(GLM, "glm-5.3")
         self.assertIsNotNone(rule)
         self.assertEqual(rule.thinking, "always_on")
 
     def test_glm53_flash_shares_rule(self):
-        _, rule = resolve_model(GLM, "glm-5.3-flash")
+        _, rule = _match_rule(GLM, "glm-5.3-flash")
         self.assertIsNotNone(rule)
         self.assertEqual(rule.thinking, "always_on")
 
     def test_unknown_model_returns_no_rule(self):
-        prof, rule = resolve_model(GLM, "glm-9.9-turbo")
+        prof, rule = _match_rule(GLM, "glm-9.9-turbo")
         self.assertIsNone(rule)
         self.assertIs(prof, GLM)          # 回落供应商默认，不报错
 
     def test_specific_rule_wins_by_priority(self):
-        _, rule = resolve_model(KIMI, "kimi-k2.7-code")
+        _, rule = _match_rule(KIMI, "kimi-k2.7-code")
         self.assertEqual(rule.fixed_params["temperature"], 1.0)
 
 

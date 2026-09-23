@@ -26,10 +26,10 @@ from typing import Any, Optional
 
 from ..errors import CapabilityError
 from ..models import Message
-from .profiles import ModelRule, Profile, resolve_model, resolve_provider
+from ._profiles import ModelRule, Profile, resolve
 
 # `CapabilityError` 现定义于内核统一异常层（palm_llm/errors.py），此处仅重导出，
-# 保持既有 `from palm_llm.providers.capability import CapabilityError` 导入路径不变。
+# 保持既有 `from palm_llm.providers._capability import CapabilityError` 导入路径不变。
 
 
 def capabilities_for(base_url: str = "", type_hint: str = "",
@@ -39,7 +39,7 @@ def capabilities_for(base_url: str = "", type_hint: str = "",
     `capabilities_known=False` 表示该档位未收录矩阵 —— 此时各字段是保守默认值，
     **不代表模型真的不支持**，调用方应自行决定是否放行。
     """
-    profile, rule = resolve_model(resolve_provider(base_url, type_hint), model)
+    profile, rule = resolve(base_url, model, type_hint)
     return {
         "profile": profile.name,
         "capabilities_known": profile.capabilities_known,
@@ -61,7 +61,7 @@ def check_capabilities(messages: list[Message], profile: Profile,
     返回值是一组**非致命**记账（无警告时为空 dict），调用方应并入 `stats.extra`：
     内核只对"已知不支持"硬拦，其余情况如实披露，不替调用方做决定。
 
-    `profile` 必须是**已二级合并**后的（`resolve_model` 的返回值），否则模型级覆盖
+    `profile` 必须是**已二级合并**后的（`resolve` 的返回值），否则模型级覆盖
     （如 GLM-5.3-Flash 单独放开文件）不会生效。
     """
     images = _by_field(messages, "images")
