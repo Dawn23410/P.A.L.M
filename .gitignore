@@ -17,9 +17,9 @@ RAG/
 1_Demo_LLM/**/results/
 1_Demo_LLM/**/*.log
 
-# 1_Demo_LLM 下非内核的二进制 / 缓存资产（用户决策：源码/文档进 VCS，模型权重与缓存不进）
-# —— 按目录名忽略（第三方 TTS / Ollama 拉取，含多 GB 模型权重与缓存，绝不可进 git）
-1_Demo_LLM/Ollama嵌入/
+# 1_Demo_LLM 下第三方 TTS 二进制/权重资产（用户决策：源码/文档进 VCS，模型权重不进）
+# —— 按目录名忽略（第三方 TTS 引擎自带的完整源码 + 模型权重，非 P.A.L.M 一方项目，绝不可进 git）
+# 注：Ollama嵌入/ 曾是误判——它是 P.A.L.M 一方内嵌源码项目 palm-ollama（零依赖），已回归跟踪，不在此列
 1_Demo_LLM/语音合成_CosyVoice2/
 1_Demo_LLM/语音合成_GPT-SoVITS/
 1_Demo_LLM/语音识别_VOSK/
