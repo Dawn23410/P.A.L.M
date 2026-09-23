@@ -18,16 +18,17 @@ RAG/
 1_Demo_LLM/**/*.log
 
 # 1_Demo_LLM 下非内核的二进制 / 缓存资产（用户决策：源码/文档进 VCS，模型权重与缓存不进）
-# —— 按目录名忽略（含多 GB 模型权重 / Ollama 拉取缓存，绝不可进 git）
-1_Demo_LLM/语音合成/
-1_Demo_LLM/模型微调_CosyVoice2/
-1_Demo_LLM/模型微调_GPT-SoVITS/
-1_Demo_LLM/模型微调_VOSK/
-1_Demo_LLM/Ollama缓存/
-# 模型权重文件（repo 内任何位置均视为资产，不入库）
+# —— 按目录名忽略（第三方 TTS / Ollama 拉取，含多 GB 模型权重与缓存，绝不可进 git）
+1_Demo_LLM/Ollama嵌入/
+1_Demo_LLM/语音合成_CosyVoice2/
+1_Demo_LLM/语音合成_GPT-SoVITS/
+1_Demo_LLM/语音识别_VOSK/
+# 模型权重文件（repo 内任何位置均视为资产，不入库，兜底覆盖上述目录遗漏的扩展名）
 1_Demo_LLM/**/*.bin
 1_Demo_LLM/**/*.pth
 1_Demo_LLM/**/*.ckpt
 1_Demo_LLM/**/*.gguf
 1_Demo_LLM/**/*.onnx
 1_Demo_LLM/**/*.safetensors
+1_Demo_LLM/**/*.pt
+1_Demo_LLM/**/*.model
