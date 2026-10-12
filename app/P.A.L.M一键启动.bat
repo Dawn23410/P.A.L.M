@@ -100,14 +100,14 @@ echo  ============================================================
 echo              P.A.L.M  One-Click Launcher
 echo  ============================================================
 echo.
-REM [removed] echo   [1] One-click  =  backend + frontendï¼ˆdevï¼‰ + voice + cosy + auto browser
-echo   [2] Backend only   ï¼ˆweb.py, port 8080ï¼‰
-echo   [3] Frontend only  ï¼ˆvite dev, port 43210ï¼‰
+REM [removed] echo   [1] One-click  =  backend + frontendï¼ˆdevï¼? + voice + cosy + auto browser
+echo   [2] Backend only   ï¼ˆweb.py, port 8080ï¼?
+echo   [3] Frontend only  ï¼ˆvite dev, port 43210ï¼?
 echo   [4] Stop backend
-echo   [5] Prod preview   ï¼ˆbuild+static serve, opens INSTANTLY - for daily operationï¼‰
+echo   [5] Prod preview   ï¼ˆbuild+static serve, opens INSTANTLY - for daily operationï¼?
 echo   [0] Exit
 echo.
-set /p CH=Enter choice ï¼ˆEnter=1ï¼‰:
+set /p CH=Enter choice ï¼ˆEnter=1ï¼?:
 if "%CH%"=="" set "CH=1"
 if "%CH%"=="1" goto all
 if "%CH%"=="2" call :launch_hidden "%ENGINE%\run_backend.bat" "%BACKEND_LOG%" & goto menu
@@ -125,11 +125,11 @@ REM ---------- one-click (dev mode) ----------
 cls
 call :log "===== all: start one-click launch (dev) ====="
 echo  ============================================================
-REM [removed] echo     One-click: backend + frontendï¼ˆdevï¼‰ + voice + cosy + auto browser
+REM [removed] echo     One-click: backend + frontendï¼ˆdevï¼? + voice + cosy + auto browser
 echo  ============================================================
 echo.
-echo  [hint] Double-click = one-click ï¼ˆno inputï¼‰. For menu, run with /menu
-echo  [mode] DEV - frontend has hot-reload but a slower cold start ï¼ˆ~30-90sï¼‰.
+echo  [hint] Double-click = one-click ï¼ˆno inputï¼?. For menu, run with /menu
+echo  [mode] DEV - frontend has hot-reload but a slower cold start ï¼ˆ~30-90sï¼?.
 echo         For instant open use menu [5] Prod preview.
 echo  [logs] backend : %BACKEND_LOG%
 echo         frontend: %FRONTEND_LOG%
@@ -150,23 +150,23 @@ REM [removed] call :launch_hidden "%COSY%\run_cosy_api.bat" "%COSY_LOG%"
 REM Voice (9880) is heavy (GPU model load). Launch it async and never
 REM wait for it - it comes up in its own hidden process after the others.
 REM [removed] call :launch_hidden "%VOICE%\run_voice.bat" "%VOICE_LOG%"
-call :launch_hidden "%VOSK%\run_server.bat" "%VOSK_LOG%"
+REM [offline] call :launch_hidden "%VOSK%\run_server.bat" "%VOSK_LOG%"  (VOSK ÒÑ¸ÄÎªÀëÏß±¾µØÄÚºË£¬2026-09-25 ²»ÔÙÌá¹© HTTP ·þÎñ£»×ÀÃæ¶ËÓïÒôÊ¶±ðÈë¿ÚËæÖ®Í£ÓÃ)
 REM [removed] call :launch_hidden "%MENTALCORE%\run_bridge.bat" "%MENTALCORE_LOG%"
-REM ç»‡è¯­å±‚ç‹¬ç«‹æœåŠ¡ï¼ˆé»˜è®¤æœ¬åœ° Mockï¼Œç«¯å£ 7799ï¼‰â€”â€”ä»Žå¿ƒæ™ºé­”æ–¹æ ¸å¿ƒæ‹†å‡ºï¼Œå¯é€‰è¿è¡Œã€‚
+REM ç»‡è¯­å±‚ç‹¬ç«‹æœåŠ¡ï¼ˆé»˜è®¤æœ¬åœ° Mockï¼Œç«¯å? 7799ï¼‰â€”â€”ä»Žå¿ƒæ™ºé­”æ–¹æ ¸å¿ƒæ‹†å‡ºï¼Œå¯é€‰è¿è¡Œã€?
 REM [removed] call :launch_hidden "%MENTALCORE%\run_weave.bat" "%WEAVE_LOG%"
 REM Open the browser ONLY after the frontend port is actually listening.
 call :open_browser
 REM Wait a few seconds, then probe which ports are actually listening.
 powershell -NoProfile -WindowStyle Hidden -Command "Start-Sleep -Seconds 4; Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue | Where-Object {$_.LocalPort -in 8080,43210,5000,9880,7861,2700,7788,7799} | Select-Object -ExpandProperty LocalPort | Sort-Object -Unique | Out-File '%STATUS_LOG%' -Encoding utf8"
 REM [removed] echo  Launched backend + frontend + packages + cosy + voice as HIDDEN background
-echo  services ï¼ˆno cmd windowsï¼‰. Browser opens once the frontend is ready.
-REM [removed] echo  Voice ï¼ˆ9880ï¼‰ loads models on GPU and may take 30-90s; that is normal.
+echo  services ï¼ˆno cmd windowsï¼?. Browser opens once the frontend is ready.
+REM [removed] echo  Voice ï¼?9880ï¼? loads models on GPU and may take 30-90s; that is normal.
 echo  You may close this window; the services keep running in background.
 echo.
 echo  [Waiting ~6s for services to bind, then showing listening ports...]
 %SystemRoot%\System32\timeout.exe /t 6 /nobreak >nul
-echo  ===== Listening ports after launch ï¼ˆfrom %STATUS_LOG%ï¼‰ =====
-if exist "%STATUS_LOG%" (type "%STATUS_LOG%") else (echo   ï¼ˆstatus not ready yet; check %STATUS_LOG% in a few secondsï¼‰)
+echo  ===== Listening ports after launch ï¼ˆfrom %STATUS_LOG%ï¼? =====
+if exist "%STATUS_LOG%" (type "%STATUS_LOG%") else (echo   ï¼ˆstatus not ready yet; check %STATUS_LOG% in a few secondsï¼?)
 echo.
 echo  [Launcher will auto-close in 8s]
 %SystemRoot%\System32\timeout.exe /t 8 /nobreak >nul
@@ -177,13 +177,13 @@ REM ---------- one-click (prod preview mode: instant open) ----------
 cls
 call :log "===== prod: build+preview launch ====="
 echo  ============================================================
-REM [removed] echo     Prod preview: backend + frontendï¼ˆpreviewï¼‰ + voice + cosy
+REM [removed] echo     Prod preview: backend + frontendï¼ˆpreviewï¼? + voice + cosy
 echo  ============================================================
 echo.
 echo  [mode] PROD PREVIEW - frontend is built once then served statically,
 echo         so it opens INSTANTLY. No hot-reload; rebuild after code changes
 echo         ï¼ˆrun this bat with /menu, pick [5] after deleting dist, or pass
-echo          run_frontend_preview.bat /rebuildï¼‰ã€‚
+echo          run_frontend_preview.bat /rebuildï¼‰ã€?
 echo  [logs] backend : %BACKEND_LOG%
 echo         frontend: %FRONTEND_LOG%
 echo         packages: %PACKAGES_LOG%
@@ -201,18 +201,18 @@ call :launch_hidden "%FRONTEND%\run_frontend_preview.bat" "%FRONTEND_LOG%"
 call :launch_hidden "%PACKAGES%\run_packages.bat" "%PACKAGES_LOG%"
 REM [removed] call :launch_hidden "%COSY%\run_cosy_api.bat" "%COSY_LOG%"
 REM [removed] call :launch_hidden "%VOICE%\run_voice.bat" "%VOICE_LOG%"
-call :launch_hidden "%VOSK%\run_server.bat" "%VOSK_LOG%"
+REM [offline] call :launch_hidden "%VOSK%\run_server.bat" "%VOSK_LOG%"  (VOSK ÒÑ¸ÄÎªÀëÏß±¾µØÄÚºË£¬2026-09-25 ²»ÔÙÌá¹© HTTP ·þÎñ£»×ÀÃæ¶ËÓïÒôÊ¶±ðÈë¿ÚËæÖ®Í£ÓÃ)
 REM [removed] call :launch_hidden "%MENTALCORE%\run_bridge.bat" "%MENTALCORE_LOG%"
 REM [removed] call :launch_hidden "%MENTALCORE%\run_weave.bat" "%WEAVE_LOG%"
 call :open_browser
 powershell -NoProfile -WindowStyle Hidden -Command "Start-Sleep -Seconds 4; Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue | Where-Object {$_.LocalPort -in 8080,43210,5000,9880,7861,2700,7788,7799} | Select-Object -ExpandProperty LocalPort | Sort-Object -Unique | Out-File '%STATUS_LOG%' -Encoding utf8"
-echo  Launched in PROD PREVIEW mode ï¼ˆfrontend opens instantly once readyï¼‰.
+echo  Launched in PROD PREVIEW mode ï¼ˆfrontend opens instantly once readyï¼?.
 echo  You may close this window; the services keep running in background.
 echo.
 echo  [Waiting ~6s for services to bind, then showing listening ports...]
 %SystemRoot%\System32\timeout.exe /t 6 /nobreak >nul
-echo  ===== Listening ports after launch ï¼ˆfrom %STATUS_LOG%ï¼‰ =====
-if exist "%STATUS_LOG%" (type "%STATUS_LOG%") else (echo   ï¼ˆstatus not ready yet; check %STATUS_LOG% in a few secondsï¼‰)
+echo  ===== Listening ports after launch ï¼ˆfrom %STATUS_LOG%ï¼? =====
+if exist "%STATUS_LOG%" (type "%STATUS_LOG%") else (echo   ï¼ˆstatus not ready yet; check %STATUS_LOG% in a few secondsï¼?)
 echo.
 echo  [Launcher will auto-close in 8s]
 %SystemRoot%\System32\timeout.exe /t 8 /nobreak >nul

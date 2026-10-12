@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebUI</title>
+<!-- 内联 SVG favicon：避免浏览器默认去要 /favicon.ico 而留下一条 404 -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230969da'/%3E%3Cpath d='M9 20.5 23 8l-8.5 18-1.6-7z' fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<!-- 自管理中文字体（设置页「字体」预设用，@font-face 见 fonts/fonts.css） -->
+<link rel="stylesheet" href="./fonts/fonts.css">
+<script>
+  /* 首屏防闪白：在 CSS 加载前就把主题写到 <html> 上。
+     这段逻辑与 core/theme/index.js 的 bootstrap 保持一致，
+     放在这里是为了在第一次绘制前生效（模块是异步的，来不及）。 */
+  (function () {
+    try {
+      var m = localStorage.getItem('webui.theme') || 'light';
+      if (m !== 'light' && m !== 'dark' && m !== 'system') m = 'light';
+      var t = m;
+      if (m === 'system') {
+        t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+      }
+      var r = document.documentElement;
+      r.setAttribute('data-theme', t);
+      r.setAttribute('data-theme-mode', m);
+      r.style.colorScheme = t;
+      // 全局字号 / 字体：首屏即生效，避免刷新后回退到默认（不依赖设置页挂载）
+      var fpRaw = parseInt(localStorage.getItem('webui.font.global'), 10);
+      if (Number.isFinite(fpRaw)) {
+        r.style.setProperty('--ui-root-font-size', Math.max(10, Math.min(19, fpRaw)) + 'px');
+      }
+      var ff = localStorage.getItem('webui.font.family');
+      if (ff) r.style.setProperty('--ui-font-family', ff);
+    } catch (e) { /* 忽略 */ }
+  })();
+</script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;width:100%;overflow:hidden;background:var(--ui-bg);}
+  html{font-size:var(--ui-root-font-size,14px);}
+  body{
+    font-family:var(--ui-font-family,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif);
+    background:var(--ui-bg);
+    color:var(--ui-text);
+    font-size:var(--ui-root-font-size,14px);
+    -webkit-font-smoothing:antialiased;
+    transition:background .2s ease,color .2s ease;
+  }
+  /* 仅 UI 控件禁选，主内容区允许复制 */
+  .sidebar,button{-webkit-user-select:none;-moz-user-select:none;
+    -ms-user-select:none;user-select:none;}
+  a,img,svg{-webkit-user-drag:none;user-drag:none;}
+
+  /* ---------- 外壳骨架 ---------- */
+  .app{
+    display:flex;
+    height:100vh;width:100vw;
+    overflow:hidden;
+  }
+  /* ---------- 侧边栏 ---------- */
+  /* 宽度走 CSS 变量。**侧边栏恒为「图标 + 文字」**，窄屏只收窄不隐藏标签。
+     注意：这个变量只在本地 <style> 里定义，不要放进 core/theme 的
+     THEME_CSS —— 那份样式是运行时后注入 <head> 的，同优先级下会反过来
+     覆盖这里的媒体查询，导致自适应失效。 */
+  :root{ --ui-sidebar-w:120px; }
+  .sidebar{
+    width:var(--ui-sidebar-w);flex:0 0 var(--ui-sidebar-w);
+    height:100vh;overflow:hidden;
+    background:var(--ui-panel);
+    border-right:1px solid var(--ui-border-soft);
+    padding:10px 10px 12px;
+    display:flex;flex-direction:column;
+    gap:4px;
+    transition:background .2s ease,border-color .2s ease,
+               width .22s var(--ui-ease),flex-basis .22s var(--ui-ease);
+  }
+  .nav{
+    width:100%;
+    display:flex;flex-direction:column;
+    align-items:stretch;gap:2px;
+    padding-top:6px;                     /* 原来是 40px，纯死白 */
+    flex:1 1 auto;min-height:0;
+    overflow-y:auto;overscroll-behavior:contain;
+  }
+  .nav-item{
+    position:relative;
+    display:flex;align-items:center;gap:9px;
+    width:100%;padding:8px 10px;
+    border:none;outline:none;background:transparent;
+    border-radius:var(--ui-radius-sm,7px);
+    font-family:inherit;font-size:0.9286rem;font-weight:400;line-height:1.25;
+    color:var(--ui-muted);text-align:left;text-decoration:none;cursor:pointer;
+    transition:background .16s,color .16s;
+    -webkit-user-drag:none;user-drag:none;
+  }
+  .nav-item .icon{
+    width:15px;height:15px;flex:0 0 15px;display:block;
+    stroke:currentColor;fill:none;
+    stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;
+  }
+  .nav-item .label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .nav-item:hover{background:var(--ui-hover);color:var(--ui-text);}
+  .nav-item.active{background:var(--ui-active);color:var(--ui-text);font-weight:600;}
+  .nav-item.active::before{
+    content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);
+    width:3px;height:16px;border-radius:0 3px 3px 0;background:var(--ui-accent);
+  }
+  .nav-item.hidden{display:none;}
+
+  .main{
+    flex:1 1 auto;min-width:0;height:100vh;
+    overflow:hidden;background:var(--ui-bg);
+    position:relative;
+    transition:background .2s ease;
+  }
+
+  /* ---------- 模块容器 ---------- */
+  .mod-host{
+    position:absolute;inset:0;
+    overflow:hidden;
+    display:none;
+  }
+  .mod-host.mod-active{display:block;}
+
+  /* ---------- 模块加载失败兜底 ---------- */
+  .mod-error{
+    height:100%;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    gap:14px;padding:40px;text-align:center;
+  }
+  .mod-error-head{
+    display:flex;align-items:center;gap:8px;
+    font-size:1rem;color:var(--ui-danger);
+  }
+  .mod-error-dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--ui-danger);flex:0 0 8px;
+  }
+  .mod-error-msg{
+    max-width:80%;max-height:40%;
+    overflow:auto;
+    font-family:ui-monospace,Consolas,monospace;
+    font-size:0.8571rem;line-height:1.6;color:var(--ui-muted);
+    background:var(--ui-panel);border:1px solid var(--ui-border-soft);
+    border-radius:8px;padding:12px 14px;
+    text-align:left;white-space:pre-wrap;word-break:break-word;
+  }
+  .mod-error-btn{
+    height:32px;padding:0 16px;
+    border:1px solid var(--ui-border);border-radius:8px;
+    background:var(--ui-elev);font-family:inherit;font-size:0.8571rem;
+    color:var(--ui-text);cursor:pointer;transition:.16s;
+  }
+  .mod-error-btn:hover{background:var(--ui-hover);}
+
+  /* ---------- 外壳级错误条 ---------- */
+  .shell-error{
+    position:absolute;left:12px;bottom:12px;right:12px;
+    display:none;
+    padding:10px 14px;
+    background:var(--ui-danger-bg);border:1px solid var(--ui-danger-border);
+    border-radius:8px;
+    font-size:0.8571rem;color:var(--ui-danger);
+    font-family:ui-monospace,Consolas,monospace;
+    z-index:99;
+  }
+  .shell-error.show{display:block;}
+
+  /* 注意：这里刻意不做「页面切换淡入」。
+     用 CSS animation 驱动 opacity 在部分环境（无头浏览器、虚拟时间）下
+     不会推进，元素会卡在 from 状态（半透明甚至全透明），
+     把整页文字压成灰蒙蒙的。外壳级 / 页面级都不要再加透明度动画。 */
+
+  /* ---------- 自适应 ---------- */
+  /* 中屏：侧栏略收窄，把宽度让给内容（基准已砍半，这里按比例再收） */
+  @media (max-width:1180px){
+    :root{ --ui-sidebar-w:108px; }
+  }
+  /* 窄屏：只把侧栏收窄，**不再隐藏标签**。
+     侧边栏要求恒为「图标 + 文字」，所以取消原来的图标轨道模式。 */
+  @media (max-width:900px){
+    :root{ --ui-sidebar-w:100px; }
+    .sidebar{padding:10px 8px 12px;}
+    .nav-item{padding:8px;gap:8px;}
+  }
+  @media (max-width:560px){
+    :root{ --ui-sidebar-w:92px; }
+    .nav-item{padding:7px;gap:7px;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .sidebar{transition:none;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <nav class="nav" id="nav"><!-- 由模块清单自动生成 --></nav>
+  </aside>
+  <main class="main">
+    <div id="stage"></div>
+    <div class="shell-error" id="shellError"></div>
+  </main>
+</div>
+
+<script type="module">
+  import { Router } from './core/router.js';
+  import { list, mount, hide, reload, isLoaded } from './core/loader.js';
+  import { startHMR } from './core/hmr.js';
+  import { Theme, THEME_CSS } from './core/theme/index.js';
+  import { log } from './core/log.js';
+  import { detectPages } from './core/manifest.js';
+  import './core/modules.js';   // 触发模块注册（副作用导入）
+
+  // 渲染器运行时由各页面自行按需引入（core/renderers/index.js 的 ensureRenderers）。
+  // 外壳不再关心具体渲染器，只负责导航与页面生命周期。
+
+  /* ---------- 主题：注入变量表并初始化 ---------- */
+  // 必须尽早执行：core/theme 在初始化时（以及每次切换时）会派发
+  // rnd-theme-change 事件，而渲染器是在页面加载后才挂上监听的。
+  // 这里先跑，页面加载时拿到的就已经是最终主题。
+  // 变量表是唯一真相源，挂进 <head> 后 <html data-theme> 一变就整体换色。
+  {
+    const styleEl = document.createElement('style');
+    styleEl.id = 'theme-vars';
+    styleEl.textContent = THEME_CSS;
+    document.head.appendChild(styleEl);
+
+    Theme.init();
+    window.Theme = Theme;
+  }
+
+  /* ---------- 图标（由 id 映射，模块清单不含图标） ---------- */
+  const ICONS = {
+    home: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V21h13V9.5"/><path d="M10 21v-6h4v6"/>',
+    overview: '<rect x="7" y="7" width="10" height="10" rx="1"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M8 3v2M16 3v2M8 19v2M16 19v2M3 8h2M3 16h2M19 8h2M19 16h2"/>',
+    settings: '<circle cx="12" cy="12" r="3.2"/><path d="M19.4 13.5a7.6 7.6 0 0 0 0-3l1.7-1.3-1.9-3.3-2 .8a7.6 7.6 0 0 0-2.6-1.5L14.3 3H9.7l-.3 2.2a7.6 7.6 0 0 0-2.6 1.5l-2-.8-1.9 3.3 1.7 1.3a7.6 7.6 0 0 0 0 3l-1.7 1.3 1.9 3.3 2-.8a7.6 7.6 0 0 0 2.6 1.5l.3 2.2h4.6l.3-2.2a7.6 7.6 0 0 0 2.6-1.5l2 .8 1.9-3.3z"/>',
+    chat: '<path d="M20.5 11.6c0 4.2-3.8 7.6-8.5 7.6a9.7 9.7 0 0 1-2.9-.4L4 20.5l1.4-3.7A7.2 7.2 0 0 1 3.5 11.6C3.5 7.4 7.3 4 12 4s8.5 3.4 8.5 7.6z"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01"/>',
+    // 兜底：新增页面忘了配图标时也不至于留空（侧栏要求图标 + 文字）
+    __default: '<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 12h6"/>',
+  };
+
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  const DEFAULT_PAGE = 'home';
+  const HIDDEN = new Set(['home']);   // 不在侧边栏展示、仅作默认页
+
+  const nav = document.getElementById('nav');
+  const stageEl = document.getElementById('stage');
+  const shellError = document.getElementById('shellError');
+
+  const router = new Router(DEFAULT_PAGE);
+  let activeId = null;
+
+  /* ---------- 渲染侧边栏（依据模块清单 + 存在性探测） ---------- */
+  async function renderNav() {
+    nav.innerHTML = '';
+    // 探测各页面模块脚本是否存在：未检测到 → 不渲染该项（导航不留空）
+    const mods = await detectPages();
+    mods.forEach((mod) => {
+      if (!mod.detected) return;
+      const a = document.createElement('a');
+      a.className = 'nav-item' + (HIDDEN.has(mod.id) ? ' hidden' : '');
+      a.href = '#' + mod.id;
+      a.dataset.page = mod.id;
+      // 窄屏侧栏收成图标轨道后标签会隐藏，用原生 title 补回可读名称
+      a.title = mod.title;
+
+      const svg = document.createElementNS(SVG_NS, 'svg');
+      svg.setAttribute('class', 'icon');
+      svg.setAttribute('viewBox', '0 0 24 24');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.innerHTML = ICONS[mod.id] || ICONS.__default;
+      a.appendChild(svg);
+
+      const span = document.createElement('span');
+      span.className = 'label';
+      span.textContent = mod.title;
+      a.appendChild(span);
+
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const next = a.classList.contains('active') ? DEFAULT_PAGE : mod.id;
+        router.go(next);
+      });
+      a.addEventListener('dragstart', (e) => e.preventDefault());
+
+      nav.appendChild(a);
+    });
+    syncActive(activeId);   // 渲染完成后同步高亮
+  }
+
+  /* ---------- 高亮同步 ---------- */
+  function syncActive(id) {
+    nav.querySelectorAll('.nav-item').forEach((n) => {
+      n.classList.toggle('active', n.dataset.page === id);
+    });
+  }
+
+  /* ---------- 页面切换 ---------- */
+  let activating = false;
+  async function activate(id) {
+    // 路由兜底：未注册的 id（例如手输 #nope）一律回主页，
+    // 避免出现「没有任何模块激活」的空白界面。
+    if (!list().some((m) => m.id === id)) {
+      console.warn(`[Shell] 未知路由「${id}」，回退到 ${DEFAULT_PAGE}`);
+      router.go(DEFAULT_PAGE);
+      return;
+    }
+    if (activeId === id) return;
+    if (activating) return;          // 防止快速切换时的重入竞态
+    activating = true;
+    try {
+      await doActivate(id);
+    } finally {
+      activating = false;
+    }
+  }
+
+  async function doActivate(id) {
+
+    // 1) 先隐藏当前页（保留实例状态，切换更快）
+    if (activeId) {
+      try { hide(activeId); } catch (e) { console.error(e); }
+    }
+    syncActive(id);
+
+    // 2) 挂载目标页；任何失败都被沙箱拦住，不影响外壳
+    try {
+      await mount(id, stageEl);
+      activeId = id;
+      shellError.classList.remove('show');
+    } catch (err) {
+      // 加载阶段失败（例如模块文件语法错误）：外壳依然可用
+      console.error(`[Shell] 无法加载模块 ${id}:`, err);
+      showShellError(`模块「${id}」加载失败：${err.message}`);
+      activeId = id;
+    }
+  }
+
+  function showShellError(msg) {
+    shellError.textContent = msg;
+    shellError.classList.add('show');
+  }
+
+  /* ---------- 模块内部请求重新加载（错误界面上的按钮） ---------- */
+  stageEl.addEventListener('mod:reload', async (e) => {
+    const id = e.detail.id;
+    await reload(id, stageEl);
+    activeId = id;
+  });
+
+  /* ---------- 路由订阅 ---------- */
+  router.onChange((id) => {
+    activate(id);
+    // 真实记录：前端导航事件 → 核心处理器（输入管道）
+    log.info({ source: 'fe', target: 'cpu', type: 'event', payload: { page: id } });
+  });
+
+  /* ---------- 启动 ---------- */
+  renderNav();
+  activate(router.current);
+
+  /* ---------- 热重载：仅开发期生效 ---------- */
+  startHMR({
+    onReload: async (id) => {
+      if (id === 'index.html') { location.reload(); return; }   // 外壳变更：整页刷新
+      if (!isLoaded(id)) return;            // 没挂载过的模块，下次进入自然会加载新版
+      await reload(id, stageEl);
+      activeId = id;
+    },
+  });
+
+  // 暴露给控制台，方便手动调试
+  window.__app = {
+    router,
+    reload: (id) => reload(id || activeId, stageEl),
+    theme: Theme,
+    // 底层框架内核：唯一运行时（boot 后可用）
+    kernel: () => window.__kernel,
+  };
+</script>
+</body>
+</html>

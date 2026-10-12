@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>内核 API 引脚图 · palm_llm + palm_cryptokernel</title>
+<style>
+:root{
+  --bg:#16181d; --panel:#1d2026; --panel2:#23272e; --line:#333842; --line2:#454b57;
+  --fg:#e6e8ec; --fg2:#a9b0bb; --fg3:#7b838f;
+  --pwr:#4ec9a8; --in:#6aa9f0; --out:#8bc34a; --io:#b48ef0; --clk:#e0a458; --gnd:#f07b7b;
+  --mono:ui-monospace,"Cascadia Mono","JetBrains Mono",Consolas,monospace;
+  --sans:ui-sans-serif,"Segoe UI","Microsoft YaHei",sans-serif;
+}
+@media (prefers-color-scheme: light){
+  :root{
+    --bg:#f6f7f9; --panel:#ffffff; --panel2:#f0f2f5; --line:#dfe3ea; --line2:#c8ced8;
+    --fg:#1c1f24; --fg2:#4d5561; --fg3:#77808d;
+    --pwr:#0f6e56; --in:#185fa5; --out:#3b6d11; --io:#534ab7; --clk:#854f0b; --gnd:#a32d2d;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:13px;line-height:1.6}
+a{color:var(--in)}
+code,.sig,.pinno{font-family:var(--mono)}
+header{padding:22px 26px 16px;border-bottom:1px solid var(--line)}
+h1{margin:0 0 4px;font-size:19px;font-weight:600;letter-spacing:.2px}
+.sub{color:var(--fg2);font-size:12.5px}
+.stats{display:flex;gap:22px;margin-top:14px;flex-wrap:wrap}
+.stat b{display:block;font-size:20px;font-weight:600;font-family:var(--mono)}
+.stat span{color:var(--fg3);font-size:11.5px}
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:14px 26px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:5}
+input[type=search]{flex:0 0 260px;padding:7px 10px;border-radius:7px;border:1px solid var(--line2);background:var(--panel);color:var(--fg);font-size:12.5px;font-family:var(--sans)}
+.tabs{display:flex;gap:6px}
+.tab{padding:6px 12px;border-radius:7px;border:1px solid var(--line);background:var(--panel);color:var(--fg2);cursor:pointer;font-size:12.5px}
+.tab.on{background:var(--panel2);color:var(--fg);border-color:var(--line2)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-left:auto}
+.lg{display:flex;align-items:center;gap:5px;color:var(--fg2);font-size:11.5px}
+.dot{width:9px;height:9px;border-radius:2px;display:inline-block}
+section{padding:20px 26px 6px}
+h2{font-size:15px;margin:6px 0 12px;font-weight:600}
+.chipwrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+@media (max-width:980px){.chipwrap{grid-template-columns:minmax(0,1fr)}}
+.chipcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+.chipcard h3{margin:0 0 2px;font-size:14px}
+.chipcard .meta{color:var(--fg3);font-size:11.5px;margin-bottom:8px}
+svg.chip{width:100%;height:auto;display:block;cursor:crosshair}
+.bankbtn{cursor:pointer}
+.bankbtn:hover rect.bankbody{fill:var(--panel2)}
+.banktable{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:0 0 16px;overflow:hidden}
+.bankhead{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);cursor:pointer}
+.bankhead .tag{font-family:var(--mono);font-size:11.5px;padding:2px 7px;border-radius:5px;background:var(--panel2);color:var(--fg2)}
+.bankhead .ttl{font-weight:600;font-size:13.5px}
+.bankhead .cnt{margin-left:auto;color:var(--fg3);font-size:11.5px;font-family:var(--mono)}
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+th,td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:500;color:var(--fg3);font-size:11.5px;background:var(--panel2)}
+tr:last-child td{border-bottom:none}
+td.no{width:52px;font-family:var(--mono);color:var(--fg3);font-size:11.5px}
+td.nm{width:190px;font-family:var(--mono);font-size:12px;word-break:break-all}
+td.sg{width:31%;font-family:var(--mono);font-size:11.5px;color:var(--fg2);word-break:break-word}
+td.kd{width:74px}
+td.no2{width:56px}
+.kbadge{font-size:10.5px;padding:1px 6px;border-radius:4px;font-family:var(--mono);white-space:nowrap}
+.k-PWR{background:color-mix(in srgb,var(--pwr) 20%,transparent);color:var(--pwr)}
+.k-IN{background:color-mix(in srgb,var(--in) 20%,transparent);color:var(--in)}
+.k-OUT{background:color-mix(in srgb,var(--out) 20%,transparent);color:var(--out)}
+.k-IO{background:color-mix(in srgb,var(--io) 20%,transparent);color:var(--io)}
+.k-CLK{background:color-mix(in srgb,var(--clk) 20%,transparent);color:var(--clk)}
+.k-GND{background:color-mix(in srgb,var(--gnd) 20%,transparent);color:var(--gnd)}
+.sig{cursor:copy}
+.sig:hover{color:var(--fg)}
+tr.hit{background:color-mix(in srgb,var(--clk) 10%,transparent)}
+footer{padding:18px 26px 40px;color:var(--fg3);font-size:11.5px;border-top:1px solid var(--line);margin-top:14px}
+.note{color:var(--fg3);font-size:11.5px;font-weight:400;margin-left:6px}
+</style>
+</head>
+<body>
+<header>
+  <h1>内核 API 引脚图</h1>
+  <div class="sub">芯片 = 模块（封装）· 引脚 = 对外 API（签名 / 方向 / 说明）。两个内核均为「内嵌独立项目」，引脚清单由源码 AST 抽取 + 运行时能力矩阵核对，非手抄。</div>
+  <div class="stats" id="stats"></div>
+</header>
+
+<div class="toolbar">
+  <input id="q" type="search" placeholder="搜引脚名 / 签名 / 说明（如 digest、stream、boot）">
+  <div class="tabs" id="tabs"></div>
+  <div class="legend" id="legend"></div>
+</div>
+
+<section>
+  <h2>芯片封装视图</h2>
+  <div class="chipwrap" id="chips"></div>
+</section>
+
+<section>
+  <h2>引脚明细</h2>
+  <div id="banks"></div>
+</section>
+
+<footer id="src"></footer>
+
+<script>
+const KIND = {
+  PWR: {cn: "电源 · 装配 / 生命周期"},
+  IN:  {cn: "输入 · 配置 / 入参"},
+  OUT: {cn: "输出 · 返回值"},
+  IO:  {cn: "双向 · 结构体 / 状态"},
+  CLK: {cn: "时钟 · 流式 / 计时"},
+  GND: {cn: "地 · 异常 / 降级兜底"}
+};
+
+const CHIPS = [
+{
+  ref: "U1", id: "llm", pkg: "palm_llm", cn: "LLM 内核",
+  meta: "多厂商大模型统一流式调用层 · 四协议通道（openai_compat / anthropic / ollama / gemini）· 服务端 FastAPI :10083",
+  banks: [
+    { id:"facade", cn:"包门面", note:"from palm_llm import …（__init__.py 的 __all__）", pins:[
+      {n:"A1",x:"Message",s:"class Message",k:"IO",d:"对话消息：role/content/images/files/tool_calls/tool_call_id/name/tool_error/reasoning/reasoning_echo"},
+      {n:"A2",x:"ModelParameters",s:"class ModelParameters",k:"IN",d:"生成参数：temperature/top_p/max_tokens/两条 penalty/extra_body/tools/tool_choice/parallel_tool_calls"},
+      {n:"A3",x:"ProviderConfig",s:"class ProviderConfig",k:"IN",d:"连接配置：name/type/base_url/api_key/default_model/extra/retry"},
+      {n:"A4",x:"Tool",s:"class Tool",k:"IO",d:"函数工具声明：name/description/parameters(JSON Schema)/raw/strict"},
+      {n:"A5",x:"BaseProvider",s:"class BaseProvider",k:"IO",d:"所有提供方的统一接口基类（含客户端复用与预热）"},
+      {n:"A6",x:"OpenAICompatProvider",s:"class OpenAICompatProvider",k:"OUT",d:"默认通道：OpenAI 兼容端点（覆盖绝大多数厂商与网关）"},
+      {n:"A7",x:"OllamaProvider",s:"class OllamaProvider",k:"OUT",d:"本地 ollama 原生 /api/chat 通道"},
+      {n:"A8",x:"OLLAMA_DEFAULT_BASE_URL",s:"const str",k:"OUT",d:"本地 ollama 默认根地址（注意：不带 /v1）"},
+      {n:"A9",x:"capabilities_for",s:"def capabilities_for(base_url=\"\", type_hint=\"\", model=\"\") -> dict",k:"OUT",d:"查「端点+模型」能力矩阵，供预检或 UI 提示"},
+      {n:"A10",x:"get_provider_instance",s:"def get_provider_instance(cfg) -> BaseProvider",k:"OUT",d:"按 cfg.type 取 provider；未知 type 回落 openai_compat"},
+      {n:"A11",x:"RetryPolicy",s:"class RetryPolicy",k:"IN",d:"重试策略（不可变）；ProviderConfig.retry 选择"},
+      {n:"A12",x:"LOW_LATENCY",s:"const RetryPolicy",k:"IN",d:"默认档：最多重试 1 次、不退避（与既有行为一致）"},
+      {n:"A13",x:"STABLE",s:"const RetryPolicy",k:"IN",d:"企业档：3 次 + 指数退避 + 抖动"},
+      {n:"A14",x:"configure_logging",s:"def configure_logging(level=None, stream=None) -> logging.Logger",k:"PWR",d:"幂等装配：结构化格式 + 队列异步输出"},
+      {n:"A15",x:"get_request_id",s:"def get_request_id() -> str",k:"OUT",d:"取本次请求 id（contextvars 跨 await 贯通）"},
+      {n:"A16",x:"set_request_id",s:"def set_request_id(rid) -> contextvars.Token",k:"IN",d:"服务层在回合边界设置；空值则新生成"},
+      {n:"A17",x:"CapabilityError",s:"class CapabilityError(PalmLLMError)",k:"GND",d:"输入超出目标模型能力 —— 发请求前拦截（零网络往返）"},
+      {n:"A18",x:"PalmLLMError",s:"class PalmLLMError(RuntimeError)",k:"GND",d:"全部异常的基类；继承 RuntimeError 以兼容既有兜底"},
+      {n:"A19",x:"TransportError",s:"class TransportError(PalmLLMError)",k:"GND",d:"传输层失败（重置/超时/DNS/首字节超时）—— 可重试"},
+      {n:"A20",x:"UpstreamServerError",s:"class UpstreamServerError(PalmLLMError)",k:"GND",d:"上游 5xx —— 可重试但有界"},
+      {n:"A21",x:"RateLimitError",s:"class RateLimitError(PalmLLMError)",k:"GND",d:"429 —— 可重试且必须尊重 Retry-After"},
+      {n:"A22",x:"AuthError",s:"class AuthError(PalmLLMError)",k:"GND",d:"401/403 —— 不可重试"},
+      {n:"A23",x:"BadRequestError",s:"class BadRequestError(PalmLLMError)",k:"GND",d:"4xx 参数/语义错误 —— 不可重试"},
+      {n:"A24",x:"NotConfiguredError",s:"class NotConfiguredError(PalmLLMError)",k:"GND",d:"本地配置缺失（如未填 API Key）—— 不可重试"},
+      {n:"A25",x:"StreamInterruptedError",s:"class StreamInterruptedError(PalmLLMError)",k:"GND",d:"已向调用方产出内容后中断 —— 绝不重试（否则重复计费）"}
+    ]},
+    { id:"providers-facade", cn:"providers 门面", note:"from palm_llm.providers import …（其余导出）", pins:[
+      {n:"B1",x:"AnthropicProvider",s:"class AnthropicProvider(BaseProvider)",k:"OUT",d:"原生 /v1/messages：system 外提、块级 SSE、缓存 token、effort 档"},
+      {n:"B2",x:"GeminiProvider",s:"class GeminiProvider(BaseProvider)",k:"OUT",d:"原生 generateContent：user/model 两角色、parts[]、x-goog-api-key、无 [DONE]"},
+      {n:"B3",x:"GEMINI_DEFAULT_BASE_URL",s:"const str",k:"OUT",d:"Gemini 默认端点基址"},
+      {n:"B4",x:"Meter",s:"class Meter",k:"CLK",d:"一次请求的计时/计数累加器（流式与非流式共用）"},
+      {n:"B5",x:"TurnStats",s:"class TurnStats",k:"CLK",d:"跨协议归一的回传统一字段（新代码只读它）"},
+      {n:"B6",x:"check_capabilities",s:"def check_capabilities(messages, profile, model=\"\", provider=\"\", rule=None) -> dict",k:"OUT",d:"按能力矩阵校验入参；违规抛 CapabilityError"}
+    ]},
+    { id:"models", cn:"数据模型", note:"palm_llm/models.py —— 内核与调用方之间的稳定结构", pins:[
+      {n:"C1",x:"ProviderConfig.fields",s:"name, type=\"openai_compat\", base_url, api_key, default_model, extra, retry",k:"IN",d:"type 决定通道：openai_compat / anthropic / ollama / gemini"},
+      {n:"C2",x:"Message.fields",s:"role, content, images, files, tool_calls, tool_call_id, name, tool_error, reasoning, reasoning_echo",k:"IO",d:"files 与 images 同形态（str data URI 或 {data,mime,name,size}）"},
+      {n:"C3",x:"Message.to_openai",s:"def to_openai(self) -> dict",k:"OUT",d:"多模态时改走 content blocks；纯附件消息不塞空文本块"},
+      {n:"C4",x:"Tool.fields",s:"name, description, parameters, raw, strict",k:"IO",d:"raw 可直接透传已组装好的 OpenAI 结构"},
+      {n:"C5",x:"Tool.to_openai",s:"def to_openai(self) -> dict",k:"OUT",d:"输出 {type:function, function:{name,description,parameters}}"},
+      {n:"C6",x:"Tool.normalize",s:"@staticmethod normalize(tools) -> Optional[list[dict]]",k:"IO",d:"list[Tool] / list[dict] 统一为 OpenAI tools 数组"},
+      {n:"C7",x:"ModelParameters.fields",s:"temperature=0.7, top_p=1.0, max_tokens=8192, frequency_penalty, presence_penalty, extra_body, tools, tool_choice, parallel_tool_calls",k:"IN",d:"max_tokens 默认 8192：思考链会吃掉数千 token，过小会让 content 为空"}
+    ]},
+    { id:"base", cn:"提供方基类", note:"palm_llm/providers/base.py —— 复用客户端 / SSE / 工具归一", pins:[
+      {n:"D1",x:"get_client",s:"def get_client() -> httpx.AsyncClient",k:"PWR",d:"按事件循环对象身份复用的异步客户端（HTTP/2 + 连接池 + 保活）"},
+      {n:"D2",x:"close_client",s:"async def close_client() -> None",k:"PWR",d:"程序退出时优雅关闭所有客户端"},
+      {n:"D3",x:"FirstByteTimeout",s:"class FirstByteTimeout(TransportError)",k:"GND",d:"首字节等待超时（连接可能已被服务端关闭，应换连接重试）"},
+      {n:"D4",x:"chain",s:"async def chain(first, rest)",k:"CLK",d:"把已取出的首行与其余行拼成一条异步流"},
+      {n:"D5",x:"iter_sse_lines",s:"async def iter_sse_lines(resp)",k:"CLK",d:"逐行产出 SSE/NDJSON；首字节短超时内未到达则抛 FirstByteTimeout"},
+      {n:"D6",x:"to_chat_message",s:"def to_chat_message(m, echo_reasoning=False) -> dict",k:"OUT",d:"Message 归一为厂商 payload；思考块默认**不发**（误发会让必须剥离的厂商静默 400）"},
+      {n:"D7",x:"normalize_tool_calls",s:"def normalize_tool_calls(raw) -> Optional[list[dict]]",k:"OUT",d:"任意来源的 tool_calls 归一为内核口径（三通道共用一份）"},
+      {n:"D8",x:"BaseProvider.__init__",s:"def __init__(self, cfg)",k:"IN",d:"持有 ProviderConfig"},
+      {n:"D9",x:"BaseProvider.complete",s:"async def complete(self, messages, params, model, stream=True)",k:"CLK",d:"产出增量字典：content / reasoning / tool_call_delta / tool_calls / done+usage+stats"},
+      {n:"D10",x:"BaseProvider.prewarm",s:"async def prewarm(self) -> float",k:"PWR",d:"预建 TCP+TLS 连接入池，把握手移出首字关键路径"},
+      {n:"D11",x:"BaseProvider.image_to_b64",s:"async def image_to_b64(self, url)",k:"IN",d:"图片 URL → (media_type, base64)；支持 data URI 与远程 http(s)"}
+    ]},
+    { id:"channels", cn:"四通道适配", note:"每条通道一个 provider；协议结构差异走薄适配器", pins:[
+      {n:"E1",x:"OpenAICompat.complete",s:"async def complete(self, messages, params, model, stream=True)",k:"CLK",d:"三级容错：完整格式 → 400/404/415/422 降级为基础字段子集重试 → 再失败抛错"},
+      {n:"E2",x:"Anthropic.complete",s:"async def complete(self, messages, params, model, stream=True)",k:"CLK",d:"原生 /v1/messages（x-api-key + anthropic-version）"},
+      {n:"E3",x:"NATIVE_VERSION",s:"const str",k:"OUT",d:"Anthropic 原生 API 版本号"},
+      {n:"E4",x:"Ollama.complete",s:"async def complete(self, messages, params, model, stream=True)",k:"CLK",d:"原生 /api/chat；think 是一等参数，思维链在 message.thinking"},
+      {n:"E5",x:"Ollama.prewarm",s:"async def prewarm(self) -> float",k:"PWR",d:"GET /api/tags 预建连（父类打的是 OpenAI 风格 /models）"},
+      {n:"E6",x:"Ollama.list_models",s:"async def list_models() -> list[str]",k:"OUT",d:"已安装模型列表；失败返回空列表（供 UI/CLI 展示）"},
+      {n:"E7",x:"DEFAULT_BASE_URL",s:"const str（ollama / gemini 各一）",k:"OUT",d:"各通道默认端点"},
+      {n:"E8",x:"Gemini.complete",s:"async def complete(self, messages, params, model, stream=True)",k:"CLK",d:"原生 generateContent；无 [DONE]，靠连接关闭收尾"}
+    ]},
+    { id:"wire", cn:"协议线（wire）", note:"anthropic_wire / gemini_wire —— 结构差异无法用数据表达，故单独成薄文件", pins:[
+      {n:"F1",x:"to_native_messages",s:"async def to_native_messages(messages, fetch_image, echo_reasoning=False) -> tuple[str, list[dict]]",k:"IO",d:"Anthropic：(system 文本, 原生 messages)"},
+      {n:"F2",x:"native_tools",s:"def native_tools(tools) -> Optional[list]",k:"IO",d:"parameters 改名 input_schema"},
+      {n:"F3",x:"native_tool_choice",s:"def native_tool_choice(choice, parallel=None) -> Optional[dict]",k:"IN",d:"原生无 required → 映射为 any；disallow parallel 走 disable_parallel_tool_use"},
+      {n:"F4",x:"anthropic.new_state",s:"def new_state() -> dict",k:"IO",d:"累积器：usage / 工具槽位 / 思考签名 / 停止原因 / 原生块序列"},
+      {n:"F5",x:"anthropic.on_event",s:"def on_event(st, obj, name) -> list",k:"CLK",d:"一个原生流式事件 → 内核事件列表"},
+      {n:"F6",x:"content_events",s:"def content_events(blocks, st) -> list",k:"OUT",d:"非流式 content blocks → 事件（思考在正文之前）"},
+      {n:"F7",x:"finish_events",s:"def finish_events(st, meter) -> list[dict]",k:"CLK",d:"收尾帧：完整工具调用 + done（原始 usage + 归一 stats）"},
+      {n:"F8",x:"parse_sse",s:"def parse_sse(line) -> Optional[dict]",k:"IN",d:"解析一行 SSE"},
+      {n:"F9",x:"error_text",s:"def error_text(raw) -> str",k:"GND",d:"错误体优先取 error.message"},
+      {n:"F10",x:"SIG_SEP",s:"const str",k:"OUT",d:"思考签名分隔约定"},
+      {n:"F11",x:"to_contents",s:"async def to_contents(messages, fetch_image, echo_reasoning=False)",k:"IO",d:"Gemini：(system 文本, 原生 contents)"},
+      {n:"F12",x:"function_declarations",s:"def function_declarations(tools) -> Optional[list]",k:"IO",d:"参数 Schema 近似 OpenAPI 3.0，可直接搬"},
+      {n:"F13",x:"tool_config",s:"def tool_config(choice, parallel=None) -> Optional[dict]",k:"IN",d:"→ toolConfig.functionCallingConfig"},
+      {n:"F14",x:"events_from",s:"def events_from(chunk, st, name) -> list[dict]",k:"CLK",d:"一帧或整包 → 内核事件列表"},
+      {n:"F15",x:"finish_reason",s:"def finish_reason(raw, has_calls) -> str",k:"OUT",d:"原生 finishReason → OpenAI 口径"}
+    ]},
+    { id:"cap", cn:"能力矩阵", note:"palm_llm/providers/capability.py —— 发请求前的闸门", pins:[
+      {n:"G1",x:"capabilities_for",s:"def capabilities_for(base_url=\"\", type_hint=\"\", model=\"\") -> dict",k:"OUT",d:"端点 + 模型 → 能力矩阵"},
+      {n:"G2",x:"check_capabilities",s:"def check_capabilities(messages, profile, model=\"\", provider=\"\", rule=None) -> dict",k:"OUT",d:"三条铁律：只拦已知不支持 / 只看内核 Message / 报错可照着改"}
+    ]},
+    { id:"profiles", cn:"方言与规则", note:"palm_llm/providers/profiles.py —— 一级定骨架、二级定语义参数", pins:[
+      {n:"H1",x:"Profile",s:"class Profile",k:"IO",d:"供应商级方言（一级匹配命中后生效）"},
+      {n:"H2",x:"ModelRule",s:"class ModelRule",k:"IO",d:"模型级规则（二级匹配命中后生效）；可覆盖思考回传等开关"},
+      {n:"H3",x:"resolve_provider",s:"def resolve_provider(base_url=\"\", type_hint=\"\") -> Profile",k:"IN",d:"显式 type ＞ 端点/域名特征 ＞ generic"},
+      {n:"H4",x:"resolve_model",s:"def resolve_model(profile, model_id)",k:"IN",d:"返回 (生效 Profile, 命中的 ModelRule 或 None)；未命中不报错、回落默认"},
+      {n:"H5",x:"apply_rule",s:"def apply_rule(payload, profile, rule=None) -> dict",k:"IO",d:"参数卫生与思考翻译；步骤顺序是硬约束（fixed_params 必须最后合并）"}
+    ]},
+    { id:"telemetry", cn:"回传统计", note:"palm_llm/providers/telemetry.py —— 跨协议归一，新代码只读 stats", pins:[
+      {n:"I1",x:"TurnStats",s:"class TurnStats",k:"CLK",d:"字段宁多勿少：model/response_id/finish_reason/stop_sequence/reasoning_text/content_text/各类 token/各项耗时/派生 TPS"},
+      {n:"I2",x:"TurnStats.to_dict",s:"def to_dict(self) -> dict",k:"OUT",d:"转纯字典（供 SSE done 帧下发）"},
+      {n:"I3",x:"Meter.__init__",s:"def __init__(self, model=\"\", response_id=\"\")",k:"IN",d:"建一次请求的计时器"},
+      {n:"I4",x:"Meter.mark_ack",s:"def mark_ack() -> None",k:"CLK",d:"响应头到达：连接/排队已走完，推理尚未开始"},
+      {n:"I5",x:"Meter.feed",s:"def feed(kind, text=\"\") -> None",k:"CLK",d:"吃一帧（kind: reasoning | content）"},
+      {n:"I6",x:"Meter.finish",s:"def finish(usage=None, finish_reason=\"\", stop_sequence=\"\", extra=None) -> dict",k:"OUT",d:"结算并返回统一字段"},
+      {n:"I7",x:"feed",s:"def feed(meter, ev) -> None",k:"CLK",d:"把内核事件里的内容帧喂给计时器（工具帧不算输出）"},
+      {n:"I8",x:"usage_from_openai",s:"def usage_from_openai(raw) -> dict",k:"OUT",d:"含 DeepSeek / 智谱 的缓存字段方言"},
+      {n:"I9",x:"usage_from_anthropic",s:"def usage_from_anthropic(raw) -> dict",k:"OUT",d:"Anthropic usage → 统一口径"},
+      {n:"I10",x:"usage_from_gemini",s:"def usage_from_gemini(raw) -> dict",k:"OUT",d:"usageMetadata → 统一口径"},
+      {n:"I11",x:"usage_from_ollama",s:"def usage_from_ollama(obj) -> dict",k:"OUT",d:"连带引擎侧分段耗时进 extra"},
+      {n:"I12",x:"map_stop_reason",s:"def map_stop_reason(reason) -> str",k:"OUT",d:"各家 stop_reason → OpenAI 口径"},
+      {n:"I13",x:"mark_finish_tool_calls",s:"def mark_finish_tool_calls(stats) -> None",k:"OUT",d:"有工具调用时把 finish_reason 归一为 tool_calls（服务端原值存 extra）"},
+      {n:"I14",x:"STOP_REASON_MAP",s:"const dict",k:"OUT",d:"停止原因映射表"}
+    ]},
+    { id:"tooltext", cn:"文本工具降级", note:"无原生 function calling 的端点：从正文抠调用（纯函数，不包异步生成器层）", pins:[
+      {n:"J1",x:"MARKERS",s:"const tuple",k:"OUT",d:"五族标记：Hermes / Llama3 / Mistral / Qwen2.5 / 裸 json 围栏"},
+      {n:"J2",x:"declared_names",s:"def declared_names(tools) -> set[str]",k:"IN",d:"从工具声明取名字集合（兼容三种原生形状）"},
+      {n:"J3",x:"TextToolFilter.feed",s:"def feed(self, text) -> list[dict]",k:"CLK",d:"投入一段正文，返回此刻可放行的内容事件"},
+      {n:"J4",x:"TextToolFilter.finish",s:"def finish(self) -> list[dict]",k:"CLK",d:"流结束：未闭合区域按「到流末」善后，剩余缓冲放行"},
+      {n:"J5",x:"TextToolFilter.release",s:"def release(self) -> list[dict]",k:"CLK",d:"放弃解析、把缓冲原样放行（已走原生 tool_calls 时用）"},
+      {n:"J6",x:"TextToolFilter.take_calls",s:"def take_calls(self) -> list[dict]",k:"OUT",d:"取走解析出的派生调用"},
+      {n:"J7",x:"parse_region",s:"def parse_region(start, body, names) -> tuple[list[dict], str]",k:"OUT",d:"一个已闭合区域 → (调用列表, 未消费正文尾巴)"},
+      {n:"J8",x:"text_tool_events",s:"def text_tool_events(flt, ev) -> list[dict]",k:"CLK",d:"一个 provider 事件 → 过滤后可下发事件（必须是纯函数）"},
+      {n:"J9",x:"filter_events",s:"def filter_events(events, names) -> list[dict]",k:"OUT",d:"非流式路径整段过滤，与流式共用同一份路由逻辑"}
+    ]},
+    { id:"multimodal", cn:"多模态归一", note:"palm_llm/providers/multimodal.py —— 任意入参 → 各家 payload 形态", pins:[
+      {n:"K1",x:"data_uri",s:"def data_uri(media, default_mime=DEFAULT_MIME) -> str",k:"IO",d:"任意形态图像/文档 → data URI"},
+      {n:"K2",x:"image_url",s:"def image_url(img) -> str",k:"IO",d:"图像入参 → URL / data URI（默认 image/png）"},
+      {n:"K3",x:"split_data_uri",s:"def split_data_uri(uri) -> tuple[str, str]",k:"OUT",d:"data URI → (mime, base64)；非 data URI 原样返回"},
+      {n:"K4",x:"file_uri",s:"def file_uri(doc) -> str",k:"IO",d:"文档入参 → data URI（默认 octet-stream）"},
+      {n:"K5",x:"file_name",s:"def file_name(doc) -> str",k:"OUT",d:"显示名：调用方给了就用，否则按 mime 反推"},
+      {n:"K6",x:"content_blocks",s:"def content_blocks(text, images, mode=\"openai\", files=None) -> list[dict]",k:"OUT",d:"纯文本 + 图像 + 文档 → 多模态 content blocks"}
+    ]},
+    { id:"retry", cn:"重试", note:"palm_llm/retry.py —— 三条铁律：只重试标了 retryable 的 / 已产出内容后绝不重试 / 必须有界", pins:[
+      {n:"L1",x:"RetryPolicy.delay_for",s:"def delay_for(self, attempt, exc=None) -> float",k:"CLK",d:"第 attempt 次失败后应等待秒数（attempt 从 1 计）"},
+      {n:"L2",x:"is_retryable",s:"def is_retryable(exc) -> bool",k:"OUT",d:"只有被显式标了 retryable 的错误才重试（默认不可重试）"},
+      {n:"L3",x:"DEFAULT",s:"const RetryPolicy",k:"IN",d:"默认档（= LOW_LATENCY 行为）"}
+    ]},
+    { id:"errors", cn:"异常", note:"palm_llm/errors.py —— 据错决策：能不能重试 / 要不要等", pins:[
+      {n:"M1",x:"PalmLLMError.__init__",s:"def __init__(self, message, *, provider=None, model=None, status=None, retry_after=None, request_id=None, text=None)",k:"IN",d:"统一携带 provider/model/status/retry_after/request_id/原文"},
+      {n:"M2",x:"error_for_status",s:"def error_for_status(status, message, *, provider=None, model=None, text=None, retry_after=None) -> PalmLLMError",k:"GND",d:"按 HTTP 状态码选类型，保留各家可读文案"},
+      {n:"M3",x:"error_for_transport",s:"def error_for_transport(exc, message, *, provider=None, model=None, interrupted=False) -> PalmLLMError",k:"GND",d:"传输异常 → 类型化错误（interrupted=True 走 StreamInterrupted）"}
+    ]},
+    { id:"obs", cn:"可观测", note:"palm_llm/obs.py —— 非阻塞日志 + request_id 贯通；绝不记录密钥与正文", pins:[
+      {n:"N1",x:"new_request_id",s:"def new_request_id() -> str",k:"OUT",d:"12 位十六进制短 id"},
+      {n:"N2",x:"ensure_request_id",s:"def ensure_request_id() -> str",k:"OUT",d:"provider 直连场景的兜底（未设置即新生成）"},
+      {n:"N3",x:"log_event",s:"def log_event(event, *, level=\"info\", **ctx) -> None",k:"OUT",d:"记录一条结构化事件"},
+      {n:"N4",x:"configure_logging",s:"def configure_logging(level=None, stream=None) -> logging.Logger",k:"PWR",d:"QueueHandler + QueueListener；默认级别 PALM_LLM_LOG=WARNING"}
+    ]},
+    { id:"http", cn:"HTTP 服务", note:"palm_llm/server/api.py —— FastAPI，默认 :10083", pins:[
+      {n:"O1",x:"app",s:"app = FastAPI(title=\"palm-llm server\")",k:"PWR",d:"服务实例 + lifespan 预热 active provider"},
+      {n:"O2",x:"GET /health",s:"def health() -> dict",k:"OUT",d:"存活探针（生产负载均衡/监控必需）"},
+      {n:"O3",x:"GET /metrics",s:"def metrics() -> dict",k:"OUT",d:"请求数/错误数/耗时/per-provider/token 累计/（可选）RSS 与 CPU"},
+      {n:"O4",x:"GET /api/config",s:"def read_config() -> dict",k:"OUT",d:"读配置（key 遮罩）"},
+      {n:"O5",x:"POST /api/config",s:"def write_config(body: ConfigIn) -> dict",k:"IN",d:"写配置；遮罩值自动回填磁盘真实 key，避免把 key 冲掉"},
+      {n:"O6",x:"GET /api/conversations",s:"def list_conversations() -> list[dict]",k:"OUT",d:"会话列表"},
+      {n:"O7",x:"GET /api/conversations/{cid}",s:"def read_conversation(cid) -> dict",k:"OUT",d:"读单个会话"},
+      {n:"O8",x:"DELETE /api/conversations/{cid}",s:"def delete_conversation(cid) -> dict",k:"IN",d:"删除会话"},
+      {n:"O9",x:"POST /api/chat/stream",s:"async def chat_stream(req: ChatRequest) -> StreamingResponse",k:"CLK",d:"SSE 流式对话（事件契约与既有前端一致）"},
+      {n:"O10",x:"main",s:"def main() -> None",k:"PWR",d:"CLI 启动入口"}
+    ]},
+    { id:"server", cn:"服务层与存储", note:"chat / config / storage / discovery / metrics", pins:[
+      {n:"P1",x:"run_chat",s:"async def run_chat(req) -> AsyncIterator[dict]",k:"CLK",d:"执行一次流式对话，产出 SSE 事件并持久化消息"},
+      {n:"P2",x:"resolve_image",s:"def resolve_image(url, default_mime=\"image/png\") -> str",k:"IN",d:"本地上传路径 → 自包含 data URI"},
+      {n:"P3",x:"prewarm_active_provider",s:"async def prewarm_active_provider() -> Optional[float]",k:"PWR",d:"预热 active provider 连接（把握手移出首问关键路径）"},
+      {n:"P4",x:"load_config / save_config",s:"def load_config() -> AppConfig / def save_config(cfg) -> None",k:"IO",d:"应用配置读写"},
+      {n:"P5",x:"get_provider",s:"def get_provider(provider_id=None) -> Optional[ProviderConfig]",k:"OUT",d:"取（默认）提供方配置"},
+      {n:"P6",x:"ensure_dirs",s:"def ensure_dirs() -> None",k:"PWR",d:"按需建数据目录（不假设调用方已建）"},
+      {n:"P7",x:"storage.*",s:"list/get/create/save/delete/append_message/export/import_conversation",k:"IO",d:"会话持久化：增删读写 + 导入导出（json 等）"},
+      {n:"P8",x:"discover_models",s:"async def discover_models(provider_type, base_url, api_key, timeout=12.0) -> list[str]",k:"OUT",d:"连通性探测并拉取模型列表"},
+      {n:"P9",x:"record_request / snapshot",s:"def record_request(provider, ms, ok, completion_tokens=None) / def snapshot() -> dict",k:"CLK",d:"埋点与开销快照（/metrics 的数据源）"},
+      {n:"P10",x:"server.models",s:"class Message/ModelParameters/ProviderConfig/Preset/AppConfig/Conversation/ChatRequest(BaseModel)",k:"IO",d:"API 层 Pydantic 模型，各自 to_kernel() 显式转换防漂移"}
+    ]},
+    { id:"cli", cn:"CLI", note:"palm_llm/cli —— 交互式会话与基准", pins:[
+      {n:"Q1",x:"cli.chat.main",s:"def main() -> None",k:"PWR",d:"REPL / 单次提问 / 命令（provider、模型、key、图片）"},
+      {n:"Q2",x:"cli.chat.repl",s:"async def repl(session) -> None",k:"CLK",d:"交互循环"},
+      {n:"Q3",x:"cli.chat_tui",s:"class ChatTuiApp(App) · def run_tui(session)",k:"IO",d:"Textual TUI：思维链气泡 / t 键切换显隐"},
+      {n:"Q4",x:"cli.benchmark.main",s:"async def run_matrix(...) · async def run_adv(...) · def main()",k:"CLK",d:"矩阵与对抗用例基准"}
+    ]}
+  ]
+},
+{
+  ref: "U2", id: "crypto", pkg: "palm_cryptokernel", cn: "加解密内核",
+  meta: "统一加解密模块 · 国密为主（SM2/SM3/SM4）+ 国际算法可选 · 只做机密性与完整性（不做签名 / 后量子 KEM / 密钥协商）",
+  banks: [
+    { id:"facade", cn:"包门面", note:"from palm_cryptokernel import …（__all__，23 项）", pins:[
+      {n:"A1",x:"suite / CryptoSuite",s:"suite: CryptoSuite",k:"IO",d:"算法族统一入口；所有取用都走注册表，能力随 provider 增减自动变化"},
+      {n:"A2",x:"registry",s:"registry: Registry",k:"IO",d:"(family, name) → [Algorithm]，同键多实现按 provider 优先级择优"},
+      {n:"A3",x:"families",s:"families: package",k:"IO",d:"七族薄接口：hash / mac / kdf / cipher / aead / pubkey / envelope"},
+      {n:"A4",x:"backends",s:"backends: module",k:"IO",d:"SM4/SM3 后端：C（tongsuo）优先、纯 Python（gmssl）保底"},
+      {n:"A5",x:"Algorithm",s:"class Algorithm(ABC)",k:"IO",d:"公共元信息契约：name/family/provider/standard/legacy + spec()"},
+      {n:"A6",x:"HashAlgorithm",s:"class HashAlgorithm(Algorithm)",k:"IO",d:"摘要：digest / hexdigest"},
+      {n:"A7",x:"MACAlgorithm",s:"class MACAlgorithm(Algorithm)",k:"IO",d:"MAC：compute / verify（常量时间）"},
+      {n:"A8",x:"KDFAlgorithm",s:"class KDFAlgorithm(Algorithm)",k:"IO",d:"派生：derive / memory_hard"},
+      {n:"A9",x:"CipherAlgorithm",s:"class CipherAlgorithm(SymmetricAlgorithm)",k:"IO",d:"无认证对称：encrypt / decrypt（调用方自保完整性）"},
+      {n:"A10",x:"AEADAlgorithm",s:"class AEADAlgorithm(SymmetricAlgorithm)",k:"IO",d:"认证加密：seal / open（失败抛 AEADError，绝不返回假明文）"},
+      {n:"A11",x:"PublicKeyCipher",s:"class PublicKeyCipher(_KeyPairAlgorithm)",k:"IO",d:"公钥加解密：encrypt(public_key, …) / decrypt(secret_key, …)"},
+      {n:"A12",x:"sm3_hash",s:"def sm3_hash(data) -> str",k:"OUT",d:"SM3 十六进制摘要（64 字符 / 256 位）"},
+      {n:"A13",x:"sm3_int",s:"def sm3_int(data) -> int",k:"OUT",d:"SM3 摘要的整数形式"},
+      {n:"A14",x:"Sm4Cipher",s:"class Sm4Cipher",k:"IO",d:"SM4-CBC；IV 由每次 encrypt 内部随机生成，不开放给调用方"},
+      {n:"A15",x:"Sm2Key",s:"class Sm2Key",k:"IO",d:"SM2 公钥加密（私钥 32B hex，公钥 64B hex = x∥y）"},
+      {n:"A16",x:"MemoryCipher",s:"class MemoryCipher",k:"IO",d:"记忆落盘加密（对接 VectorMemory）：四路密钥来源 + 完整性标签"},
+      {n:"A17",x:"vault",s:"vault: package",k:"IO",d:"主密钥生命周期（硬件指纹密封密钥库 + 恢复密钥）+ 文件级加解密"},
+      {n:"A18",x:"CryptoError",s:"class CryptoError(Exception)",k:"GND",d:"内核一切错误的基类"},
+      {n:"A19",x:"AlgorithmNotFound",s:"class AlgorithmNotFound(CryptoError, KeyError)",k:"GND",d:"按名取算法未命中（名字拼错或该族无此算法）"},
+      {n:"A20",x:"ProviderUnavailable",s:"class ProviderUnavailable(CryptoError)",k:"GND",d:"所需密码学库缺失（可选 provider 未安装）"},
+      {n:"A21",x:"KeyFormatError",s:"class KeyFormatError(CryptoError)",k:"GND",d:"密钥/公钥格式非法或长度不符"},
+      {n:"A22",x:"AEADError",s:"class AEADError(CryptoError)",k:"GND",d:"认证失败（篡改 / AAD 不符 / 密钥或 nonce 不对）"}
+    ]},
+    { id:"matrix", cn:"算法矩阵（运行时实测）", note:"capabilities.report() 实取：6 族 16 条，缺口 0；本机 C 后端 = tongsuo", pins:[
+      {n:"B1",x:"hash / sm3",s:"GB/T 32905-2016",k:"OUT",d:"provider=hashlib，2 个实现（OpenSSL 与 gmssl 互为对拍）"},
+      {n:"B2",x:"hash / sha256",s:"FIPS 180-4",k:"OUT",d:"provider=hashlib；推荐档"},
+      {n:"B3",x:"hash / sha512",s:"FIPS 180-4",k:"OUT",d:"provider=hashlib；亦是 HMAC-SHA512 的原语"},
+      {n:"B4",x:"mac / hmac-sm3",s:"RFC 2104 + GB/T 32905-2016",k:"OUT",d:"国密组合；vault 的完整性标签即用它"},
+      {n:"B5",x:"mac / hmac-sha256",s:"RFC 2104",k:"OUT",d:"推荐档"},
+      {n:"B6",x:"mac / hmac-sha512",s:"RFC 2104",k:"OUT",d:"provider=hashlib"},
+      {n:"B7",x:"kdf / argon2id",s:"RFC 9106",k:"OUT",d:"provider=optional（内存硬化，抗 GPU）"},
+      {n:"B8",x:"kdf / pbkdf2",s:"RFC 8018",k:"OUT",d:"vault 用它从硬件指纹 + 盐派生密钥库密封密钥"},
+      {n:"B9",x:"kdf / hkdf",s:"RFC 5869",k:"OUT",d:"密钥扩展类（用途隔离）"},
+      {n:"B10",x:"cipher / sm4-cbc",s:"GB/T 32907-2016",k:"OUT",d:"provider=gmssl；vault 落盘加密用它"},
+      {n:"B11",x:"cipher / aes-256-cbc",s:"FIPS 197 / SP 800-38A",k:"OUT",d:"provider=cryptodome"},
+      {n:"B12",x:"aead / aes-256-gcm",s:"NIST SP 800-38D",k:"OUT",d:"推荐 AEAD（通用硬件加速）"},
+      {n:"B13",x:"aead / chacha20-poly1305",s:"RFC 8439",k:"OUT",d:"无 AES 硬件场景退它"},
+      {n:"B14",x:"pubkey / sm2",s:"GB/T 32918",k:"OUT",d:"国密公钥；envelope 默认公钥算法"},
+      {n:"B15",x:"pubkey / rsa-oaep",s:"RFC 8017",k:"OUT",d:"默认公钥档"},
+      {n:"B16",x:"pubkey / rsa-pkcs1v15",s:"RFC 8017",k:"OUT",d:"🔴 唯一 legacy=True 档（旧填充，仅供兼容）"}
+    ]},
+    { id:"suite", cn:"suite / registry", note:"取算法、看能力、查推荐 —— 内核的调度台", pins:[
+      {n:"C1",x:"CryptoSuite.get",s:"def get(self, family, name) -> Algorithm",k:"IN",d:"未注册抛 AlgorithmNotFound"},
+      {n:"C2",x:"CryptoSuite.names",s:"def names(self, family) -> list[str]",k:"OUT",d:"某族可用规范名"},
+      {n:"C3",x:"CryptoSuite.families / labels",s:"def families() -> list[str] / def labels() -> dict[str, str]",k:"OUT",d:"族标识与中文标签"},
+      {n:"C4",x:"CryptoSuite.capabilities",s:"def capabilities(self) -> dict",k:"OUT",d:"完整能力报告（可用矩阵 + 缺口 + provider 状态）"},
+      {n:"C5",x:"CryptoSuite.gaps",s:"def gaps(self) -> list[dict]",k:"GND",d:"当前不可用的算法与原因"},
+      {n:"C6",x:"CryptoSuite.recommended",s:"def recommended(self, family) -> str",k:"OUT",d:"按预设优先序取第一个可用的；全不可用则报错"},
+      {n:"C7",x:"CryptoSuite.describe",s:"def describe(self, family, name) -> dict",k:"OUT",d:"单条算法：元信息 + 全部实现方 + 是否本族推荐"},
+      {n:"C8",x:"CryptoSuite.hashing",s:"def hashing(self, name=None) -> HashAlgorithm",k:"OUT",d:"族快捷取用（hashing / mac / kdf / cipher / aead / pubkey 六件）"},
+      {n:"C9",x:"Registry.register",s:"def register(self, algo) -> None",k:"IN",d:"登记实现；同 (family,name) 允许多 provider 并存"},
+      {n:"C10",x:"Registry.get",s:"def get(self, family, name) -> Algorithm",k:"IN",d:"择优（按 provider 优先级）"},
+      {n:"C11",x:"Registry.find",s:"def find(self, name) -> list[Algorithm]",k:"OUT",d:"跨族按规范名查找"},
+      {n:"C12",x:"Registry.names / families",s:"def names(self, family) / def families(self)",k:"OUT",d:"已注册规范名与族（排序输出）"},
+      {n:"C13",x:"Registry.all_of",s:"def all_of(self, family) -> list[Algorithm]",k:"OUT",d:"含同名的低优先级 provider"},
+      {n:"C14",x:"Registry.failures / provider_of",s:"def failures() -> dict[str, str] / def provider_of(self, family, name) -> Optional[str]",k:"OUT",d:"不可用原因表 / 当前实现方（未注册返回 None）"},
+      {n:"C15",x:"Registry.note_failure / load",s:"def note_failure(self, provider, reason) / def load(self)",k:"PWR",d:"记录缺库原因 / 首次访问懒装载（幂等、线程安全）"},
+      {n:"C16",x:"PROVIDER_PRIORITY / ORDER",s:"const dict / tuple",k:"IN",d:"优先级：cryptodome 90 > hashlib 80 > optional 70 > gmssl 50"}
+    ]},
+    { id:"f-hash", cn:"族 · hash", note:"families/hash.py", pins:[
+      {n:"D1",x:"names",s:"def names(*, include_legacy=True) -> list[str]",k:"OUT",d:"include_legacy 是接口契约；当前摘要族已无 legacy 档（md5/sha1 于 v0.5.2 移除）"},
+      {n:"D2",x:"digest",s:"def digest(name, data) -> bytes",k:"OUT",d:"原始摘要字节"},
+      {n:"D3",x:"hexdigest",s:"def hexdigest(name, data) -> str",k:"OUT",d:"十六进制摘要（落库/展示）"},
+      {n:"D4",x:"fingerprint",s:"def fingerprint(data, *, algorithm=\"sha256\", size=8) -> str",k:"OUT",d:"短指纹：内容寻址、去重键的常用形态"},
+      {n:"D5",x:"matches",s:"def matches(name, data, expected) -> bool",k:"OUT",d:"常量时间比对摘要 —— 校验完整性务必用它，别用 =="},
+      {n:"D6",x:"digest_size / recommended",s:"def digest_size(name) -> int / def recommended() -> str",k:"OUT",d:"摘要长度；推荐 SHA-256（无则退可用列表首个）"},
+      {n:"D7",x:"FAMILY / DEFAULT",s:"FAMILY = \"hash\" · DEFAULT = \"sha256\"",k:"IN",d:"族标识与默认算法名"}
+    ]},
+    { id:"f-mac", cn:"族 · mac", note:"families/mac.py", pins:[
+      {n:"E1",x:"names",s:"def names(*, include_legacy=True) -> list[str]",k:"OUT",d:"可用 MAC 算法名"},
+      {n:"E2",x:"compute",s:"def compute(name, key, data, nonce=None) -> bytes",k:"OUT",d:"仅 GMAC 一类需 nonce，其余传 None"},
+      {n:"E3",x:"verify",s:"def verify(name, key, data, tag, nonce=None) -> bool",k:"OUT",d:"常量时间校验；不抛异常，统一返回布尔"},
+      {n:"E4",x:"tag_size / nonce_size",s:"def tag_size(name) -> int / def nonce_size(name) -> int",k:"OUT",d:"标签长度；nonce 长度（0 = 不需要）"},
+      {n:"E5",x:"generate_key",s:"def generate_key(name) -> bytes",k:"OUT",d:"键长自由的算法（HMAC/KMAC）取 256 位默认值"},
+      {n:"E6",x:"recommended",s:"def recommended() -> str",k:"OUT",d:"HMAC-SHA256"}
+    ]},
+    { id:"f-kdf", cn:"族 · kdf", note:"families/kdf.py", pins:[
+      {n:"F1",x:"derive",s:"def derive(name, secret, length, *, salt=None, info=None, **params) -> bytes",k:"OUT",d:"口令类需 salt；hkdf 需 salt+info；其余参数透传"},
+      {n:"F2",x:"is_memory_hard",s:"def is_memory_hard(name) -> bool",k:"OUT",d:"是否抗 GPU 暴力破解（口令类判据）"},
+      {n:"F3",x:"recommends_passwords",s:"def recommends_passwords() -> list[str]",k:"OUT",d:"适合派生存放口令的算法（按强度优先）"},
+      {n:"F4",x:"recommends_expansion",s:"def recommends_expansion() -> list[str]",k:"OUT",d:"适合做密钥用途隔离/扩展的算法"},
+      {n:"F5",x:"recommended",s:"def recommended(*, purpose=\"password\") -> str",k:"OUT",d:"purpose=password 取最强口令类；expansion 取扩展类"},
+      {n:"F6",x:"PASSWORD_KDF / EXPANSION_KDF",s:"const tuple",k:"IN",d:"两类 KDF 的预设名单"}
+    ]},
+    { id:"f-cipher", cn:"族 · cipher", note:"families/cipher.py（无认证，调用方自保完整性）", pins:[
+      {n:"G1",x:"names",s:"def names(*, include_legacy=True) -> list[str]",k:"OUT",d:"ECB / RC4 / DES 等已标 legacy"},
+      {n:"G2",x:"nonce_size / key_size",s:"def nonce_size(name) -> int / def key_size(name) -> int",k:"OUT",d:"IV 长度（0 = 该模式不用，如 ECB）/ 族默认键长"},
+      {n:"G3",x:"generate_key / new_iv",s:"def generate_key(name) -> bytes / def new_iv(name) -> bytes",k:"OUT",d:"按算法声明生成密钥与随机 IV"},
+      {n:"G4",x:"encrypt",s:"def encrypt(name, key, nonce, plaintext) -> bytes",k:"OUT",d:"返回纯密文（不含 IV）；填充由 provider 内部统一处理"},
+      {n:"G5",x:"decrypt",s:"def decrypt(name, key, nonce, ciphertext) -> bytes",k:"OUT",d:"填充非法抛 KeyFormatError"},
+      {n:"G6",x:"encrypt_packed",s:"def encrypt_packed(name, plaintext, key=None) -> bytes",k:"OUT",d:"返回 nonce ‖ 密文 并自动生成密钥/IV —— 调用方需自行保存密钥"},
+      {n:"G7",x:"decrypt_packed",s:"def decrypt_packed(name, key, packed) -> bytes",k:"OUT",d:"encrypt_packed 的逆操作"},
+      {n:"G8",x:"recommended",s:"def recommended() -> str",k:"OUT",d:"AES-256-CBC；国密场景请显式取 sm4-cbc"}
+    ]},
+    { id:"f-aead", cn:"族 · aead", note:"families/aead.py（认证加密，密文 ‖ 标签）", pins:[
+      {n:"H1",x:"names / tag_size",s:"def names() -> list[str] / def tag_size(name) -> int",k:"OUT",d:"可用算法与认证标签长度"},
+      {n:"H2",x:"nonce_size / key_size",s:"def nonce_size(name) -> int / def key_size(name) -> int",k:"OUT",d:"GCM 12 / CCM 13 / OCB 15 / SIV 16；AES-SIV 是 64 = 双密钥"},
+      {n:"H3",x:"generate_key / new_nonce_for",s:"def generate_key(name) -> bytes / def new_nonce_for(name) -> bytes",k:"OUT",d:"长度由算法自述，调用方无需记忆"},
+      {n:"H4",x:"seal",s:"def seal(name, key, nonce, plaintext, aad=b\"\") -> bytes",k:"OUT",d:"加密并认证，返回 密文 ‖ 标签"},
+      {n:"H5",x:"open",s:"def open(name, key, nonce, sealed, aad=b\"\") -> bytes",k:"OUT",d:"验签后解密；认证失败抛 AEADError"},
+      {n:"H6",x:"seal_packed",s:"def seal_packed(name, key, plaintext, aad=b\"\") -> bytes",k:"OUT",d:"返回 nonce ‖ 密文 ‖ 标签（nonce 随包走，便于单列落盘）"},
+      {n:"H7",x:"open_packed",s:"def open_packed(name, key, packed, aad=b\"\") -> bytes",k:"OUT",d:"seal_packed 的逆操作"},
+      {n:"H8",x:"recommended",s:"def recommended() -> str",k:"OUT",d:"AES-256-GCM；无 AES 退 ChaCha20-Poly1305"}
+    ]},
+    { id:"f-pubkey", cn:"族 · pubkey", note:"families/pubkey.py（仅短明文；长了请用 envelope）", pins:[
+      {n:"I1",x:"names",s:"def names(*, include_legacy=True) -> list[str]",k:"OUT",d:"可用公钥加密算法名（rsa-pkcs1v15 为 legacy）"},
+      {n:"I2",x:"generate",s:"def generate(name) -> tuple[bytes, bytes]",k:"OUT",d:"生成密钥对 → (公钥, 私钥)"},
+      {n:"I3",x:"encrypt",s:"def encrypt(name, public_key, plaintext) -> bytes",k:"OUT",d:"公钥加密（仅限短明文）"},
+      {n:"I4",x:"decrypt",s:"def decrypt(name, secret_key, ciphertext) -> bytes",k:"OUT",d:"密钥或密文非法抛 KeyFormatError"},
+      {n:"I5",x:"max_plaintext",s:"def max_plaintext(name, public_key) -> int",k:"OUT",d:"该密钥下明文长度上限 —— 超限请改用 envelope"},
+      {n:"I6",x:"recommended",s:"def recommended(*, guomi=False) -> str",k:"OUT",d:"默认 RSA-OAEP；guomi=True 取 SM2"}
+    ]},
+    { id:"f-envelope", cn:"族 · envelope", note:"families/envelope.py —— 公钥信封（报文 v2，自描述）", pins:[
+      {n:"J1",x:"generate",s:"def generate(pubkey=\"sm2\") -> tuple[bytes, bytes]",k:"OUT",d:"按公钥算法生成信封密钥对"},
+      {n:"J2",x:"seal",s:"def seal(public_key, plaintext, *, aad=b\"\", pubkey=\"sm2\", aead=None) -> bytes",k:"OUT",d:"封装 + 加密 → 自描述密文报文：数据密钥与 nonce 逐条新生成"},
+      {n:"J3",x:"open",s:"def open(secret_key, blob, *, aad=b\"\") -> bytes",k:"OUT",d:"校验报文头 → 解封数据密钥 → 解密正文；任一步失败抛 CryptoError 子类"},
+      {n:"J4",x:"peek",s:"def peek(blob) -> dict",k:"OUT",d:"只读报文头（不解密），用于路由/审计/排查"},
+      {n:"J5",x:"recommend_pair",s:"def recommend_pair(*, guomi=True) -> dict[str, str]",k:"OUT",d:"推荐组合（默认国密 SM2），供 UI/配置展示"},
+      {n:"J6",x:"MAGIC / VERSION",s:"const bytes / int",k:"IN",d:"报文标识与版本（v1 的 KEM 报文明确不支持）"},
+      {n:"J7",x:"DEFAULT_PUBKEY / DEFAULT_AEAD",s:"const str",k:"IN",d:"默认公钥算法与 AEAD 档"}
+    ]},
+    { id:"f-util", cn:"族公共件 · _util", note:"families/_util.py —— 入参归一与长度断言", pins:[
+      {n:"K1",x:"as_bytes",s:"def as_bytes(value, *, field=\"数据\") -> bytes",k:"IN",d:"str 按 UTF-8 归一；其余字节类原样转 bytes"},
+      {n:"K2",x:"check_length",s:"def check_length(value, expected, *, field) -> None",k:"GND",d:"nonce/key 长度是安全边界，不符必须早失败而非静默凑合"},
+      {n:"K3",x:"random_nonce",s:"def random_nonce(size) -> bytes",k:"OUT",d:"随机 nonce（CSPRNG）；size=0 返回空串"},
+      {n:"K4",x:"new_nonce / new_key",s:"def new_nonce(algo) -> bytes / def new_key(algo) -> bytes",k:"OUT",d:"按算法自述的长度生成，调用方无需记忆"},
+      {n:"K5",x:"BytesLike / TEXT_ENCODING",s:"type alias / const str",k:"IN",d:"可接受 str 或 bytes；统一 UTF-8"}
+    ]},
+    { id:"vault", cn:"vault · 密钥库", note:"vault/ —— 主密钥生命周期 + 文件级加解密（21 项）", pins:[
+      {n:"L1",x:"boot",s:"def boot() -> None",k:"PWR",d:"装配时调用一次：绑指纹 → 加载/生成密钥库 → 加固路径；失败仅降级禁用"},
+      {n:"L2",x:"set_data_dir / get_data_dir",s:"def set_data_dir(path) / def get_data_dir() -> str",k:"IN",d:"重钉密钥库/校验码目录（须在 boot() 之前）"},
+      {n:"L3",x:"is_bound / is_locked / is_enabled",s:"def is_bound/is_locked/is_enabled() -> bool",k:"OUT",d:"绑定态 / 换机锁定态 / 加密开关"},
+      {n:"L4",x:"set_enabled",s:"def set_enabled(value) -> None",k:"IN",d:"翻转加密开关并持久化（写盘失败仅告警）"},
+      {n:"L5",x:"fingerprint_prefix",s:"def fingerprint_prefix() -> str",k:"OUT",d:"指纹前缀（供日志/审计引用，不外泄完整指纹）"},
+      {n:"L6",x:"get_machine_fingerprint",s:"def get_machine_fingerprint() -> str",k:"OUT",d:"采集本机硬件指纹 → SHA256 hex"},
+      {n:"L7",x:"fingerprint_strength / sources",s:"def fingerprint_strength() -> str / def fingerprint_sources() -> tuple[str, ...]",k:"OUT",d:"per-unit（每台唯一）或 model-only（仅型号唯一）—— 如实报出"},
+      {n:"L8",x:"set_master_key / get_master_key",s:"def set_master_key(key) / def get_master_key() -> bytes | None",k:"IO",d:"必须是 16 字节 SM4 密钥（入口即校验长度）"},
+      {n:"L9",x:"derive_key",s:"def derive_key(fingerprint, salt, iterations=200000) -> bytes",k:"OUT",d:"PBKDF2-HMAC-SHA256 派生 16 字节密钥，用于密封密钥库"},
+      {n:"L10",x:"seal_keystore / unseal_keystore",s:"def seal_keystore(plaintext, fingerprint) -> bytes / def unseal_keystore(pkg, fingerprint) -> bytes",k:"IO",d:"仅本机可解封；指纹不匹配（换机）抛 ValueError"},
+      {n:"L11",x:"encrypt_data",s:"def encrypt_data(plaintext) -> bytes",k:"OUT",d:"SM4-CBC + HMAC-SM3 认证标签，使用主密钥"},
+      {n:"L12",x:"decrypt_data",s:"def decrypt_data(encrypted_pkg) -> bytes",k:"OUT",d:"先验 HMAC-SM3，再解密；校验失败抛 ValueError"},
+      {n:"L13",x:"encrypt_file",s:"def encrypt_file(file_path) -> str",k:"OUT",d:"读文件 → 加密 → 写出 .enc（0600），返回路径"},
+      {n:"L14",x:"decrypt_file",s:"def decrypt_file(enc_path, output_path=None) -> str",k:"OUT",d:"写出明文（0600，权限最小化）—— 落盘的是明文，用完即删或置于受控目录"},
+      {n:"L15",x:"ensure_checksum / recovery_checksum",s:"def ensure_checksum() -> str / def recovery_checksum() -> str",k:"OUT",d:"8 位 hex 恢复密钥校验码（首次随机生成并落盘）"},
+      {n:"L16",x:"is_gmssl_available",s:"def is_gmssl_available() -> bool",k:"OUT",d:"国密底层是否可用（C 后端或纯 Python 任一即可）"}
+    ]},
+    { id:"pfs", cn:"私有落盘 · _private_fs", note:"最小权限；「同一对象只收紧一次」（v0.5.1 修掉 icacls 写路径回归）", pins:[
+      {n:"M1",x:"write_private_bytes",s:"def write_private_bytes(path, data, mode=0o600) -> bool",k:"OUT",d:"以最小权限建文件并写入；返回是否**确实**收紧（False 不能当成功）"},
+      {n:"M2",x:"write_private_text",s:"def write_private_text(path, text, mode=0o600) -> bool",k:"OUT",d:"bytes 版的文本封装（UTF-8）"},
+      {n:"M3",x:"ensure_dir",s:"def ensure_dir(path, mode=0o700) -> bool",k:"PWR",d:"建目录并收紧（登记为自管目录，子项从此继承 ACL）"},
+      {n:"M4",x:"harden_dir_once",s:"def harden_dir_once(path, mode=0o700) -> bool",k:"PWR",d:"目录级一次性收紧（Windows 带 (OI)(CI) 继承位），成功即进程内永久免重复"},
+      {n:"M5",x:"harden_file_once",s:"def harden_file_once(path, mode=0o600) -> bool",k:"PWR",d:"文件级一次性收紧（按文件身份缓存，删后重建自动失效）"},
+      {n:"M6",x:"restrict / restrict_dir / restrict_file",s:"def restrict(path, mode, inherit_children=None) -> bool（+ 两个封装）",k:"IN",d:"显式收紧 —— **永不缓存**，「现在就做」"},
+      {n:"M7",x:"restrict_if_exists",s:"def restrict_if_exists(path, mode=0o600) -> bool",k:"IN",d:"路径存在才收紧（不存在视为无事可做）"},
+      {n:"M8",x:"harden_cache_stats / reset_harden_cache",s:"def harden_cache_stats() -> dict / def reset_harden_cache() -> None",k:"IO",d:"缓存状态（供审计证伪缓存是否真生效）/ 清空缓存（测试用）"}
+    ]},
+    { id:"legacy", cn:"便捷门面（旧接口）", note:"palm_cryptokernel/cipher.py · sm2.py · sm3.py · sm4.py —— app 侧存量调用面", pins:[
+      {n:"N1",x:"MemoryCipher.from_key",s:"@classmethod def from_key(key, integrity=True) -> MemoryCipher",k:"IN",d:"从 16 字节密钥构造"},
+      {n:"N2",x:"MemoryCipher.from_env",s:"@classmethod def from_env(env=\"PALM_CRYPTO_KEY\", integrity=True)",k:"IN",d:"从环境变量读 32 位 hex"},
+      {n:"N3",x:"MemoryCipher.from_key_file",s:"@classmethod def from_key_file(path, integrity=True)",k:"IN",d:"从密钥文件读"},
+      {n:"N4",x:"MemoryCipher.generate",s:"@classmethod def generate(key_file=None, integrity=True, overwrite=False)",k:"PWR",d:"随机生成并落盘；默认**拒绝覆盖**（避免密钥被无声替换导致数据读不回）"},
+      {n:"N5",x:"MemoryCipher.encrypt_text",s:"def encrypt_text(self, text) -> str",k:"OUT",d:"带完整性标签的密文串（落库形态）"},
+      {n:"N6",x:"MemoryCipher.decrypt_text",s:"def decrypt_text(self, text) -> str",k:"OUT",d:"对旧明文/解码失败数据原样返回；被篡改返回空串"},
+      {n:"N7",x:"MemoryCipher.content_hash",s:"def content_hash(self, text) -> int",k:"OUT",d:"稳定内容指纹（替代跨进程随机化的 hash()）"},
+      {n:"N8",x:"Sm4Cipher.__init__",s:"def __init__(self, key)",k:"IN",d:"只接受密钥：IV 由每次 encrypt 内部随机生成"},
+      {n:"N9",x:"Sm4Cipher.from_hex / random_key",s:"@classmethod def from_hex(key_hex) / @staticmethod def random_key() -> bytes",k:"IN",d:"两种取密钥方式"},
+      {n:"N10",x:"Sm4Cipher.encrypt_bytes / decrypt_bytes",s:"def encrypt_bytes(self, plaintext) -> bytes / def decrypt_bytes(self, ciphertext) -> bytes",k:"IO",d:"字节形态加解密"},
+      {n:"N11",x:"Sm4Cipher.encrypt_text / decrypt_text",s:"def encrypt_text(self, text) -> str / def decrypt_text(self, text) -> str",k:"IO",d:"文本形态（base64 落库）"},
+      {n:"N12",x:"Sm2Key.generate / from_private",s:"@classmethod def generate() / @classmethod def from_private(private_key)",k:"PWR",d:"生成密钥对 / 由私钥派生公钥（k·G）"},
+      {n:"N13",x:"Sm2Key.private_key / public_key",s:"@property def private_key(self) / @property def public_key(self)",k:"OUT",d:"私钥 32B hex / 公钥 64B hex（x∥y）"},
+      {n:"N14",x:"Sm2Key.encrypt / decrypt",s:"def encrypt(self, data) -> bytes / def decrypt(self, data) -> bytes",k:"IO",d:"公钥加密 / 私钥解密（密钥信封用法）"}
+    ]},
+    { id:"abcs", cn:"抽象契约 · abcs", note:"abcs.py —— 族 ABC 是「可插拔」的落点", pins:[
+      {n:"O1",x:"Algorithm.spec",s:"def spec(self) -> dict[str, Any]",k:"OUT",d:"元信息快照：能力清单与审计报告的唯一数据源"},
+      {n:"O2",x:"HashAlgorithm.digest / hexdigest",s:"def digest(self, data) -> bytes / def hexdigest(self, data) -> str",k:"OUT",d:"摘要接口"},
+      {n:"O3",x:"MACAlgorithm.compute / verify",s:"def compute(self, key, data, nonce=None) -> bytes / def verify(...) -> bool",k:"IO",d:"nonce_size=0 表示不需要 nonce"},
+      {n:"O4",x:"KDFAlgorithm.derive / memory_hard",s:"def derive(self, secret, length, *, salt=None, info=None, **params) -> bytes",k:"OUT",d:"口令类与密钥扩展类的统一入口"},
+      {n:"O5",x:"CipherAlgorithm.encrypt / decrypt",s:"def encrypt(self, key, nonce, plaintext) -> bytes / def decrypt(...)",k:"IO",d:"密文不含 nonce"},
+      {n:"O6",x:"AEADAlgorithm.seal / open",s:"def seal(self, key, nonce, plaintext, aad=b\"\") -> bytes / def open(...)",k:"IO",d:"open 失败抛 AEADError（绝不返回假明文）"},
+      {n:"O7",x:"PublicKeyCipher.encrypt / decrypt",s:"def encrypt(self, public_key, plaintext) -> bytes / def decrypt(self, secret_key, ciphertext)",k:"IO",d:"公钥加解密接口"},
+      {n:"O8",x:"SymmetricAlgorithm.key_size",s:"def key_size(self) -> int",k:"OUT",d:"族默认密钥长度（取第一个声明值）"}
+    ]},
+    { id:"caps", cn:"能力清单 · capabilities", note:"capabilities.py —— 报告诚实性靠 absent()", pins:[
+      {n:"Q1",x:"report",s:"def report() -> dict[str, Any]",k:"OUT",d:"完整能力报告：可用矩阵 + 缺口 + 提供方状态"},
+      {n:"Q2",x:"available",s:"def available(family=None) -> dict[str, list[dict]]",k:"OUT",d:"可用算法（按规范名去重，provider 为择优结果）"},
+      {n:"Q3",x:"absent",s:"def absent() -> list[dict[str, Any]]",k:"GND",d:"已知但当前不可用的算法 —— 空 ≠ 能力全齐，只代表申报清单已满足"},
+      {n:"Q4",x:"providers_status",s:"def providers_status() -> dict[str, dict]",k:"OUT",d:"各提供方状态：库是否在位 + 各模块装配错误"},
+      {n:"Q5",x:"families / FAMILY_LABELS",s:"def families() -> list[str] / const dict",k:"OUT",d:"族标识与中文标签"},
+      {n:"Q6",x:"capability",s:"def capability() -> dict[str, Any]",k:"OUT",d:"砖块契约出口：对外暴露的能力（算法/族计数 + 缺口）"}
+    ]},
+    { id:"providers", cn:"提供方与后端", note:"providers/ · backends.py —— 能力随库增减自动变化", pins:[
+      {n:"R1",x:"backends.backend_name",s:"def backend_name() -> str",k:"OUT",d:"当前底层后端（本机 = tongsuo(C)）"},
+      {n:"R2",x:"backends.is_c_backend",s:"def is_c_backend() -> bool",k:"OUT",d:"是否走 C 加速后端（tongsuopy）"},
+      {n:"R3",x:"backends.hmac_sm3",s:"def hmac_sm3(key, msg) -> bytes",k:"OUT",d:"RFC 2104 HMAC，哈希原语为 SM3"},
+      {n:"R4",x:"providers.load_all",s:"def load_all(registry) -> None",k:"PWR",d:"把各 provider 的算法注册进注册表；缺库/装配异常按模块记录原因"},
+      {n:"R5",x:"providers.catalog",s:"def catalog() -> tuple[tuple[str, str, str | None], ...]",k:"OUT",d:"(provider, 模块键, 依赖导入名) 目录 —— 能力清单据此判定可用性"},
+      {n:"R6",x:"providers.manifest_gaps",s:"def manifest_gaps(registry) -> Iterator[tuple[str, str, str, str]]",k:"GND",d:"产出「清单里有、但没注册成功」的条目"},
+      {n:"R7",x:"providers.provider_names / MODULE_NAMES",s:"def provider_names() -> tuple[str, ...] / const",k:"OUT",d:"全部 provider 标识与模块名"},
+      {n:"R8",x:"各 provider 的 build",s:"def build() -> list[Algorithm]（cryptodome / cryptodome_pubkey / digest / gmssl / optional）",k:"PWR",d:"装配本提供方的全部算法（可用性已由加载器前置校验）"}
+    ]}
+  ]
+}
+];
+
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+let filterChip = "all", query = "";
+
+function allPins(chip){ return chip.banks.flatMap(b => b.pins.map(p => ({...p, bank:b}))); }
+
+function totalPins(){ return CHIPS.reduce((a,c) => a + allPins(c).length, 0); }
+function totalBanks(){ return CHIPS.reduce((a,c) => a + c.banks.length, 0); }
+
+function renderStats(){
+  const u2matrix = CHIPS[1].banks.find(b => b.id === "matrix");
+  const rows = [
+    [String(CHIPS.length), "内核（芯片封装）"],
+    [String(totalBanks()), "引脚组（bank）"],
+    [String(totalPins()), "引脚（对外 API）"],
+    ["4", "协议通道（U1）"],
+    [String(u2matrix.pins.length), "算法（U2 运行时实测）"],
+    ["AST", "抽取方式（非手抄）"]
+  ];
+  document.getElementById("stats").innerHTML = rows
+    .map(r => '<div class="stat"><b>' + esc(r[0]) + '</b><span>' + esc(r[1]) + '</span></div>').join("");
+}
+
+function renderLegend(){
+  document.getElementById("legend").innerHTML = Object.entries(KIND)
+    .map(([k,v]) => '<span class="lg"><i class="dot" style="background:var(--' + k.toLowerCase() + ')"></i>' + esc(k + " · " + v.cn) + '</span>').join("");
+}
+
+function renderTabs(){
+  const tabs = [{id:"all", cn:"全部"}, ...CHIPS.map(c => ({id:c.id, cn:c.ref + " · " + c.cn}))];
+  document.getElementById("tabs").innerHTML = tabs
+    .map(t => '<button class="tab' + (filterChip === t.id ? " on" : "") + '" data-id="' + esc(t.id) + '">' + esc(t.cn) + '</button>').join("");
+  document.querySelectorAll(".tab").forEach(el => el.onclick = () => {
+    filterChip = el.dataset.id; renderTabs(); applyFilter();
+  });
+}
+
+function chipSvg(chip){
+  const left = [], right = [];
+  chip.banks.forEach((b, i) => (i % 2 === 0 ? left : right).push(b));
+  const rows = Math.max(left.length, right.length);
+  const rowH = 26, top = 62, pinLen = 26;
+  const bodyW = 300, bodyX = 40 + pinLen + 34, W = 680;
+  const H = top + rows * rowH + 46;
+  let s = '<svg viewBox="0 0 ' + W + " " + H + '" role="img">';
+  s += '<title>' + esc(chip.ref + " " + chip.pkg) + '</title>';
+  s += '<desc>' + esc(chip.cn + " 的模块封装与引脚组分布") + '</desc>';
+  s += '<rect x="' + bodyX + '" y="26" width="' + bodyW + '" height="' + (H - 60) + '" rx="12" fill="var(--panel2)" stroke="var(--line2)" stroke-width="1"/>';
+  s += '<text x="' + (bodyX + 14) + '" y="48" fill="var(--fg)" font-size="14" font-weight="600">' + esc(chip.ref + "  " + chip.pkg) + '</text>';
+  s += '<text x="' + (bodyX + bodyW - 14) + '" y="48" text-anchor="end" fill="var(--fg3)" font-size="11">' + esc(chip.cn + " · " + allPins(chip).length + " 引脚") + '</text>';
+  const draw = (list, side) => list.map((b, i) => {
+    const y = top + i * rowH + 10;
+    const pinX = side === "L" ? 40 : W - 40;
+    const stubEnd = side === "L" ? 40 + pinLen : W - 40 - pinLen;
+    const labelX = side === "L" ? bodyX + 14 : bodyX + bodyW - 14;
+    const anchor = side === "L" ? "start" : "end";
+    const dot = KIND[b.pins[0] ? b.pins[0].k : "IO"];
+    const t = '<g class="bankbtn" data-bank="' + esc(chip.id + "-" + b.id) + '">'
+      + '<line x1="' + pinX + '" y1="' + y + '" x2="' + stubEnd + '" y2="' + y + '" stroke="var(--line2)" stroke-width="2"/>'
+      + '<circle cx="' + pinX + '" cy="' + y + '" r="4" fill="var(--' + (b.pins[0] ? b.pins[0].k.toLowerCase() : "io") + ')"/>'
+      + '<text x="' + labelX + '" y="' + (y + 4) + '" text-anchor="' + anchor + '" fill="var(--fg2)" font-size="12">'
+      + esc(b.cn + "  ×" + b.pins.length) + '</text>'
+      + '<title>' + esc(b.cn + "：" + b.pins.length + " 个引脚，点击跳到明细") + '</title></g>';
+    return t;
+  }).join("");
+  s += draw(left, "L") + draw(right, "R");
+  s += '<text x="40" y="' + (H - 14) + '" fill="var(--fg3)" font-size="11">' + esc(chip.meta) + '</text>';
+  s += '</svg>';
+  return s;
+}
+
+function renderChips(){
+  document.getElementById("chips").innerHTML = CHIPS.map(c =>
+    '<div class="chipcard"><h3>' + esc(c.ref + " · " + c.pkg) + ' <span class="note">' + esc(c.cn) + '</span></h3>'
+    + '<div class="meta">' + esc(c.banks.length + " 个引脚组 · " + allPins(c).length + " 个引脚") + '</div>'
+    + chipSvg(c) + '</div>').join("");
+  document.querySelectorAll(".bankbtn").forEach(el => el.onclick = () => {
+    const id = el.dataset.bank;
+    const sec = document.getElementById(id);
+    if (sec) { sec.scrollIntoView({behavior:"smooth", block:"center"}); flash(id); }
+  });
+}
+
+function flash(id){
+  const el = document.getElementById(id);
+  el.style.transition = "box-shadow .4s";
+  el.style.boxShadow = "0 0 0 2px var(--clk)";
+  setTimeout(() => el.style.boxShadow = "none", 900);
+}
+
+function rowHtml(id, p){
+  const k = p.k || "IO";
+  return '<tr data-key="' + esc((p.x + " " + p.s + " " + p.d + " " + p.n).toLowerCase()) + '">'
+    + '<td class="no">' + esc(p.n) + '</td>'
+    + '<td class="nm">' + esc(p.x) + '</td>'
+    + '<td class="sg"><span class="sig" title="点击复制签名">' + esc(p.s) + '</span></td>'
+    + '<td class="kd"><span class="kbadge k-' + k + '">' + esc(k) + '</span></td>'
+    + '<td>' + esc(p.d) + '</td></tr>';
+}
+
+function renderBanks(){
+  let html = "";
+  for (const c of CHIPS) {
+    html += '<h2 style="margin-top:18px">' + esc(c.ref + " · " + c.pkg + " — " + c.cn) + '</h2>';
+    for (const b of c.banks) {
+      const id = c.id + "-" + b.id;
+      html += '<div class="banktable" id="' + esc(id) + '" data-chip="' + esc(c.id) + '">'
+        + '<div class="bankhead" onclick="var t=this.nextElementSibling;t.style.display=t.style.display===\'none\'?\'\':\'none\'">'
+        + '<span class="tag">' + esc(c.ref + "." + b.id) + '</span>'
+        + '<span class="ttl">' + esc(b.cn) + '</span>'
+        + (b.note ? '<span class="note">' + esc(b.note) + '</span>' : '')
+        + '<span class="cnt">' + esc(b.pins.length + " pins") + '</span></div>'
+        + '<table><thead><tr><th>引脚</th><th>名称</th><th>签名 / 形态</th><th>方向</th><th>说明</th></tr></thead><tbody>'
+        + b.pins.map(p => rowHtml(id, p)).join("")
+        + '</tbody></table></div>';
+    }
+  }
+  document.getElementById("banks").innerHTML = html;
+  document.querySelectorAll(".sig").forEach(el => el.onclick = () => {
+    const t = el.textContent;
+    if (navigator.clipboard) navigator.clipboard.writeText(t);
+    el.style.color = "var(--clk)";
+    setTimeout(() => el.style.color = "", 500);
+  });
+}
+
+function applyFilter(){
+  const q = query.trim().toLowerCase();
+  document.querySelectorAll(".banktable").forEach(box => {
+    const chipOk = filterChip === "all" || box.dataset.chip === filterChip;
+    let shown = 0;
+    box.querySelectorAll("tbody tr").forEach(tr => {
+      const hit = chipOk && (!q || tr.dataset.key.indexOf(q) >= 0);
+      if (q) tr.classList.toggle("hit", hit);
+      tr.style.display = hit ? "" : "none";
+      if (hit) shown++;
+    });
+    box.style.display = shown ? "" : "none";
+  });
+}
+
+function renderSrc(){
+  const pins = totalPins();
+  document.getElementById("src").innerHTML =
+    "引脚清单由源码 AST 抽取（palm_llm/*.py、palm_cryptokernel/**/*.py 的公共 def/class 与其 __all__），"
+    + "算法矩阵由 <code>palm_cryptokernel.capabilities.report()</code> 运行时实取（6 族 " + CHIPS[1].banks.find(b => b.id === "matrix").pins.length + " 条）。"
+    + "共 " + pins + " 个引脚 · 数据日期 2026-09-23 · U2 版本 0.5.2 / U1 服务端 0.2.0。"
+    + "点击任意签名可复制；点击封装图上的引脚组可跳到明细。";
+}
+
+renderStats(); renderLegend(); renderTabs(); renderChips(); renderBanks(); applyFilter(); renderSrc();
+document.getElementById("q").addEventListener("input", e => { query = e.target.value; applyFilter(); });
+</script>
+</body>
+</html>

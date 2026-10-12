@@ -1,0 +1,399 @@
+{
+ "root": "C:\\Users\\24459\\Desktop\\GPT-SoVITS-1007-cu128",
+ "entries": [
+  "GPT_SoVITS/TTS_infer_pack/TTS.py",
+  "GPT_SoVITS/inference_cli.py",
+  "api_v2.py",
+  "gsvi.py"
+ ],
+ "total_files": 181,
+ "reachable_files": 87,
+ "unreachable_files": 95,
+ "unreachable": [
+  {
+   "path": "webui.py",
+   "loc": 1983
+  },
+  {
+   "path": "api.py",
+   "loc": 1395
+  },
+  {
+   "path": "GPT_SoVITS/train_util.py",
+   "loc": 1303
+  },
+  {
+   "path": "GPT_SoVITS/export_torch_script_v3v4.py",
+   "loc": 1258
+  },
+  {
+   "path": "GPT_SoVITS/export_torch_script.py",
+   "loc": 1101
+  },
+  {
+   "path": "GPT_SoVITS/module/models_onnx.py",
+   "loc": 1087
+  },
+  {
+   "path": "GPT_SoVITS/module/data_utils.py",
+   "loc": 1071
+  },
+  {
+   "path": "GPT_SoVITS/BigVGAN/train.py",
+   "loc": 716
+  },
+  {
+   "path": "GPT_SoVITS/s2_train.py",
+   "loc": 684
+  },
+  {
+   "path": "tools/uvr5/lib/lib_v5/spec_utils.py",
+   "loc": 635
+  },
+  {
+   "path": "tools/uvr5/bs_roformer/bs_roformer.py",
+   "loc": 626
+  },
+  {
+   "path": "GPT_SoVITS/BigVGAN/discriminators.py",
+   "loc": 625
+  },
+  {
+   "path": "tools/uvr5/bs_roformer/mel_band_roformer.py",
+   "loc": 606
+  },
+  {
+   "path": "GPT_SoVITS/inference_webui_fast.py",
+   "loc": 523
+  },
+  {
+   "path": "GPT_SoVITS/s2_train_v3.py",
+   "loc": 467
+  },
+  {
+   "path": "tools/subfix_webui.py",
+   "loc": 425
+  },
+  {
+   "path": "GPT_SoVITS/onnx_export.py",
+   "loc": 398
+  },
+  {
+   "path": "GPT_SoVITS/AR/models/t2s_model_onnx.py",
+   "loc": 394
+  },
+  {
+   "path": "GPT_SoVITS/module/attentions_onnx.py",
+   "loc": 385
+  },
+  {
+   "path": "GPT_SoVITS/s2_train_v3_lora.py",
+   "loc": 379
+  },
+  {
+   "path": "tools/uvr5/vr.py",
+   "loc": 350
+  },
+  {
+   "path": "GPT_SoVITS/AR/data/dataset.py",
+   "loc": 320
+  },
+  {
+   "path": "GPT_SoVITS/inference_gui.py",
+   "loc": 316
+  },
+  {
+   "path": "tools/uvr5/bsroformer.py",
+   "loc": 304
+  },
+  {
+   "path": "GPT_SoVITS/eres2net/ERes2Net_huge.py",
+   "loc": 289
+  },
+  {
+   "path": "GPT_SoVITS/AR/modules/transformer_onnx.py",
+   "loc": 281
+  },
+  {
+   "path": "GPT_SoVITS/eres2net/ERes2Net.py",
+   "loc": 264
+  },
+  {
+   "path": "GPT_SoVITS/BigVGAN/loss.py",
+   "loc": 238
+  },
+  {
+   "path": "tools/my_utils.py",
+   "loc": 231
+  },
+  {
+   "path": "tools/slicer2.py",
+   "loc": 230
+  },
+  {
+   "path": "tools/uvr5/webui.py",
+   "loc": 224
+  },
+  {
+   "path": "tools/uvr5/mdxnet.py",
+   "loc": 223
+  },
+  {
+   "path": "GPT_SoVITS/f5_tts/model/backbones/unett.py",
+   "loc": 219
+  },
+  {
+   "path": "GPT_SoVITS/BigVGAN/tests/test_cuda_vs_torch_model.py",
+   "loc": 215
+  },
+  {
+   "path": "GPT_SoVITS/AR/modules/activation_onnx.py",
+   "loc": 188
+  },
+  {
+   "path": "GPT_SoVITS/s1_train.py",
+   "loc": 171
+  },
+  {
+   "path": "tools/asr/fasterwhisper_asr.py",
+   "loc": 170
+  },
+  {
+   "path": "tools/uvr5/lib/lib_v5/dataset.py",
+   "loc": 167
+  },
+  {
+   "path": "GPT_SoVITS/AR/data/bucket_sampler.py",
+   "loc": 149
+  },
+  {
+   "path": "GPT_SoVITS/f5_tts/model/backbones/mmdit.py",
+   "loc": 146
+  },
+  {
+   "path": "GPT_SoVITS/prepare_datasets/1-get-text.py",
+   "loc": 143
+  },
+  {
+   "path": "tools/i18n/scan_i18n.py",
+   "loc": 137
+  },
+  {
+   "path": "GPT_SoVITS/prepare_datasets/2-get-hubert-wav32k.py",
+   "loc": 134
+  },
+  {
+   "path": "GPT_SoVITS/train_cli.py",
+   "loc": 133
+  },
+  {
+   "path": "tools/uvr5/lib/lib_v5/nets_new.py",
+   "loc": 125
+  },
+  {
+   "path": "tools/uvr5/lib/lib_v5/nets_123812KB.py",
+   "loc": 122
+  },
+  {
+   "path": "tools/uvr5/lib/lib_v5/nets_123821KB.py",
+   "loc": 122
+  },
+  {
+   "path": "tools/uvr5/lib/lib_v5/nets_33966KB.py",
+   "loc": 122
+  },
+  {
+   "path": "tools/uvr5/lib/lib_v5/nets_537227KB.py",
+   "loc": 122
+  },
+  {
+   "path": "tools/uvr5/lib/lib_v5/nets_537238KB.py",
+   "loc": 122
+  },
+  {
+   "path": "tools/uvr5/lib/lib_v5/nets_61968KB.py",
+   "loc": 122
+  },
+  {
+   "path": "tools/uvr5/lib/lib_v5/nets.py",
+   "loc": 121
+  },
+  {
+   "path": "GPT_SoVITS/prepare_datasets/3-get-semantic.py",
+   "loc": 118
+  },
+  {
+   "path": "tools/asr/funasr_asr.py",
+   "loc": 118
+  },
+  {
+   "path": "GPT_SoVITS/prepare_datasets/2-get-sv.py",
+   "loc": 115
+  },
+  {
+   "path": "tools/uvr5/lib/utils.py",
+   "loc": 113
+  },
+  {
+   "path": "tools/uvr5/lib/lib_v5/layers_new.py",
+   "loc": 111
+  },
+  {
+   "path": "GPT_SoVITS/AR/models/t2s_lightning_module_onnx.py",
+   "loc": 110
+  },
+  {
+   "path": "tools/uvr5/lib/lib_v5/layers_33966KB.py",
+   "loc": 110
+  },
+  {
+   "path": "tools/uvr5/lib/lib_v5/layers_537227KB.py",
+   "loc": 110
+  },
+  {
+   "path": "tools/uvr5/lib/lib_v5/layers_537238KB.py",
+   "loc": 110
+  },
+  {
+   "path": "tools/AP_BWE_main/datasets1/dataset.py",
+   "loc": 108
+  },
+  {
+   "path": "tools/uvr5/lib/lib_v5/layers.py",
+   "loc": 106
+  },
+  {
+   "path": "tools/uvr5/lib/lib_v5/layers_123812KB.py",
+   "loc": 106
+  },
+  {
+   "path": "tools/uvr5/lib/lib_v5/layers_123821KB.py",
+   "loc": 106
+  },
+  {
+   "path": "GPT_SoVITS/BigVGAN/inference_e2e.py",
+   "loc": 100
+  },
+  {
+   "path": "GPT_SoVITS/AR/modules/patched_mha_with_cache_onnx.py",
+   "loc": 85
+  },
+  {
+   "path": "GPT_SoVITS/BigVGAN/inference.py",
+   "loc": 85
+  },
+  {
+   "path": "GPT_SoVITS/BigVGAN/alias_free_activation/cuda/load.py",
+   "loc": 82
+  },
+  {
+   "path": "GPT_SoVITS/AR/data/data_module.py",
+   "loc": 81
+  },
+  {
+   "path": "GPT_SoVITS/AR/text_processing/phonemizer.py",
+   "loc": 72
+  },
+  {
+   "path": "GPT_SoVITS/module/losses.py",
+   "loc": 70
+  },
+  {
+   "path": "tools/uvr5/bs_roformer/attend.py",
+   "loc": 67
+  },
+  {
+   "path": "tools/uvr5/lib/lib_v5/model_param_init.py",
+   "loc": 66
+  },
+  {
+   "path": "GPT_SoVITS/AR/modules/embedding_onnx.py",
+   "loc": 63
+  },
+  {
+   "path": "GPT_SoVITS/BigVGAN/tests/test_activation.py",
+   "loc": 62
+  },
+  {
+   "path": "GPT_SoVITS/BigVGAN/tests/test_activation_snake_beta.py",
+   "loc": 62
+  },
+  {
+   "path": "tools/slice_audio.py",
+   "loc": 53
+  },
+  {
+   "path": "tools/asr/config.py",
+   "loc": 44
+  },
+  {
+   "path": "GPT_SoVITS/AR/utils/initialize.py",
+   "loc": 39
+  },
+  {
+   "path": "tools/cmd-denoise.py",
+   "loc": 38
+  },
+  {
+   "path": "GPT_SoVITS/AR/utils/__init__.py",
+   "loc": 36
+  },
+  {
+   "path": "GPT_SoVITS/download.py",
+   "loc": 13
+  },
+  {
+   "path": "GPT_SoVITS/AR/text_processing/symbols.py",
+   "loc": 12
+  },
+  {
+   "path": "GPT_SoVITS/BigVGAN/alias_free_activation/torch/__init__.py",
+   "loc": 6
+  },
+  {
+   "path": "GPT_SoVITS/TTS_infer_pack/__init__.py",
+   "loc": 1
+  },
+  {
+   "path": "tools/AP_BWE_main/datasets1/__init__.py",
+   "loc": 1
+  },
+  {
+   "path": "tools/AP_BWE_main/models/__init__.py",
+   "loc": 1
+  },
+  {
+   "path": "GPT_SoVITS/AR/__init__.py",
+   "loc": 0
+  },
+  {
+   "path": "GPT_SoVITS/AR/data/__init__.py",
+   "loc": 0
+  },
+  {
+   "path": "GPT_SoVITS/AR/models/__init__.py",
+   "loc": 0
+  },
+  {
+   "path": "GPT_SoVITS/AR/modules/__init__.py",
+   "loc": 0
+  },
+  {
+   "path": "GPT_SoVITS/AR/text_processing/__init__.py",
+   "loc": 0
+  },
+  {
+   "path": "tools/__init__.py",
+   "loc": 0
+  },
+  {
+   "path": "tools/uvr5/bs_roformer/__init__.py",
+   "loc": 0
+  }
+ ],
+ "dynamic_files": [
+  "GPT_SoVITS/text/cleaner.py",
+  "GPT_SoVITS/text/g2pw/utils.py"
+ ],
+ "unresolved_imports": {}
+}

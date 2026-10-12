@@ -1,0 +1,101 @@
+================================================================
+ dynprobe 0.1.0 — security @ path:C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128
+================================================================
+  security: 扫描 115 文件 | 命中 61（high 59 / medium 0 / low 2）
+-- 发现 --
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/gsvi.py:333 硬编码密钥 'wYdj…' 赋值给 shutdown_password [A07]（生产代码）
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/webui.py:1298 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/webui.py:239 subprocess.run(shell=True, 非常量) 命令注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: L235 参数 pid（调用方数据可达） → L237 cmd ← …expr…
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/webui.py:288 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: L271 参数 path_list（调用方数据可达） → L275 path_list ← call() → L276 cmd ← …expr…
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/webui.py:318 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/webui.py:356 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/webui.py:396 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: L372 参数 asr_model（调用方数据可达） → L378 cmd ← f"…" → L372 参数 asr_inp_dir（调用方数据可达） → L375 asr_inp_dir ← call() → L379 cmd ← aug → L372 参数 asr_opt_dir（调用方数据可达） → L376 asr_opt_dir ← call() → L380 cmd ← aug → L372 参数 asr_model_size（调用方数据可达） → L381 cmd ← aug → L372 参数 asr_lang（调用方数据可达） → L382 cmd ← aug → L372 参数 asr_precision（调用方数据可达） → L383 cmd ← aug
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/webui.py:454 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: L433 参数 denoise_inp_dir（调用方数据可达） → L436 denoise_inp_dir ← call() → L433 参数 denoise_opt_dir（调用方数据可达） → L437 denoise_opt_dir ← call() → L439 cmd ← …expr…
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/webui.py:554 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/webui.py:646 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/webui.py:609 yaml.load 未显式 SafeLoader（CVE-2017-18342 族）[A08]（污点：外部输入可达）
+        ↳ 污点链: 来源 open() 文件读取 → L605 f ← call() → L608 data ← call()
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/webui.py:729 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: L683 参数 inp（调用方数据可达） → L685 inp ← call() → L683 参数 opt_root（调用方数据可达） → L686 opt_root ← call() → L683 参数 threshold（调用方数据可达） → L683 参数 min_length（调用方数据可达） → L683 参数 min_interval（调用方数据可达） → L683 参数 hop_size（调用方数据可达） → L683 参数 max_sil_kept（调用方数据可达） → L683 参数 _max（调用方数据可达） → L683 参数 alpha（调用方数据可达） → L683 参数 n_parts（调用方数据可达） → L713 i_part ← call() → L714 cmd ← …expr…
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/webui.py:811 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/webui.py:901 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/webui.py:995 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/webui.py:923 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/webui.py:1142 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/webui.py:1095 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/webui.py:1164 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/webui.py:1204 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/inference_webui.py:87 eval(非常量) 代码注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: 来源 os.environ → L86 is_share ← call()
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/inference_webui.py:90 eval(非常量) 代码注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: 来源 os.environ
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/inference_webui_fast.py:48 eval(非常量) 代码注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: 来源 os.environ → L47 is_share ← call()
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/inference_webui_fast.py:52 eval(非常量) 代码注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: 来源 os.environ
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/train_util.py:1298 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/train_util.py:238 subprocess.run(shell=True, 非常量) 命令注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: L234 参数 pid（调用方数据可达） → L236 cmd ← …expr…
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/train_util.py:287 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: L270 参数 path_list（调用方数据可达） → L274 path_list ← call() → L275 cmd ← …expr…
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/train_util.py:317 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/train_util.py:355 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/train_util.py:395 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: L371 参数 asr_model（调用方数据可达） → L377 cmd ← f"…" → L371 参数 asr_inp_dir（调用方数据可达） → L374 asr_inp_dir ← call() → L378 cmd ← aug → L371 参数 asr_opt_dir（调用方数据可达） → L375 asr_opt_dir ← call() → L379 cmd ← aug → L371 参数 asr_model_size（调用方数据可达） → L380 cmd ← aug → L371 参数 asr_lang（调用方数据可达） → L381 cmd ← aug → L371 参数 asr_precision（调用方数据可达） → L382 cmd ← aug
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/train_util.py:453 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: L432 参数 denoise_inp_dir（调用方数据可达） → L435 denoise_inp_dir ← call() → L432 参数 denoise_opt_dir（调用方数据可达） → L436 denoise_opt_dir ← call() → L438 cmd ← …expr…
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/train_util.py:553 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/train_util.py:646 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/train_util.py:609 yaml.load 未显式 SafeLoader（CVE-2017-18342 族）[A08]（污点：外部输入可达）
+        ↳ 污点链: 来源 open() 文件读取 → L605 f ← call() → L608 data ← call()
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/train_util.py:729 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: L683 参数 inp（调用方数据可达） → L685 inp ← call() → L683 参数 opt_root（调用方数据可达） → L686 opt_root ← call() → L683 参数 threshold（调用方数据可达） → L683 参数 min_length（调用方数据可达） → L683 参数 min_interval（调用方数据可达） → L683 参数 hop_size（调用方数据可达） → L683 参数 max_sil_kept（调用方数据可达） → L683 参数 _max（调用方数据可达） → L683 参数 alpha（调用方数据可达） → L683 参数 n_parts（调用方数据可达） → L713 i_part ← call() → L714 cmd ← …expr…
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/train_util.py:811 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/train_util.py:901 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/train_util.py:995 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/train_util.py:923 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/train_util.py:1142 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/train_util.py:1095 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/train_util.py:1164 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/train_util.py:1204 subprocess.Popen(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/prepare_datasets/1-get-text.py:16 eval(非常量) 代码注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: 来源 os.environ
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/prepare_datasets/2-get-hubert-wav32k.py:19 eval(非常量) 代码注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: 来源 os.environ
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/prepare_datasets/2-get-sv.py:18 eval(非常量) 代码注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: 来源 os.environ
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/prepare_datasets/3-get-semantic.py:31 eval(非常量) 代码注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: 来源 os.environ
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/text/cleaner.py:37 __import__(非常量) 代码注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: L21 参数 language（调用方数据可达）
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/text/cleaner.py:72 __import__(非常量) 代码注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: L58 参数 language（调用方数据可达）
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/text/english.py:213 pickle.load 反序列化需确认来源可信 [A08]（污点：外部输入可达）
+        ↳ 污点链: 来源 open() 文件读取 → L212 pickle_file ← call()
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/text/english.py:226 pickle.load 反序列化需确认来源可信 [A08]（污点：外部输入可达）
+        ↳ 污点链: 来源 open() 文件读取 → L225 pickle_file ← call()
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/text/g2pw/g2pw.py:120 pickle.load 反序列化需确认来源可信 [A08]（污点：外部输入可达）
+        ↳ 污点链: 来源 open() 文件读取 → L119 pickle_file ← call()
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/text/g2pw/g2pw.py:134 eval(非常量) 代码注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: 来源 open() 文件读取 → L130 f ← call() → L131 line ← call() → L133 value_str ← call()
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/text/g2pw/g2pw.py:141 eval(非常量) 代码注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: 来源 open() 文件读取 → L130 f ← call() → L131 line ← call() → L133 value_str ← call() → L137 f ← call() → L138 line ← call() → L140 value_str ← call()
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/TTS_infer_pack/TTS.py:365 yaml.load 未显式 SafeLoader（CVE-2017-18342 族）[A08]（污点：外部输入可达）
+        ↳ 污点链: 来源 open() 文件读取 → L364 f ← call()
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/tools/my_infer.py:416 subprocess.run(shell=True, 非常量) 命令注入 [A03]
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/tools/my_infer.py:631 subprocess.run(shell=True, 非常量) 命令注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: L612 参数 model_url（调用方数据可达） → L612 参数 categroy（调用方数据可达） → L612 参数 lang（调用方数据可达） → L612 参数 model_name（调用方数据可达）
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/tools/my_infer.py:638 subprocess.run(shell=True, 非常量) 命令注入 [A03]（污点：外部输入可达）
+        ↳ 污点链: L612 参数 categroy（调用方数据可达） → L612 参数 lang（调用方数据可达） → L612 参数 model_name（调用方数据可达）
+  [HIGH  ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/tools/subfix_webui.py:423 eval(非常量) 代码注入 [A03]
+  [LOW   ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/process_ckpt.py:95 hashlib.md5 弱哈希（口令/签名场景勿用）[A02]
+  [LOW   ] C:/Users/24459/Desktop/GPT-SoVITS-1007-cu128/GPT_SoVITS/text/japanese.py:51 hashlib.md5 弱哈希（口令/签名场景勿用）[A02]
+----------------------------------------------------------------
+  得分 0.0 / 100  等级 E
+================================================================
+
+[json] 已写入 D:/P.A.L.M/1_Demo_LLM/audit_gpt_sovits/dynprobe_sec_selfdev.json

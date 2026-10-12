@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>对话异常 UI 展示 · P.A.L.M WebUI</title>
+<style>
+/* ===== 主题变量（与聊天模块 core/theme 保持一致）===== */
+:root{
+  --ui-bg:#ffffff; --ui-text:#1a1a1a; --ui-muted:#6b6b6b; --ui-border:#e3e3e6;
+  --ui-elev:#ffffff; --ui-hover:#f2f3f5; --ui-accent:#0969da;
+  --ui-danger:#d1242f; --ui-danger-bg:#fdecee; --ui-danger-bd:#f3c2c7;
+  --ui-danger-soft:#fbe9eb;
+  --ui-warn:#9a6700; --ui-warn-bg:#fff8e6; --ui-warn-bd:#f0dca0;
+  --ui-ok:#1a7f37; --ui-radius:12px; --ui-mono:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+}
+[data-theme="dark"]{
+  --ui-bg:#0d1117; --ui-text:#e6edf3; --ui-muted:#8b949e; --ui-border:#30363d;
+  --ui-elev:#161b22; --ui-hover:#21262d; --ui-accent:#2f81f7;
+  --ui-danger:#f85149; --ui-danger-bg:#2d1417; --ui-danger-bd:#5c2126; --ui-danger-soft:#3a171b;
+  --ui-warn:#d29922; --ui-warn-bg:#2a210f; --ui-warn-bd:#553f12; --ui-ok:#3fb950;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ui-bg); color:var(--ui-text);
+  font:14px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'PingFang SC','Microsoft YaHei',sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+header{
+  display:flex; align-items:center; gap:12px; padding:18px 28px;
+  border-bottom:1px solid var(--ui-border); position:sticky; top:0; z-index:50;
+  background:color-mix(in srgb, var(--ui-bg) 86%, transparent); backdrop-filter:blur(8px);
+}
+header h1{font-size:17px; margin:0; font-weight:650}
+header .sub{color:var(--ui-muted); font-size:12.5px}
+header .spacer{flex:1}
+.btn{
+  border:1px solid var(--ui-border); background:var(--ui-elev); color:var(--ui-text);
+  padding:6px 12px; border-radius:8px; cursor:pointer; font-size:13px; font-family:inherit;
+}
+.btn:hover{background:var(--ui-hover)}
+.btn.primary{background:var(--ui-accent); color:#fff; border-color:transparent}
+.btn.primary:hover{filter:brightness(1.08)}
+
+main{max-width:1080px; margin:0 auto; padding:24px 28px 80px}
+.section-h{font-size:13px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+  color:var(--ui-muted); margin:34px 0 14px}
+.intro{color:var(--ui-muted); font-size:13.5px; line-height:1.7}
+.intro code{background:var(--ui-hover); padding:1px 6px; border-radius:5px; font-family:var(--ui-mono); font-size:12.5px}
+
+/* ===== 实时触发区 ===== */
+#live-render{
+  border:1px solid var(--ui-border); border-radius:var(--ui-radius); overflow:hidden;
+  background:var(--ui-elev); min-height:240px; position:relative;
+}
+.live-bar{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px}
+.live-bar .btn{font-size:12.5px; padding:6px 11px}
+
+/* ===== 聊天气泡（用于错误预览）===== */
+.chat{display:flex; flex-direction:column; gap:14px; padding:18px}
+.msg{display:flex; gap:10px; align-items:flex-start}
+.msg.me{flex-direction:row-reverse}
+.av{flex:none; width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:600; background:var(--ui-hover); color:var(--ui-muted)}
+.bub{max-width:78%; padding:10px 13px; border-radius:14px; background:var(--ui-hover); white-space:pre-wrap; word-break:break-all}
+.msg.me .bub{background:var(--ui-accent); color:#fff}
+.bub.err{background:var(--ui-danger-soft); border:1px solid var(--ui-danger-bd); color:var(--ui-text)}
+.msg.ai .bub.err{white-space:pre-wrap}
+.bub.err .em{color:var(--ui-danger); font-weight:600}
+
+/* ===== 顶部错误横幅 ===== */
+.err-banner{
+  display:flex; gap:12px; align-items:flex-start; padding:12px 16px;
+  background:var(--ui-danger-bg); border-bottom:1px solid var(--ui-danger-bd); color:var(--ui-text);
+}
+.err-banner .ic{flex:none; width:20px; height:20px; border-radius:50%; background:var(--ui-danger); color:#fff;
+  display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; margin-top:1px}
+.err-banner .bd{flex:1; min-width:0}
+.err-banner .tt{font-weight:650; margin-bottom:2px}
+.err-banner .dt{color:var(--ui-muted); font-size:12.5px; white-space:pre-wrap; word-break:break-all}
+.err-banner .acs{display:flex; gap:8px; margin-top:8px}
+.err-banner .mini{border:1px solid var(--ui-danger-bd); background:transparent; color:var(--ui-danger);
+  padding:3px 10px; border-radius:6px; font-size:12px; cursor:pointer}
+.err-banner .mini:hover{background:var(--ui-danger); color:#fff}
+
+/* ===== 底部 toast ===== */
+.toast-wrap{position:absolute; left:0; right:0; bottom:0; display:flex; justify-content:center; padding:14px; pointer-events:none}
+.toast{background:var(--ui-danger); color:#fff; padding:9px 16px; border-radius:999px; font-size:13px;
+  box-shadow:0 6px 20px rgba(0,0,0,.18); display:flex; gap:8px; align-items:center}
+.toast.warn{background:var(--ui-warn)}
+.toast .x{pointer-events:auto; cursor:pointer; opacity:.8}
+.toast .x:hover{opacity:1}
+
+/* ===== 附件 chip 错误态 ===== */
+.att-chip{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:8px;
+  border:1px solid var(--ui-danger-bd); background:var(--ui-danger-soft); font-size:12.5px; max-width:260px}
+.att-chip .nm{overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.att-chip .x{margin-left:auto; color:var(--ui-danger); cursor:pointer}
+
+/* ===== 输入框校验态 ===== */
+.composer{border:1px solid var(--ui-border); border-radius:12px; padding:10px; background:var(--ui-elev)}
+.composer.err{border-color:var(--ui-danger); box-shadow:0 0 0 3px var(--ui-danger-soft)}
+.composer .fake-inp{height:54px; border-radius:8px; background:var(--ui-hover); display:flex; align-items:center; padding:0 12px; color:var(--ui-muted)}
+.composer .hint{color:var(--ui-danger); font-size:12.5px; margin-top:7px; display:flex; align-items:center; gap:6px}
+
+/* ===== 画廊 ===== */
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:16px}
+.card{border:1px solid var(--ui-border); border-radius:var(--ui-radius); background:var(--ui-elev); overflow:hidden; display:flex; flex-direction:column}
+.card .hd{padding:11px 14px; border-bottom:1px solid var(--ui-border); display:flex; align-items:center; gap:9px}
+.card .hd .tag{font-size:11px; font-weight:700; padding:2px 8px; border-radius:999px; background:var(--ui-hover); color:var(--ui-muted)}
+.card .hd .ttl{font-weight:600; font-size:13.5px}
+.card .ct{padding:14px; flex:1}
+.card .meta{font-size:12px; color:var(--ui-muted); margin-top:10px; line-height:1.6}
+.card .meta b{color:var(--ui-text); font-weight:600}
+.frame{border:1px dashed var(--ui-border); border-radius:10px; background:var(--ui-bg); overflow:hidden}
+</style>
+</head>
+<body data-theme="auto">
+<header>
+  <h1>对话异常 UI 展示</h1>
+  <span class="sub">P.A.L.M WebUI · 覆盖 11 类调用异常</span>
+  <span class="spacer"></span>
+  <button class="btn" id="themeBtn">切换 暗/亮</button>
+</header>
+
+<main>
+  <div class="intro">
+    当前聊天模块只有一个错误出口：任何失败都被包成 <code>⚠️ 无法连接对话后端（…）</code>，
+    即使真实原因是「模型未配置 / 模型不存在 / 鉴权失败」也会被误导成「连不上后端」。
+    内核实际会回传结构化的 SSE <code>error</code> 事件（如 <code>未配置有效的模型提供方，请在设置中添加。</code>），
+    本页给出一套<strong>分类型</strong>的异常 UI，并支持<strong>真实触发</strong>部分场景。
+  </div>
+
+  <div class="section-h">实时触发（真实调用内核 10093）</div>
+  <div class="live-bar">
+    <button class="btn primary" onclick="liveNoModel()">① 未配置模型（真实 10093）</button>
+    <button class="btn primary" onclick="liveBackendDown()">② 后端宕机（连 10099）</button>
+    <button class="btn" onclick="clearLive()">清空</button>
+  </div>
+  <div id="live-render"><div class="chat" id="live-chat"><div class="msg ai"><div class="av">AI</div><div class="bub" style="color:var(--ui-muted)">点上方按钮，触发真实异常并看这里如何渲染。</div></div></div></div>
+
+  <div class="section-h">完整异常 UI 画廊（11 类）</div>
+  <div class="grid" id="gallery"></div>
+</main>
+
+<script>
+/* ---------- 主题切换 ---------- */
+const root = document.body;
+const ts = [['auto',''],['light',' data-theme="light"'],['dark',' data-theme="dark"']];
+let ti = 0;
+document.getElementById('themeBtn').onclick = () => {
+  ti = (ti+1) % ts.length;
+  if (ts[ti][0]==='auto'){ root.removeAttribute('data-theme'); root.setAttribute('data-theme','auto'); }
+  else root.setAttribute('data-theme', ts[ti][0]);
+};
+
+/* ---------- 渲染组件 ---------- */
+function banner(title, detail){
+  return `<div class="err-banner"><div class="ic">!</div><div class="bd">
+    <div class="tt">${title}</div><div class="dt">${detail}</div>
+    <div class="acs"><button class="mini" onclick="this.closest('.err-banner').remove()">重试</button>
+    <button class="mini" onclick="this.closest('.err-banner').remove()">关闭</button></div>
+  </div></div>`;
+}
+function bubbleErr(text){
+  // 贴近当前聊天模块的引用块风格
+  return `<div class="msg ai"><div class="av">AI</div><div class="bub err">&gt; ⚠️ <span class="em">${text}</span></div></div>`;
+}
+function bubbleErrFull(head, detail, hint){
+  const body = `&gt; ⚠️ <span class="em">${head}</span>\n&gt;\n&gt; ${detail}${hint?('\n&gt; '+hint):''}`;
+  return `<div class="msg ai"><div class="av">AI</div><div class="bub err">${body}</div></div>`;
+}
+function toast(text, warn){
+  return `<div class="toast-wrap"><div class="toast ${warn?'warn':''}">⚠️ ${text}<span class="x" onclick="this.closest('.toast-wrap').remove()">✕</span></div></div>`;
+}
+function uploadErr(name, msg){
+  return `<div class="att-chip">📎 <span class="nm">${name}</span><span style="color:var(--ui-danger)">⚠ ${msg}</span><span class="x">✕</span></div>`;
+}
+function emptyInline(){
+  return `<div class="composer err"><div class="fake-inp">说点什么…</div>
+    <div class="hint">⚠ 请输入内容后再发送（空输入不会发起请求）。</div></div>`;
+}
+
+/* ---------- 实时触发 ---------- */
+const CHAT='http://127.0.0.1:10093/api/chat/stream';
+function clearLive(){ document.getElementById('live-render').innerHTML =
+  '<div class="chat" id="live-chat"><div class="msg ai"><div class="av">AI</div><div class="bub" style="color:var(--ui-muted)">点上方按钮，触发真实异常并看这里如何渲染。</div></div></div>'; }
+function appendLive(html){ const c=document.getElementById('live-chat'); if(c) c.insertAdjacentHTML('beforeend', html); }
+
+async function liveNoModel(){
+  clearLive();
+  appendLive('<div class="msg ai"><div class="av">AI</div><div class="bub" style="color:var(--ui-muted)">…</div></div>');
+  try{
+    const res = await fetch(CHAT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:'hi'})});
+    if(!res.ok || !res.body) throw new Error('HTTP '+res.status);
+    const reader=res.body.getReader(), dec=new TextDecoder(); let buf='', got=false;
+    while(true){ const {value,done}=await reader.read(); if(done)break; buf+=dec.decode(value,{stream:true});
+      let i; while((i=buf.indexOf('\n\n'))>=0){ const line=buf.slice(0,i).replace(/^data:\s?/,'').trim(); buf=buf.slice(i+2);
+        if(!line||line==='[DONE]')continue; try{const ev=JSON.parse(line);
+          if(ev.type==='error'){ document.getElementById('live-chat').lastElementChild.outerHTML = bubbleErr(ev.message); got=true; return; }
+        }catch(e){} } }
+    if(!got) document.getElementById('live-chat').lastElementChild.outerHTML = bubbleErr('（流结束，未收到错误事件）');
+  }catch(e){
+    document.getElementById('live-render').insertAdjacentHTML('afterbegin',
+      banner('无法连接对话后端', CHAT+'：'+e.message+'\n请先启动后端：python -m palm_llm.server.api（端口 10093）'));
+  }
+}
+async function liveBackendDown(){
+  clearLive();
+  try{
+    await fetch('http://127.0.0.1:10099/api/chat/stream',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}',signal:AbortSignal.timeout(3000)});
+    appendLive(bubbleErr('（意外：连接竟然成功了）'));
+  }catch(e){
+    document.getElementById('live-render').insertAdjacentHTML('afterbegin',
+      banner('无法连接对话后端', 'http://127.0.0.1:10099/api/chat/stream：'+e.message+'\n请先启动后端：python -m palm_llm.server.api（端口 10093）'));
+  }
+}
+
+/* ---------- 画廊数据 ---------- */
+const cases = [
+  {tag:'连接', ttl:'① 后端不可达', comp:()=>banner('无法连接对话后端',
+      'http://127.0.0.1:10093/api/chat/stream：Failed to fetch\n请先启动后端：python -m palm_llm.server.api（端口 10093）'),
+    meta:'触发：网络断开 / 内核进程未启动 / 端口被占。<b>横幅型</b>，常驻顶部，可「重试 / 关闭」。'},
+
+  {tag:'配置', ttl:'② 未配置模型', comp:()=>bubbleErr('未配置有效的模型提供方，请在设置中添加。'),
+    meta:'真实内核回传（SSE error 事件）。<b>气泡型</b>。当前「保存的模型」已全部清空，复现此状态只需发一条消息。'},
+
+  {tag:'模型', ttl:'③ 模型不存在（上游 404）', comp:()=>bubbleErrFull('模型不存在',
+      "[Ollama (本地)] 404: {\"error\":\"model 'llama3.1:8b' not found\"}",
+      '请在 Ollama 中 pull 该模型，或在设置里改用已存在的模型。'),
+    meta:'你最初看到的那条：内核连上了，但上游 Ollama 没有该模型。应展示上游明细，而非「连不上后端」。'},
+
+  {tag:'参数', ttl:'④ 请求参数错误（400/422）', comp:()=>bubbleErrFull('请求参数错误',
+      'HTTP 422: content 不能为空 / images 格式非法', '检查输入内容或附件编码后重试。'),
+    meta:'前端校验通过后仍被内核拒绝时。<b>气泡型</b>。'},
+
+  {tag:'鉴权', ttl:'⑤ 鉴权失败（401/403）', comp:()=>bubbleErrFull('API Key 无效或缺失',
+      'HTTP 401: Invalid authentication（provider=openai）', '请到「设置」填入有效的 API Key。'),
+    meta:'云端 provider 常见。提示用户去设置补 Key，而非报「后端挂了」。'},
+
+  {tag:'限流', ttl:'⑥ 触发限流（429）', comp:()=>'<div class="chat"><div class="msg ai"><div class="av">AI</div><div class="bub err" style="white-space:pre-wrap">&gt; ⚠️ <span class="em">请求过于频繁，已被限流（429）</span>\n&gt; 已自动退避，稍后重试…</div></div></div>'+toast('限流中：30s 后自动重试', true),
+    meta:'<b>非阻塞</b>：底部 toast 提示 + 气泡备注，不阻断界面，自动退避重试。'},
+
+  {tag:'服务端', ttl:'⑦ 服务端错误（500）', comp:()=>bubbleErrFull('服务端内部错误',
+      'HTTP 500: Internal Server Error（request_id=req_8f2a）', '可点击重试；若持续出现请查看内核日志。'),
+    meta:'提供 request_id 便于排查，可「重试」。'},
+
+  {tag:'超时', ttl:'⑧ 请求超时', comp:()=>bubbleErrFull('请求超时',
+      '超过 120s 未收到首个 token（首字延迟超时）', '模型可能负载过高，建议换模型或稍后重试。'),
+    meta:'首字延迟（TTFA）超阈值。<b>气泡型</b>。'},
+
+  {tag:'输入', ttl:'⑨ 空输入（前端拦截）', comp:()=>emptyInline(),
+    meta:'<b>不发请求</b>：输入框红框 + 提示，send 按钮置灰。最轻量的校验态。'},
+
+  {tag:'流式', ttl:'⑩ 流式中断', comp:()=>bubbleErrFull('连接中断',
+      'stream aborted：在服务端返回第 3 个 token 后连接被重置', '已生成内容已保留，可「继续」续写。'),
+    meta:'流式进行中网络断开。<b>气泡型</b>，保留已产出内容，支持续写。'},
+
+  {tag:'附件', ttl:'⑪ 附件上传失败', comp:()=>'<div style="padding:6px 0">'+uploadErr('报告.pdf','读取失败：文件已移动或权限不足')+'</div>'+toast('1 个附件上传失败'),
+    meta:'<b>chip 错误态</b> + 底部 toast。点 ✕ 移除该附件，不影响其余发送。'},
+];
+
+const gal = document.getElementById('gallery');
+cases.forEach(c=>{
+  const el=document.createElement('div'); el.className='card';
+  el.innerHTML=`<div class="hd"><span class="tag">${c.tag}</span><span class="ttl">${c.ttl}</span></div>
+    <div class="ct"><div class="frame">${c.comp()}</div><div class="meta">${c.meta}</div></div>`;
+  gal.appendChild(el);
+});
+</script>
+</body>
+</html>

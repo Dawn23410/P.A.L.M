@@ -1,5 +1,0 @@
-httpx==0.28.1
-pydantic==2.10.4
-textual==8.2.8
-h2==4.3.0
-httpcore[asyncio]

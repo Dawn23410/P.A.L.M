@@ -1,0 +1,27 @@
+/*
+ * 自管理中文字体（系统字体子集化 woff2）
+ * =====================================
+ * 来源：C:\Windows\Fonts 系统字体 → fontTools 子集（ASCII + GB2312 全区 + 常用标点）
+ * 生成脚本：Desktop/_temp_archive_20260929/_make_webfonts.py，重跑即可再生成。
+ * 每个家族约 2MB（原字体 10~18MB）；font-display:swap 先用回退字体渲染，不阻塞首屏。
+ */
+@font-face{
+  font-family:'PalmSong';
+  src:url('simsun.woff2') format('woff2');
+  font-display:swap;
+}
+@font-face{
+  font-family:'PalmFang';
+  src:url('simfang.woff2') format('woff2');
+  font-display:swap;
+}
+@font-face{
+  font-family:'PalmKai';
+  src:url('simkai.woff2') format('woff2');
+  font-display:swap;
+}
+@font-face{
+  font-family:'PalmHei';
+  src:url('simhei.woff2') format('woff2');
+  font-display:swap;
+}

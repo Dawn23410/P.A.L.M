@@ -6,7 +6,7 @@
 
     LLM内核/palm_llm/...
     记忆/palm_memory/...
-    国密加解密/palm_crypto/...
+    加解密内核/palm_cryptokernel/...
     词元预算/palm_budget/...
     Ollama嵌入/palm_ollama/...
 
@@ -69,7 +69,7 @@ EMBEDDED_PROJECTS = (
     "缝合引擎",
     "LLM内核",
     "记忆",
-    "国密加解密",
+    "加解密内核",
     "词元预算",
     "Ollama嵌入",
 )
@@ -77,14 +77,20 @@ EMBEDDED_PROJECTS = (
 # 本文件所在目录
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
+# 数字前缀容器目录：现网布局里项目并不直接躺在 ROOT 下，而是平级放在
+# `1_Demo_LLM/`（LLM内核 / 记忆 / 加解密内核 …）与
+# `2_实验/`（模型适配 / 智能体框架 / 工具集 / Ollama嵌入 …）里，故容器本身也是一层候选根。
+CONTAINER_DIRS = ("1_Demo_LLM", "2_实验")
+
 
 def _candidate_roots() -> tuple[str, ...]:
-    """向上逐层收集候选根：每层的自身 / 其下 P.A.L.M / 其下 P.A.L.M/实验。
+    """向上逐层收集候选根：每层的自身 / 其下 P.A.L.M / P.A.L.M/实验 / 数字容器。
 
-    覆盖三种布局：
+    覆盖四种布局：
       - 主工程 `P.A.L.M -1/`：项目位于父目录的 `P.A.L.M/` 与 `P.A.L.M/实验/` 下
       - `P.A.L.M/<项目>/`：兄弟项目同级
       - `P.A.L.M/实验/<项目>/`：实验区项目（兄弟在实验区内，正式项目在其父目录）
+      - `P.A.L.M/1_Demo_LLM/<项目>/`、`P.A.L.M/2_实验/<项目>/`：现网数字前缀布局
     """
     roots = [ROOT]
     cur = ROOT
@@ -95,6 +101,8 @@ def _candidate_roots() -> tuple[str, ...]:
         cur = parent
         roots.extend([cur, os.path.join(cur, "P.A.L.M"),
                       os.path.join(cur, "P.A.L.M", "实验")])
+        roots.extend(os.path.join(cur, d) for d in CONTAINER_DIRS)
+        roots.extend(os.path.join(cur, "P.A.L.M", d) for d in CONTAINER_DIRS)
     seen, out = set(), []
     for r in roots:
         if r not in seen:

@@ -1,0 +1,146 @@
+[
+  {
+    "name": "README.md",
+    "path": "GPT_SoVITS/text/zh_normalization/README.md",
+    "sha": "92eea9f54630dfd41dfc3ce53bc511cc7595062c",
+    "size": 1387,
+    "url": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/contents/GPT_SoVITS/text/zh_normalization/README.md?ref=main",
+    "html_url": "https://github.com/RVC-Boss/GPT-SoVITS/blob/main/GPT_SoVITS/text/zh_normalization/README.md",
+    "git_url": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/git/blobs/92eea9f54630dfd41dfc3ce53bc511cc7595062c",
+    "download_url": "https://raw.githubusercontent.com/RVC-Boss/GPT-SoVITS/main/GPT_SoVITS/text/zh_normalization/README.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/contents/GPT_SoVITS/text/zh_normalization/README.md?ref=main",
+      "git": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/git/blobs/92eea9f54630dfd41dfc3ce53bc511cc7595062c",
+      "html": "https://github.com/RVC-Boss/GPT-SoVITS/blob/main/GPT_SoVITS/text/zh_normalization/README.md"
+    }
+  },
+  {
+    "name": "__init__.py",
+    "path": "GPT_SoVITS/text/zh_normalization/__init__.py",
+    "sha": "46b367a68b074cf02da933f1e2433b86eeffe494",
+    "size": 664,
+    "url": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/contents/GPT_SoVITS/text/zh_normalization/__init__.py?ref=main",
+    "html_url": "https://github.com/RVC-Boss/GPT-SoVITS/blob/main/GPT_SoVITS/text/zh_normalization/__init__.py",
+    "git_url": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/git/blobs/46b367a68b074cf02da933f1e2433b86eeffe494",
+    "download_url": "https://raw.githubusercontent.com/RVC-Boss/GPT-SoVITS/main/GPT_SoVITS/text/zh_normalization/__init__.py",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/contents/GPT_SoVITS/text/zh_normalization/__init__.py?ref=main",
+      "git": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/git/blobs/46b367a68b074cf02da933f1e2433b86eeffe494",
+      "html": "https://github.com/RVC-Boss/GPT-SoVITS/blob/main/GPT_SoVITS/text/zh_normalization/__init__.py"
+    }
+  },
+  {
+    "name": "char_convert.py",
+    "path": "GPT_SoVITS/text/zh_normalization/char_convert.py",
+    "sha": "5b57ed973cecdaf100aeababb2665215739bae2f",
+    "size": 66099,
+    "url": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/contents/GPT_SoVITS/text/zh_normalization/char_convert.py?ref=main",
+    "html_url": "https://github.com/RVC-Boss/GPT-SoVITS/blob/main/GPT_SoVITS/text/zh_normalization/char_convert.py",
+    "git_url": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/git/blobs/5b57ed973cecdaf100aeababb2665215739bae2f",
+    "download_url": "https://raw.githubusercontent.com/RVC-Boss/GPT-SoVITS/main/GPT_SoVITS/text/zh_normalization/char_convert.py",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/contents/GPT_SoVITS/text/zh_normalization/char_convert.py?ref=main",
+      "git": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/git/blobs/5b57ed973cecdaf100aeababb2665215739bae2f",
+      "html": "https://github.com/RVC-Boss/GPT-SoVITS/blob/main/GPT_SoVITS/text/zh_normalization/char_convert.py"
+    }
+  },
+  {
+    "name": "chronology.py",
+    "path": "GPT_SoVITS/text/zh_normalization/chronology.py",
+    "sha": "2a6f66c21de80aba717434849a36065f4b885a12",
+    "size": 3428,
+    "url": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/contents/GPT_SoVITS/text/zh_normalization/chronology.py?ref=main",
+    "html_url": "https://github.com/RVC-Boss/GPT-SoVITS/blob/main/GPT_SoVITS/text/zh_normalization/chronology.py",
+    "git_url": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/git/blobs/2a6f66c21de80aba717434849a36065f4b885a12",
+    "download_url": "https://raw.githubusercontent.com/RVC-Boss/GPT-SoVITS/main/GPT_SoVITS/text/zh_normalization/chronology.py",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/contents/GPT_SoVITS/text/zh_normalization/chronology.py?ref=main",
+      "git": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/git/blobs/2a6f66c21de80aba717434849a36065f4b885a12",
+      "html": "https://github.com/RVC-Boss/GPT-SoVITS/blob/main/GPT_SoVITS/text/zh_normalization/chronology.py"
+    }
+  },
+  {
+    "name": "constants.py",
+    "path": "GPT_SoVITS/text/zh_normalization/constants.py",
+    "sha": "4218a551dc0425e9d0726220e9859708fddedd89",
+    "size": 2329,
+    "url": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/contents/GPT_SoVITS/text/zh_normalization/constants.py?ref=main",
+    "html_url": "https://github.com/RVC-Boss/GPT-SoVITS/blob/main/GPT_SoVITS/text/zh_normalization/constants.py",
+    "git_url": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/git/blobs/4218a551dc0425e9d0726220e9859708fddedd89",
+    "download_url": "https://raw.githubusercontent.com/RVC-Boss/GPT-SoVITS/main/GPT_SoVITS/text/zh_normalization/constants.py",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/contents/GPT_SoVITS/text/zh_normalization/constants.py?ref=main",
+      "git": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/git/blobs/4218a551dc0425e9d0726220e9859708fddedd89",
+      "html": "https://github.com/RVC-Boss/GPT-SoVITS/blob/main/GPT_SoVITS/text/zh_normalization/constants.py"
+    }
+  },
+  {
+    "name": "num.py",
+    "path": "GPT_SoVITS/text/zh_normalization/num.py",
+    "sha": "14d602b05054f8f9ce911d3b937b243734cac566",
+    "size": 9814,
+    "url": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/contents/GPT_SoVITS/text/zh_normalization/num.py?ref=main",
+    "html_url": "https://github.com/RVC-Boss/GPT-SoVITS/blob/main/GPT_SoVITS/text/zh_normalization/num.py",
+    "git_url": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/git/blobs/14d602b05054f8f9ce911d3b937b243734cac566",
+    "download_url": "https://raw.githubusercontent.com/RVC-Boss/GPT-SoVITS/main/GPT_SoVITS/text/zh_normalization/num.py",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/contents/GPT_SoVITS/text/zh_normalization/num.py?ref=main",
+      "git": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/git/blobs/14d602b05054f8f9ce911d3b937b243734cac566",
+      "html": "https://github.com/RVC-Boss/GPT-SoVITS/blob/main/GPT_SoVITS/text/zh_normalization/num.py"
+    }
+  },
+  {
+    "name": "phonecode.py",
+    "path": "GPT_SoVITS/text/zh_normalization/phonecode.py",
+    "sha": "3560ac2ed265580e5f150da191c21acea7390087",
+    "size": 1953,
+    "url": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/contents/GPT_SoVITS/text/zh_normalization/phonecode.py?ref=main",
+    "html_url": "https://github.com/RVC-Boss/GPT-SoVITS/blob/main/GPT_SoVITS/text/zh_normalization/phonecode.py",
+    "git_url": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/git/blobs/3560ac2ed265580e5f150da191c21acea7390087",
+    "download_url": "https://raw.githubusercontent.com/RVC-Boss/GPT-SoVITS/main/GPT_SoVITS/text/zh_normalization/phonecode.py",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/contents/GPT_SoVITS/text/zh_normalization/phonecode.py?ref=main",
+      "git": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/git/blobs/3560ac2ed265580e5f150da191c21acea7390087",
+      "html": "https://github.com/RVC-Boss/GPT-SoVITS/blob/main/GPT_SoVITS/text/zh_normalization/phonecode.py"
+    }
+  },
+  {
+    "name": "quantifier.py",
+    "path": "GPT_SoVITS/text/zh_normalization/quantifier.py",
+    "sha": "1e7f2aab07d8b16fd1d69a93c70100f969a7ae51",
+    "size": 1805,
+    "url": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/contents/GPT_SoVITS/text/zh_normalization/quantifier.py?ref=main",
+    "html_url": "https://github.com/RVC-Boss/GPT-SoVITS/blob/main/GPT_SoVITS/text/zh_normalization/quantifier.py",
+    "git_url": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/git/blobs/1e7f2aab07d8b16fd1d69a93c70100f969a7ae51",
+    "download_url": "https://raw.githubusercontent.com/RVC-Boss/GPT-SoVITS/main/GPT_SoVITS/text/zh_normalization/quantifier.py",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/contents/GPT_SoVITS/text/zh_normalization/quantifier.py?ref=main",
+      "git": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/git/blobs/1e7f2aab07d8b16fd1d69a93c70100f969a7ae51",
+      "html": "https://github.com/RVC-Boss/GPT-SoVITS/blob/main/GPT_SoVITS/text/zh_normalization/quantifier.py"
+    }
+  },
+  {
+    "name": "text_normlization.py",
+    "path": "GPT_SoVITS/text/zh_normalization/text_normlization.py",
+    "sha": "1a6cdd0f7a5d1ebc46c479fc075ae885ee326796",
+    "size": 7663,
+    "url": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/contents/GPT_SoVITS/text/zh_normalization/text_normlization.py?ref=main",
+    "html_url": "https://github.com/RVC-Boss/GPT-SoVITS/blob/main/GPT_SoVITS/text/zh_normalization/text_normlization.py",
+    "git_url": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/git/blobs/1a6cdd0f7a5d1ebc46c479fc075ae885ee326796",
+    "download_url": "https://raw.githubusercontent.com/RVC-Boss/GPT-SoVITS/main/GPT_SoVITS/text/zh_normalization/text_normlization.py",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/contents/GPT_SoVITS/text/zh_normalization/text_normlization.py?ref=main",
+      "git": "https://api.github.com/repos/RVC-Boss/GPT-SoVITS/git/blobs/1a6cdd0f7a5d1ebc46c479fc075ae885ee326796",
+      "html": "https://github.com/RVC-Boss/GPT-SoVITS/blob/main/GPT_SoVITS/text/zh_normalization/text_normlization.py"
+    }
+  }
+]

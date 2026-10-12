@@ -1,0 +1,7 @@
+
+  WebUI dev server 已启动
+  http://localhost:5173
+
+  热重载监控目录: pages/
+  改完模块文件保存，页面会自动重载该模块。
+

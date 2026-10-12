@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>框架测试项目 · 迷你聊天 App</title>
+<style>
+  :root{--bg:#0f172a;--panel:#1e293b;--line:#334155;--fg:#e2e8f0;--muted:#94a3b8;--accent:#60a5fa;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:13px/1.6 ui-monospace,Consolas,Menlo,monospace;
+       display:grid;grid-template-columns:1fr 380px;gap:12px;padding:12px;height:100vh}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;display:flex;flex-direction:column;min-height:0}
+  .hd{padding:8px 12px;border-bottom:1px solid var(--line);color:var(--accent);font-weight:600}
+  #msgs{flex:1;overflow:auto;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+  .m{max-width:88%}
+  .m.user{align-self:flex-end;color:#bfdbfe}
+  .m.ai{align-self:flex-start;color:#e2e8f0}
+  .m .who{font-size:11px;color:var(--muted)}
+  .row{display:flex;gap:8px;padding:8px 12px;border-top:1px solid var(--line)}
+  input{flex:1;background:#0b1220;border:1px solid var(--line);color:var(--fg);border-radius:8px;padding:8px 10px;font:inherit;outline:none}
+  button{background:#1d4ed8;border:none;color:#fff;border-radius:8px;padding:8px 12px;font:inherit;cursor:pointer}
+  button.gray{background:#334155}
+  .ctrls{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px;border-bottom:1px solid var(--line)}
+  .ctrls button{padding:6px 9px;font-size:12px}
+  #log{flex:1;overflow:auto;padding:8px 10px;font-size:11px;color:var(--muted);white-space:pre-wrap}
+  #status{padding:6px 12px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)}
+</style>
+</head>
+<body>
+  <section class="panel">
+    <div class="hd">迷你聊天 App（跑在底层框架上）</div>
+    <div id="msgs"></div>
+    <div class="row">
+      <input id="in" placeholder="输入消息…" autocomplete="off">
+      <button id="send">发送</button>
+    </div>
+    <div id="status">就绪</div>
+  </section>
+
+  <section class="panel">
+    <div class="hd">运行时控制 / 日志</div>
+    <div class="ctrls">
+      <button class="gray" id="unplugModel">卸载 model</button>
+      <button class="gray" id="replugModel">重装 model</button>
+      <button class="gray" id="revokeStorage">吊销 storage 权限</button>
+      <button class="gray" id="grantStorage">恢复 storage 权限</button>
+      <button class="gray" id="fault">故障注入</button>
+      <button class="gray" id="leak">泄漏测试 ×50</button>
+    </div>
+    <div id="log"></div>
+  </section>
+
+<script type="module">
+  import { createApp } from './app.js';
+  import { log } from '../index.js';
+
+  const $ = (s) => document.querySelector(s);
+  const msgs = $('#msgs'), status = $('#status'), logEl = $('#log');
+
+  function bubble(who, text) {
+    const d = document.createElement('div');
+    d.className = 'm ' + (who === '我' ? 'user' : 'ai');
+    d.innerHTML = `<div class="who">${who}</div><div class="t"></div>`;
+    d.querySelector('.t').textContent = text;
+    msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight;
+    return d.querySelector('.t');
+  }
+
+  const { k } = await createApp();
+
+  // 实时日志面板（消费 append-only 事件流）
+  log.on((ev) => {
+    logEl.textContent += `${String(ev.seq).padStart(3, '0')} ${ev.type}\n`;
+    logEl.scrollTop = logEl.scrollHeight;
+  });
+
+  async function send(text) {
+    if (!text) return;
+    bubble('我', text);
+    const t = bubble('AI', '…');
+    const chat = k.container.get('chat');
+    if (!chat) { t.textContent = '(chat 未加载)'; return; }
+    await chat.send(text, (acc) => { t.textContent = acc; });
+  }
+
+  $('#send').onclick = () => { const v = $('#in').value.trim(); $('#in').value = ''; send(v); };
+  $('#in').addEventListener('keydown', (e) => { if (e.key === 'Enter') { const v = $('#in').value.trim(); $('#in').value = ''; send(v); } });
+
+  $('#unplugModel').onclick = async () => { await k.unuse('model'); status.textContent = 'model 已卸载'; };
+  $('#replugModel').onclick = async () => { await k.use('model'); status.textContent = 'model 已重装'; };
+  $('#revokeStorage').onclick = () => { k.permission.revoke('use:storage'); status.textContent = 'storage 权限已吊销'; };
+  $('#grantStorage').onclick = () => { k.permission.grant('use:storage'); status.textContent = 'storage 权限已恢复'; };
+  $('#fault').onclick = () => {
+    // 故障注入：临时定义一个会抛错的插件并加载
+    k.define('boom', { provides: ['boom'], setup() { throw new Error('注入的故障'); } });
+    k.use('boom').then(() => { status.textContent = '故障注入完成（未崩）'; });
+  };
+  $('#leak').onclick = async () => {
+    for (let i = 0; i < 50; i++) { await k.use('metrics'); await k.unuse('metrics'); }
+    status.textContent = '泄漏测试完成';
+  };
+
+  // 暴露给自动化测试
+  window.__app = {
+    k, send, log,
+    probeCount: () => window.__probeCount,
+    emitProbe: () => k.bus.emit('probe', 1),
+    loadedIds: () => [...k.loadedIds],
+    containerNames: () => k.container.names(),
+    logSeqs: () => log.all().map((e) => e.seq),
+    logTypes: () => log.all().map((e) => e.type),
+  };
+  window.__appReady = true;
+</script>
+</body>
+</html>

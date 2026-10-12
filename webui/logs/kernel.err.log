@@ -1,0 +1,7 @@
+INFO:     Started server process [7224]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:10093 (Press CTRL+C to quit)
+2026-10-07 14:08:30.286 ERROR   [-] chat.turn.error  provider=Ollama (本地) model=llama3.1:8b error=BadRequestError retryable=False msg=[Ollama (本地)] 404: {"error":"model 'llama3.1:8b' not found"}
+2026-10-07 14:41:17.208 ERROR   [-] chat.turn.error  provider=Ollama (本地) model=llama3.1:8b error=BadRequestError retryable=False msg=[Ollama (本地)] 404: {"error":"model 'llama3.1:8b' not found"}
+2026-10-07 14:42:24.097 ERROR   [-] chat.turn.error  provider=Ollama (本地) model=llama3.1:8b error=BadRequestError retryable=False msg=[Ollama (本地)] 404: {"error":"model 'llama3.1:8b' not found"}

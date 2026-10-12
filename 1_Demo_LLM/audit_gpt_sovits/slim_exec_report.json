@@ -1,0 +1,45 @@
+{
+ "batches": [
+  {
+   "name": "批1 训练脚本与数据集",
+   "removed": [],
+   "failed": []
+  },
+  {
+   "name": "批2 导出与 ONNX 变体",
+   "removed": [],
+   "failed": []
+  },
+  {
+   "name": "批3 AR 训练侧与 ONNX 变体",
+   "removed": [],
+   "failed": []
+  },
+  {
+   "name": "批4 BigVGAN 冗余",
+   "removed": [],
+   "failed": []
+  },
+  {
+   "name": "批5 残余 + GUI 与其入口",
+   "removed": [],
+   "failed": []
+  },
+  {
+   "name": "批6 tools 数据预处理",
+   "removed": [
+    "tools/uvr5"
+   ],
+   "failed": []
+  },
+  {
+   "name": "批7 旧API 与 ASR",
+   "removed": [
+    "api.py",
+    "tools/asr"
+   ],
+   "failed": []
+  }
+ ],
+ "restored_needed": []
+}

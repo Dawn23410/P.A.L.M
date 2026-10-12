@@ -1,0 +1,65 @@
+{
+ "batches": [
+  {
+   "name": "批1 训练脚本与数据集",
+   "removed": [],
+   "failed": []
+  },
+  {
+   "name": "批2 导出与 ONNX 变体",
+   "removed": [],
+   "failed": []
+  },
+  {
+   "name": "批3 AR 训练侧与 ONNX 变体",
+   "removed": [
+    "GPT_SoVITS/AR/utils/initialize.py"
+   ],
+   "failed": []
+  },
+  {
+   "name": "批4 BigVGAN 冗余",
+   "removed": [
+    "GPT_SoVITS/BigVGAN/train.py",
+    "GPT_SoVITS/BigVGAN/discriminators.py",
+    "GPT_SoVITS/BigVGAN/loss.py",
+    "GPT_SoVITS/BigVGAN/inference.py",
+    "GPT_SoVITS/BigVGAN/inference_e2e.py",
+    "GPT_SoVITS/BigVGAN/tests",
+    "GPT_SoVITS/BigVGAN/alias_free_activation/cuda/load.py"
+   ],
+   "failed": []
+  },
+  {
+   "name": "批5 GUI 与入口",
+   "removed": [
+    "webui.py",
+    "GPT_SoVITS/inference_webui_fast.py",
+    "GPT_SoVITS/inference_gui.py"
+   ],
+   "failed": []
+  },
+  {
+   "name": "批6 tools 数据预处理",
+   "removed": [
+    "tools/uvr5",
+    "tools/slicer2.py",
+    "tools/slice_audio.py",
+    "tools/cmd-denoise.py",
+    "tools/subfix_webui.py",
+    "tools/my_infer.py",
+    "tools/my_utils.py",
+    "tools/i18n/scan_i18n.py"
+   ],
+   "failed": []
+  },
+  {
+   "name": "批7 ASR",
+   "removed": [
+    "tools/asr"
+   ],
+   "failed": []
+  }
+ ],
+ "restored_needed": []
+}

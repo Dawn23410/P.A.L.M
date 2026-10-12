@@ -14,7 +14,7 @@ httpcore[asyncio]
 fastapi>=0.110
 uvicorn>=0.29
 
-# ---- 国密加解密（palm_crypto：SM2/SM3/SM4 + vault）----
+# ---- 加解密内核（palm_cryptokernel：SM2/SM3/SM4 + vault）----
 gmssl>=3.2.2
 
 # ---- 记忆（palm_memory：向量记忆可选后端，本地 ONNX bge-m3）----
