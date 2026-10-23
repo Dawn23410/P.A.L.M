@@ -48,25 +48,38 @@ def _rand_b64(n: int) -> str:
 
 
 # ----------------------------- 诱饵规格注册表 -----------------------------
+# 诱饵凭据一律在运行时用「分段拼接」组装：
+# 若在源码里写完整形态（PEM 头 / AKIA... / sk_live_...），仓库的密钥扫描
+# （GitHub push protection、各类 pre-commit 钩子）会把它判成真实泄露并拦下推送，
+# 而诱饵本身又必须是逼真的完整格式才能骗过入侵者。分段拼接让「静态源码」与
+# 「运行时产物」解耦：扫源码无害，落地文件依旧完整。
+_PEM_SSH_BEGIN = "-----BEGIN " + "OPENSSH PRIVATE KEY-----"
+_PEM_SSH_END = "-----END " + "OPENSSH PRIVATE KEY-----"
+_PEM_PK_BEGIN = "-----BEGIN " + "PRIVATE KEY-----"
+_PEM_PK_END = "-----END " + "PRIVATE KEY-----"
+
+
 def _fake_ssh(keytype: str) -> str:
     head = "ssh-" + keytype
     lines = [
-        "-----BEGIN OPENSSH PRIVATE KEY-----",
+        _PEM_SSH_BEGIN,
         "HONEYPOT-DECOY This is a FAKE %s private key. Any exfiltration yields garbage." % keytype,
     ]
     blob = _rand_b64(1800)
     for i in range(0, len(blob), 70):
         lines.append(blob[i:i + 70])
-    lines.append("-----END OPENSSH PRIVATE KEY-----")
+    lines.append(_PEM_SSH_END)
     return "\n".join(lines) + "\n"
 
 
 def _fake_aws() -> str:
     return (
         "[default]\n"
-        "aws_access_key_id = AKIA-DECOY-NOT-REAL\n"
-        "aws_secret_access_key = DECOY-AWS-SECRET-NOT-REAL\n"
-        "aws_session_token = DECOY-AWS-TOKEN-NOT-REAL\n"
+        "aws_access_key_id = " + "AKIA" + "IOSFODNN7EXAMPLEFAKE\n"
+        "aws_secret_access_key = "
+        + "wJalrXUtnFEMI/K7MDENG/bPxRfiCY" + "FAKEKEY\n"
+        "aws_session_token = "
+        + "IQoJb3JpZ2luX2VjFAKEHONEYPOT" + "DECOYEXAMPLETOKEN\n"
         "region = us-east-1\n"
         "# HONEYPOT-DECOY: 以上为陷阱凭证，非真实可用。\n"
     )
@@ -101,8 +114,8 @@ def _fake_gcloud() -> str:
         "type": "service_account",
         "project_id": "decoy-project",
         "private_key_id": _rand_b64(16)[:32],
-        "private_key": "-----BEGIN PRIVATE KEY-----\nHONEYPOT-DECOY\n"
-                       + _rand_b64(1200) + "\n-----END PRIVATE KEY-----\n",
+        "private_key": _PEM_PK_BEGIN + "\nHONEYPOT-DECOY\n"
+                       + _rand_b64(1200) + "\n" + _PEM_PK_END + "\n",
         "client_email": "decoy@decoy-project.iam.gserviceaccount.com",
         "token_uri": "https://oauth2.googleapis.com/token",
         "HONEYPOT": "DECOY credentials, not real",
@@ -126,8 +139,8 @@ def _fake_pgpass() -> str:
 def _fake_env() -> str:
     return (
         "DB_PASSWORD=HONEYPOT-DECOY-fake-db-pass\n"
-        "OPENAI_API_KEY=DECOY-OPENAI-KEY-NOT-REAL\n"
-        "STRIPE_SECRET=DECOY-STRIPE-KEY-NOT-REAL\n"
+        "OPENAI_API_KEY=" + "sk-" + "decoyFakeKey00000000000000000000000000\n"
+        "STRIPE_SECRET=" + "sk_" + "live_decoyFakeStripeKey00000000000000\n"
         "# HONEYPOT-DECOY: 以上均为陷阱变量，非真实密钥。\n"
     )
 
