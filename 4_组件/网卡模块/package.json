@@ -1,0 +1,38 @@
+{
+  "name": "@palm-ai/netcard",
+  "version": "0.1.0",
+  "description": "P.A.L.M 网卡模块：fail-closed 门面 + 安全管道（SSRF/DLP/注入扫描/配额）+ 网卡砖。经构建为标准 npm 包。",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --experimental-strip-types tests/netguard.test.ts",
+    "prepack": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "palm",
+    "netcard",
+    "netguard",
+    "ssrf",
+    "dlp",
+    "fail-closed"
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,4555 @@
+{
+  "project": {
+    "score": 96.4,
+    "grade": "A",
+    "stars": "★★★★★",
+    "parts": {
+      "complexity": 99.0,
+      "unit_size": 100.0,
+      "duplication": 97.2,
+      "coupling": 100.0,
+      "readability": 81.0,
+      "efficiency": 99.5,
+      "dead_code": 99.7,
+      "naming": 100.0,
+      "clones": 91.4
+    },
+    "raw": {
+      "complexity": "最大CC 10 / 最大认知 9 / 最大嵌套 3",
+      "unit_size": "函数 255 个，超长 0",
+      "duplication": "0.57% (阈值 2.0%)",
+      "coupling": "平均扇出 3.6",
+      "readability": "注释占比 2.8%",
+      "efficiency": "循环内风险 1 处",
+      "dead_code": "未用 import 1 · 私有未用 0",
+      "naming": "违规 0 处 · 函数风格 snake 100% / camel 0% / other 0%",
+      "clones": "10 组 / 27 函数 / 23 对边"
+    },
+    "raw_thresholds": {
+      "func_loc": 50,
+      "func_cc": 10,
+      "func_cognitive": 15,
+      "func_params": 4,
+      "max_nesting": 3,
+      "file_loc": 500,
+      "duplication_pct": 2.0,
+      "comment_min": 0.08,
+      "comment_max": 0.35,
+      "line_width": 120,
+      "fanout": 15,
+      "clone_min_lines": 6,
+      "clone_min_tokens": 8,
+      "clone_sim": 0.8
+    },
+    "summary": {
+      "root": "palm_cryptokernel",
+      "profile": "default",
+      "dims": "all",
+      "files": 32,
+      "code_lines": 2425,
+      "langs": {
+        "python": 32
+      },
+      "func_count": 255,
+      "over_loc": 0,
+      "over_cc": 0,
+      "over_cognitive": 0,
+      "over_params": 18,
+      "duplication_pct": 0.57,
+      "efficiency_hits": 1,
+      "avg_mi": 36.3,
+      "unused_imports": 1,
+      "dead_private_total": 0,
+      "naming_violations": 0,
+      "clone_groups": 10,
+      "clone_funcs": 27,
+      "clone_edges": 23,
+      "excluded_data_like": 0,
+      "excluded_list": []
+    }
+  },
+  "files": [
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\abcs.py",
+        "lang": "python",
+        "loc": 194,
+        "code_lines": 133,
+        "comment_lines": 6,
+        "blank_lines": 55,
+        "funcs": [
+          {
+            "name": "__repr__",
+            "lineno": 45,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "spec",
+            "lineno": 49,
+            "loc": 9,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "digest",
+            "lineno": 70,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "hexdigest",
+            "lineno": 73,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "compute",
+            "lineno": 87,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 4,
+            "nesting": 0
+          },
+          {
+            "name": "verify",
+            "lineno": 91,
+            "loc": 5,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 5,
+            "nesting": 0
+          },
+          {
+            "name": "derive",
+            "lineno": 104,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 6,
+            "nesting": 0
+          },
+          {
+            "name": "memory_hard",
+            "lineno": 109,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "key_size",
+            "lineno": 122,
+            "loc": 3,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "encrypt",
+            "lineno": 133,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 4,
+            "nesting": 0
+          },
+          {
+            "name": "decrypt",
+            "lineno": 137,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 4,
+            "nesting": 0
+          },
+          {
+            "name": "seal",
+            "lineno": 148,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 5,
+            "nesting": 0
+          },
+          {
+            "name": "open",
+            "lineno": 153,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 5,
+            "nesting": 0
+          },
+          {
+            "name": "generate",
+            "lineno": 164,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "encrypt",
+            "lineno": 178,
+            "loc": 1,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "decrypt",
+            "lineno": 181,
+            "loc": 1,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          }
+        ],
+        "fanout": 4,
+        "halstead_volume": 4415.644090359185,
+        "mi": 28.00517098176516,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "data",
+          "info"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 15,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 24,
+        "clone_hits": 0,
+        "clone_partners": [],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 2,
+        "max_cognitive": 1,
+        "max_nesting": 0
+      },
+      "result": {
+        "parts": {
+          "complexity": 96.2,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 81.7,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 100.0
+        },
+        "score": 96.3,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\backends.py",
+        "lang": "python",
+        "loc": 104,
+        "code_lines": 75,
+        "comment_lines": 2,
+        "blank_lines": 27,
+        "funcs": [
+          {
+            "name": "_pkcs7_pad",
+            "lineno": 20,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "_pkcs7_unpad",
+            "lineno": 25,
+            "loc": 7,
+            "cc": 5,
+            "cognitive": 2,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "_detect",
+            "lineno": 34,
+            "loc": 11,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 0,
+            "nesting": 1
+          },
+          {
+            "name": "backend_name",
+            "lineno": 50,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "is_c_backend",
+            "lineno": 54,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "hmac_sm3",
+            "lineno": 97,
+            "loc": 8,
+            "cc": 4,
+            "cognitive": 3,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "sm4_cbc_encrypt",
+            "lineno": 65,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "sm4_cbc_decrypt",
+            "lineno": 69,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "sm3",
+            "lineno": 73,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "sm4_cbc_encrypt",
+            "lineno": 83,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "sm4_cbc_decrypt",
+            "lineno": 88,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "sm3",
+            "lineno": 93,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          }
+        ],
+        "fanout": 3,
+        "halstead_volume": 3846.917077974749,
+        "mi": 33.7703023509905,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "a",
+          "c",
+          "d",
+          "data",
+          "h"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 12,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 12,
+        "clone_hits": 1,
+        "clone_partners": [
+          "cryptodome_provider.py:60 (_pkcs7_unpad, dice 1.00)"
+        ],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 5,
+        "max_cognitive": 3,
+        "max_nesting": 1
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 76.7,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 93.0
+        },
+        "score": 96.5,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\capabilities.py",
+        "lang": "python",
+        "loc": 128,
+        "code_lines": 107,
+        "comment_lines": 0,
+        "blank_lines": 21,
+        "funcs": [
+          {
+            "name": "families",
+            "lineno": 23,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "available",
+            "lineno": 28,
+            "loc": 20,
+            "cc": 6,
+            "cognitive": 6,
+            "params": 1,
+            "nesting": 2
+          },
+          {
+            "name": "_lib_present",
+            "lineno": 50,
+            "loc": 9,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "absent",
+            "lineno": 61,
+            "loc": 13,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 0,
+            "nesting": 1
+          },
+          {
+            "name": "providers_status",
+            "lineno": 76,
+            "loc": 22,
+            "cc": 4,
+            "cognitive": 6,
+            "params": 0,
+            "nesting": 2
+          },
+          {
+            "name": "report",
+            "lineno": 100,
+            "loc": 11,
+            "cc": 4,
+            "cognitive": 3,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "capability",
+            "lineno": 113,
+            "loc": 10,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 0,
+            "nesting": 0
+          }
+        ],
+        "fanout": 4,
+        "halstead_volume": 5123.614492264802,
+        "mi": 29.295439325044196,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "a",
+          "s"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 7,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 7,
+        "clone_hits": 0,
+        "clone_partners": [],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 6,
+        "max_cognitive": 6,
+        "max_nesting": 2
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 76.7,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 100.0
+        },
+        "score": 96.5,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\cipher.py",
+        "lang": "python",
+        "loc": 115,
+        "code_lines": 94,
+        "comment_lines": 5,
+        "blank_lines": 16,
+        "funcs": [
+          {
+            "name": "__init__",
+            "lineno": 40,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "from_key",
+            "lineno": 46,
+            "loc": 4,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 3,
+            "nesting": 1
+          },
+          {
+            "name": "from_env",
+            "lineno": 52,
+            "loc": 11,
+            "cc": 4,
+            "cognitive": 5,
+            "params": 3,
+            "nesting": 1
+          },
+          {
+            "name": "from_key_file",
+            "lineno": 65,
+            "loc": 10,
+            "cc": 3,
+            "cognitive": 4,
+            "params": 3,
+            "nesting": 1
+          },
+          {
+            "name": "generate",
+            "lineno": 77,
+            "loc": 15,
+            "cc": 4,
+            "cognitive": 3,
+            "params": 4,
+            "nesting": 2
+          },
+          {
+            "name": "encrypt_text",
+            "lineno": 94,
+            "loc": 6,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "decrypt_text",
+            "lineno": 101,
+            "loc": 10,
+            "cc": 4,
+            "cognitive": 3,
+            "params": 2,
+            "nesting": 2
+          },
+          {
+            "name": "content_hash",
+            "lineno": 113,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          }
+        ],
+        "fanout": 5,
+        "halstead_volume": 3587.451577432856,
+        "mi": 31.71453113611758,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "p"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 7,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 8,
+        "clone_hits": 2,
+        "clone_partners": [
+          "cipher.py:65 (from_key_file, dice 0.81)",
+          "cipher.py:52 (from_env, dice 0.81)"
+        ],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 4,
+        "max_cognitive": 5,
+        "max_nesting": 2
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 85.3,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 81.0
+        },
+        "score": 97.8,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\errors.py",
+        "lang": "python",
+        "loc": 33,
+        "code_lines": 20,
+        "comment_lines": 0,
+        "blank_lines": 13,
+        "funcs": [
+          {
+            "name": "__init__",
+            "lineno": 17,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          }
+        ],
+        "fanout": 1,
+        "halstead_volume": 370.0,
+        "mi": 53.502293297723014,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 0,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 5,
+        "clone_hits": 0,
+        "clone_partners": [],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 1,
+        "max_cognitive": 0,
+        "max_nesting": 0
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 87.0,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 100.0
+        },
+        "score": 98.0,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\registry.py",
+        "lang": "python",
+        "loc": 110,
+        "code_lines": 84,
+        "comment_lines": 5,
+        "blank_lines": 21,
+        "funcs": [
+          {
+            "name": "__init__",
+            "lineno": 30,
+            "loc": 5,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "register",
+            "lineno": 37,
+            "loc": 5,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "note_failure",
+            "lineno": 43,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "load",
+            "lineno": 48,
+            "loc": 10,
+            "cc": 4,
+            "cognitive": 2,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "get",
+            "lineno": 60,
+            "loc": 7,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 3,
+            "nesting": 1
+          },
+          {
+            "name": "find",
+            "lineno": 68,
+            "loc": 8,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "names",
+            "lineno": 77,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "families",
+            "lineno": 82,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "all_of",
+            "lineno": 87,
+            "loc": 7,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "failures",
+            "lineno": 95,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "provider_of",
+            "lineno": 100,
+            "loc": 6,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 3,
+            "nesting": 1
+          }
+        ],
+        "fanout": 4,
+        "halstead_volume": 3922.3776250103447,
+        "mi": 32.64166499161083,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 10,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 11,
+        "clone_hits": 0,
+        "clone_partners": [],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 4,
+        "max_cognitive": 2,
+        "max_nesting": 1
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 87.8,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 100.0
+        },
+        "score": 98.2,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\sm2.py",
+        "lang": "python",
+        "loc": 66,
+        "code_lines": 51,
+        "comment_lines": 0,
+        "blank_lines": 15,
+        "funcs": [
+          {
+            "name": "__init__",
+            "lineno": 19,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "generate",
+            "lineno": 24,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "from_private",
+            "lineno": 29,
+            "loc": 5,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "private_key",
+            "lineno": 36,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "public_key",
+            "lineno": 40,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "_obj",
+            "lineno": 43,
+            "loc": 14,
+            "cc": 2,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "encrypt",
+            "lineno": 58,
+            "loc": 4,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "decrypt",
+            "lineno": 63,
+            "loc": 4,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 1
+          }
+        ],
+        "fanout": 3,
+        "halstead_volume": 1661.8773556613426,
+        "mi": 40.01550772902379,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "data",
+          "obj",
+          "s"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 7,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 8,
+        "clone_hits": 0,
+        "clone_partners": [],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 2,
+        "max_cognitive": 1,
+        "max_nesting": 1
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 78.4,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 100.0
+        },
+        "score": 96.8,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\sm3.py",
+        "lang": "python",
+        "loc": 27,
+        "code_lines": 17,
+        "comment_lines": 0,
+        "blank_lines": 10,
+        "funcs": [
+          {
+            "name": "_to_bytes",
+            "lineno": 16,
+            "loc": 2,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "sm3_hash",
+            "lineno": 20,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "sm3_int",
+            "lineno": 25,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          }
+        ],
+        "fanout": 3,
+        "halstead_volume": 524.7927513443585,
+        "mi": 53.934303712288255,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "data"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 3,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 3,
+        "clone_hits": 0,
+        "clone_partners": [],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 2,
+        "max_cognitive": 1,
+        "max_nesting": 0
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 85.6,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 100.0
+        },
+        "score": 97.8,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\sm4.py",
+        "lang": "python",
+        "loc": 62,
+        "code_lines": 45,
+        "comment_lines": 4,
+        "blank_lines": 13,
+        "funcs": [
+          {
+            "name": "__init__",
+            "lineno": 23,
+            "loc": 9,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "from_hex",
+            "lineno": 34,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "random_key",
+            "lineno": 38,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "encrypt_bytes",
+            "lineno": 42,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "decrypt_bytes",
+            "lineno": 47,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "encrypt_text",
+            "lineno": 53,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "decrypt_text",
+            "lineno": 56,
+            "loc": 7,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 1
+          }
+        ],
+        "fanout": 4,
+        "halstead_volume": 1430.5537676938297,
+        "mi": 41.669067548645295,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "iv"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 6,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 7,
+        "clone_hits": 0,
+        "clone_partners": [],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 2,
+        "max_cognitive": 1,
+        "max_nesting": 1
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 91.5,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 100.0
+        },
+        "score": 98.7,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\suite.py",
+        "lang": "python",
+        "loc": 118,
+        "code_lines": 89,
+        "comment_lines": 4,
+        "blank_lines": 25,
+        "funcs": [
+          {
+            "name": "get",
+            "lineno": 42,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "names",
+            "lineno": 46,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "families",
+            "lineno": 50,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "labels",
+            "lineno": 54,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "capabilities",
+            "lineno": 58,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "gaps",
+            "lineno": 62,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "recommended",
+            "lineno": 66,
+            "loc": 10,
+            "cc": 4,
+            "cognitive": 4,
+            "params": 2,
+            "nesting": 2
+          },
+          {
+            "name": "describe",
+            "lineno": 77,
+            "loc": 7,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "hashing",
+            "lineno": 86,
+            "loc": 2,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "mac",
+            "lineno": 89,
+            "loc": 2,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "kdf",
+            "lineno": 92,
+            "loc": 2,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "cipher",
+            "lineno": 95,
+            "loc": 2,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "aead",
+            "lineno": 98,
+            "loc": 2,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "pubkey",
+            "lineno": 101,
+            "loc": 2,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 0
+          }
+        ],
+        "fanout": 3,
+        "halstead_volume": 4169.201544062586,
+        "mi": 31.89784212335433,
+        "dup_lines": 6,
+        "long_lines": 0,
+        "vague_names": [
+          "a"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 14,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 15,
+        "clone_hits": 0,
+        "clone_partners": [],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 4,
+        "max_cognitive": 4,
+        "max_nesting": 2
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 62.1,
+          "coupling": 100.0,
+          "readability": 84.4,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 100.0
+        },
+        "score": 92.0,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\_private_fs.py",
+        "lang": "python",
+        "loc": 227,
+        "code_lines": 174,
+        "comment_lines": 4,
+        "blank_lines": 49,
+        "funcs": [
+          {
+            "name": "_posix_chmod",
+            "lineno": 45,
+            "loc": 6,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "_windows_acl",
+            "lineno": 53,
+            "loc": 19,
+            "cc": 5,
+            "cognitive": 4,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "restrict",
+            "lineno": 74,
+            "loc": 11,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 3,
+            "nesting": 1
+          },
+          {
+            "name": "restrict_dir",
+            "lineno": 87,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "restrict_file",
+            "lineno": 92,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "restrict_if_exists",
+            "lineno": 97,
+            "loc": 5,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "_remember_dir",
+            "lineno": 104,
+            "loc": 4,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "_remember_file",
+            "lineno": 110,
+            "loc": 6,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "_file_id",
+            "lineno": 118,
+            "loc": 7,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "harden_dir_once",
+            "lineno": 127,
+            "loc": 14,
+            "cc": 4,
+            "cognitive": 2,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "harden_file_once",
+            "lineno": 143,
+            "loc": 13,
+            "cc": 6,
+            "cognitive": 3,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "ensure_dir",
+            "lineno": 158,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "_open_for_write",
+            "lineno": 164,
+            "loc": 7,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "_protect_after_write",
+            "lineno": 173,
+            "loc": 18,
+            "cc": 8,
+            "cognitive": 4,
+            "params": 3,
+            "nesting": 1
+          },
+          {
+            "name": "write_private_bytes",
+            "lineno": 193,
+            "loc": 11,
+            "cc": 3,
+            "cognitive": 1,
+            "params": 3,
+            "nesting": 1
+          },
+          {
+            "name": "write_private_text",
+            "lineno": 206,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "harden_cache_stats",
+            "lineno": 211,
+            "loc": 4,
+            "cc": 2,
+            "cognitive": 0,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "reset_harden_cache",
+            "lineno": 217,
+            "loc": 5,
+            "cc": 2,
+            "cognitive": 0,
+            "params": 0,
+            "nesting": 0
+          }
+        ],
+        "fanout": 4,
+        "halstead_volume": 7398.471701059,
+        "mi": 23.65933676183997,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "data",
+          "fd",
+          "handle",
+          "ok",
+          "st"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 18,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 18,
+        "clone_hits": 3,
+        "clone_partners": [
+          "_private_fs.py:143 (harden_file_once, dice 0.81)",
+          "_private_fs.py:127 (harden_dir_once, dice 0.81)",
+          "_private_fs.py:173 (_protect_after_write, dice 0.81)",
+          "_private_fs.py:143 (harden_file_once, dice 0.81)"
+        ],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 8,
+        "max_cognitive": 4,
+        "max_nesting": 1
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 73.3,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 82.0
+        },
+        "score": 96.0,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\__init__.py",
+        "lang": "python",
+        "loc": 109,
+        "code_lines": 90,
+        "comment_lines": 5,
+        "blank_lines": 14,
+        "funcs": [],
+        "fanout": 2,
+        "halstead_volume": 824.988129902257,
+        "mi": 36.81471611101368,
+        "dup_lines": 6,
+        "long_lines": 0,
+        "vague_names": [],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 0,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 0,
+        "clone_hits": 0,
+        "clone_partners": [],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 0,
+        "max_cognitive": 0,
+        "max_nesting": 0
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 62.7,
+          "coupling": 100.0,
+          "readability": 88.6,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 100.0
+        },
+        "score": 92.7,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\families\\aead.py",
+        "lang": "python",
+        "loc": 100,
+        "code_lines": 73,
+        "comment_lines": 0,
+        "blank_lines": 27,
+        "funcs": [
+          {
+            "name": "names",
+            "lineno": 17,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "nonce_size",
+            "lineno": 22,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "key_size",
+            "lineno": 27,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "tag_size",
+            "lineno": 32,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "generate_key",
+            "lineno": 37,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "new_nonce_for",
+            "lineno": 41,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "seal",
+            "lineno": 46,
+            "loc": 8,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 5,
+            "nesting": 0
+          },
+          {
+            "name": "open",
+            "lineno": 56,
+            "loc": 8,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 5,
+            "nesting": 0
+          },
+          {
+            "name": "seal_packed",
+            "lineno": 66,
+            "loc": 6,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 4,
+            "nesting": 0
+          },
+          {
+            "name": "open_packed",
+            "lineno": 74,
+            "loc": 10,
+            "cc": 3,
+            "cognitive": 1,
+            "params": 4,
+            "nesting": 1
+          },
+          {
+            "name": "recommended",
+            "lineno": 86,
+            "loc": 10,
+            "cc": 4,
+            "cognitive": 4,
+            "params": 0,
+            "nesting": 2
+          }
+        ],
+        "fanout": 2,
+        "halstead_volume": 3883.3515490274103,
+        "mi": 34.02622895987328,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 11,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 11,
+        "clone_hits": 3,
+        "clone_partners": [
+          "aead.py:56 (open, dice 0.98)",
+          "aead.py:46 (seal, dice 0.98)",
+          "cipher.py:45 (encrypt, dice 0.98)",
+          "cipher.py:54 (decrypt, dice 0.96)",
+          "cipher.py:45 (encrypt, dice 0.96)",
+          "cipher.py:54 (decrypt, dice 0.98)",
+          "cipher.py:73 (decrypt_packed, dice 0.89)"
+        ],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 4,
+        "max_cognitive": 4,
+        "max_nesting": 2
+      },
+      "result": {
+        "parts": {
+          "complexity": 97.3,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 81.1,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 69.6
+        },
+        "score": 96.5,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\families\\cipher.py",
+        "lang": "python",
+        "loc": 92,
+        "code_lines": 66,
+        "comment_lines": 0,
+        "blank_lines": 26,
+        "funcs": [
+          {
+            "name": "names",
+            "lineno": 18,
+            "loc": 6,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "nonce_size",
+            "lineno": 26,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "key_size",
+            "lineno": 31,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "generate_key",
+            "lineno": 36,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "new_iv",
+            "lineno": 40,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "encrypt",
+            "lineno": 45,
+            "loc": 7,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 4,
+            "nesting": 0
+          },
+          {
+            "name": "decrypt",
+            "lineno": 54,
+            "loc": 8,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 4,
+            "nesting": 0
+          },
+          {
+            "name": "encrypt_packed",
+            "lineno": 64,
+            "loc": 7,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "decrypt_packed",
+            "lineno": 73,
+            "loc": 9,
+            "cc": 3,
+            "cognitive": 1,
+            "params": 3,
+            "nesting": 1
+          },
+          {
+            "name": "recommended",
+            "lineno": 84,
+            "loc": 4,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 0,
+            "nesting": 0
+          }
+        ],
+        "fanout": 3,
+        "halstead_volume": 3700.356250009759,
+        "mi": 35.09499088578737,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "iv"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 10,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 10,
+        "clone_hits": 5,
+        "clone_partners": [
+          "aead.py:46 (seal, dice 0.98)",
+          "aead.py:46 (seal, dice 0.96)",
+          "aead.py:56 (open, dice 0.96)",
+          "aead.py:56 (open, dice 0.98)",
+          "aead.py:74 (open_packed, dice 0.89)",
+          "cipher.py:54 (decrypt, dice 0.98)",
+          "cipher.py:45 (encrypt, dice 0.98)",
+          "mac.py:35 (verify, dice 0.83)",
+          "hash.py:17 (names, dice 1.00)",
+          "mac.py:17 (names, dice 1.00)",
+          "pubkey.py:18 (names, dice 1.00)"
+        ],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 3,
+        "max_cognitive": 2,
+        "max_nesting": 1
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 79.9,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 50.0
+        },
+        "score": 97.0,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\families\\envelope.py",
+        "lang": "python",
+        "loc": 147,
+        "code_lines": 115,
+        "comment_lines": 0,
+        "blank_lines": 32,
+        "funcs": [
+          {
+            "name": "generate",
+            "lineno": 39,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "_pick",
+            "lineno": 44,
+            "loc": 4,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "seal",
+            "lineno": 50,
+            "loc": 28,
+            "cc": 4,
+            "cognitive": 2,
+            "params": 5,
+            "nesting": 1
+          },
+          {
+            "name": "open",
+            "lineno": 80,
+            "loc": 10,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "peek",
+            "lineno": 92,
+            "loc": 6,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "_max_plaintext",
+            "lineno": 100,
+            "loc": 4,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "_check_short",
+            "lineno": 106,
+            "loc": 4,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "_parse",
+            "lineno": 112,
+            "loc": 25,
+            "cc": 8,
+            "cognitive": 6,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "recommend_pair",
+            "lineno": 139,
+            "loc": 5,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          }
+        ],
+        "fanout": 4,
+        "halstead_volume": 6564.7767250032275,
+        "mi": 27.99100214137502,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "data",
+          "pk"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 9,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 9,
+        "clone_hits": 0,
+        "clone_partners": [],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 8,
+        "max_cognitive": 6,
+        "max_nesting": 1
+      },
+      "result": {
+        "parts": {
+          "complexity": 98.3,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 76.3,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 100.0
+        },
+        "score": 96.0,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\families\\hash.py",
+        "lang": "python",
+        "loc": 72,
+        "code_lines": 52,
+        "comment_lines": 0,
+        "blank_lines": 20,
+        "funcs": [
+          {
+            "name": "names",
+            "lineno": 17,
+            "loc": 10,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "digest",
+            "lineno": 29,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "hexdigest",
+            "lineno": 34,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "fingerprint",
+            "lineno": 39,
+            "loc": 10,
+            "cc": 3,
+            "cognitive": 1,
+            "params": 3,
+            "nesting": 1
+          },
+          {
+            "name": "matches",
+            "lineno": 51,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "digest_size",
+            "lineno": 56,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "recommended",
+            "lineno": 61,
+            "loc": 8,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 0,
+            "nesting": 1
+          }
+        ],
+        "fanout": 3,
+        "halstead_volume": 2184.1578450927186,
+        "mi": 38.935663007059674,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "data"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 7,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 7,
+        "clone_hits": 1,
+        "clone_partners": [
+          "cipher.py:18 (names, dice 1.00)",
+          "mac.py:17 (names, dice 1.00)",
+          "pubkey.py:18 (names, dice 1.00)"
+        ],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 3,
+        "max_cognitive": 2,
+        "max_nesting": 1
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 81.1,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 85.4
+        },
+        "score": 97.2,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\families\\kdf.py",
+        "lang": "python",
+        "loc": 71,
+        "code_lines": 53,
+        "comment_lines": 0,
+        "blank_lines": 18,
+        "funcs": [
+          {
+            "name": "names",
+            "lineno": 21,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "derive",
+            "lineno": 26,
+            "loc": 11,
+            "cc": 3,
+            "cognitive": 0,
+            "params": 6,
+            "nesting": 0
+          },
+          {
+            "name": "is_memory_hard",
+            "lineno": 39,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "recommends_passwords",
+            "lineno": 44,
+            "loc": 4,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "recommends_expansion",
+            "lineno": 50,
+            "loc": 4,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "recommended",
+            "lineno": 56,
+            "loc": 11,
+            "cc": 4,
+            "cognitive": 3,
+            "params": 1,
+            "nesting": 1
+          }
+        ],
+        "fanout": 3,
+        "halstead_volume": 2245.1891508685503,
+        "mi": 38.62976807156842,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "info"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 6,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 6,
+        "clone_hits": 1,
+        "clone_partners": [
+          "mac.py:35 (verify, dice 0.81)"
+        ],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 4,
+        "max_cognitive": 3,
+        "max_nesting": 1
+      },
+      "result": {
+        "parts": {
+          "complexity": 97.5,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 81.0,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 88.0
+        },
+        "score": 96.5,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\families\\mac.py",
+        "lang": "python",
+        "loc": 67,
+        "code_lines": 47,
+        "comment_lines": 0,
+        "blank_lines": 20,
+        "funcs": [
+          {
+            "name": "names",
+            "lineno": 17,
+            "loc": 6,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "compute",
+            "lineno": 25,
+            "loc": 8,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 4,
+            "nesting": 1
+          },
+          {
+            "name": "verify",
+            "lineno": 35,
+            "loc": 7,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 5,
+            "nesting": 0
+          },
+          {
+            "name": "tag_size",
+            "lineno": 44,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "nonce_size",
+            "lineno": 49,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "generate_key",
+            "lineno": 54,
+            "loc": 4,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "recommended",
+            "lineno": 60,
+            "loc": 4,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 0,
+            "nesting": 0
+          }
+        ],
+        "fanout": 3,
+        "halstead_volume": 2609.720572679458,
+        "mi": 39.31366073159738,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "data"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 7,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 7,
+        "clone_hits": 3,
+        "clone_partners": [
+          "cipher.py:64 (encrypt_packed, dice 0.83)",
+          "kdf.py:26 (derive, dice 0.81)",
+          "mac.py:35 (verify, dice 0.90)",
+          "mac.py:25 (compute, dice 0.90)",
+          "cipher.py:18 (names, dice 1.00)",
+          "hash.py:17 (names, dice 1.00)",
+          "pubkey.py:18 (names, dice 1.00)"
+        ],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 3,
+        "max_cognitive": 2,
+        "max_nesting": 1
+      },
+      "result": {
+        "parts": {
+          "complexity": 97.9,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 81.2,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 60.3
+        },
+        "score": 96.6,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\families\\pubkey.py",
+        "lang": "python",
+        "loc": 65,
+        "code_lines": 48,
+        "comment_lines": 0,
+        "blank_lines": 17,
+        "funcs": [
+          {
+            "name": "names",
+            "lineno": 18,
+            "loc": 6,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "generate",
+            "lineno": 26,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "encrypt",
+            "lineno": 31,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "decrypt",
+            "lineno": 37,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "max_plaintext",
+            "lineno": 43,
+            "loc": 7,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "recommended",
+            "lineno": 52,
+            "loc": 10,
+            "cc": 4,
+            "cognitive": 3,
+            "params": 1,
+            "nesting": 1
+          }
+        ],
+        "fanout": 2,
+        "halstead_volume": 2189.747318718044,
+        "mi": 39.66697552813597,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 6,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 6,
+        "clone_hits": 1,
+        "clone_partners": [
+          "cipher.py:18 (names, dice 1.00)",
+          "hash.py:17 (names, dice 1.00)",
+          "mac.py:17 (names, dice 1.00)"
+        ],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 4,
+        "max_cognitive": 3,
+        "max_nesting": 1
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 82.8,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 84.0
+        },
+        "score": 97.4,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\families\\_util.py",
+        "lang": "python",
+        "loc": 57,
+        "code_lines": 41,
+        "comment_lines": 0,
+        "blank_lines": 16,
+        "funcs": [
+          {
+            "name": "as_bytes",
+            "lineno": 17,
+            "loc": 7,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "check_length",
+            "lineno": 26,
+            "loc": 6,
+            "cc": 3,
+            "cognitive": 1,
+            "params": 3,
+            "nesting": 1
+          },
+          {
+            "name": "random_nonce",
+            "lineno": 34,
+            "loc": 3,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "new_nonce",
+            "lineno": 39,
+            "loc": 3,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "new_key",
+            "lineno": 44,
+            "loc": 10,
+            "cc": 4,
+            "cognitive": 3,
+            "params": 1,
+            "nesting": 1
+          }
+        ],
+        "fanout": 4,
+        "halstead_volume": 1615.3483702475978,
+        "mi": 41.977860659328805,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "value"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 5,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 5,
+        "clone_hits": 0,
+        "clone_partners": [],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 4,
+        "max_cognitive": 3,
+        "max_nesting": 1
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 82.0,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 100.0
+        },
+        "score": 97.3,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\families\\__init__.py",
+        "lang": "python",
+        "loc": 35,
+        "code_lines": 28,
+        "comment_lines": 1,
+        "blank_lines": 6,
+        "funcs": [],
+        "fanout": 2,
+        "halstead_volume": 447.6967300300298,
+        "mi": 49.73501954178851,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 0,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 0,
+        "clone_hits": 0,
+        "clone_partners": [],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 0,
+        "max_cognitive": 0,
+        "max_nesting": 0
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 90.1,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 100.0
+        },
+        "score": 98.5,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\providers\\cryptodome_provider.py",
+        "lang": "python",
+        "loc": 180,
+        "code_lines": 138,
+        "comment_lines": 4,
+        "blank_lines": 38,
+        "funcs": [
+          {
+            "name": "_sha_mod",
+            "lineno": 47,
+            "loc": 5,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "_pkcs7_pad",
+            "lineno": 54,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "_pkcs7_unpad",
+            "lineno": 60,
+            "loc": 8,
+            "cc": 5,
+            "cognitive": 2,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "build",
+            "lineno": 164,
+            "loc": 10,
+            "cc": 4,
+            "cognitive": 3,
+            "params": 0,
+            "nesting": 1
+          },
+          {
+            "name": "__init__",
+            "lineno": 73,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 5,
+            "nesting": 0
+          },
+          {
+            "name": "memory_hard",
+            "lineno": 79,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "derive",
+            "lineno": 82,
+            "loc": 12,
+            "cc": 5,
+            "cognitive": 4,
+            "params": 6,
+            "nesting": 1
+          },
+          {
+            "name": "__init__",
+            "lineno": 103,
+            "loc": 5,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 8,
+            "nesting": 0
+          },
+          {
+            "name": "_new",
+            "lineno": 109,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "encrypt",
+            "lineno": 114,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 4,
+            "nesting": 0
+          },
+          {
+            "name": "decrypt",
+            "lineno": 117,
+            "loc": 6,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 4,
+            "nesting": 1
+          },
+          {
+            "name": "__init__",
+            "lineno": 128,
+            "loc": 5,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 6,
+            "nesting": 0
+          },
+          {
+            "name": "_ctor",
+            "lineno": 134,
+            "loc": 6,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 3,
+            "nesting": 1
+          },
+          {
+            "name": "seal",
+            "lineno": 141,
+            "loc": 9,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 5,
+            "nesting": 1
+          },
+          {
+            "name": "open",
+            "lineno": 151,
+            "loc": 11,
+            "cc": 4,
+            "cognitive": 3,
+            "params": 5,
+            "nesting": 1
+          }
+        ],
+        "fanout": 5,
+        "halstead_volume": 9014.686421793289,
+        "mi": 25.323264995326866,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "ct",
+          "data",
+          "info",
+          "ks",
+          "mh",
+          "ns"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 12,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 15,
+        "clone_hits": 2,
+        "clone_partners": [
+          "digest_provider.py:72 (build, dice 0.88)",
+          "backends.py:25 (_pkcs7_unpad, dice 1.00)"
+        ],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 5,
+        "max_cognitive": 4,
+        "max_nesting": 1
+      },
+      "result": {
+        "parts": {
+          "complexity": 94.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 73.0,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 88.0
+        },
+        "score": 94.4,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\providers\\cryptodome_pubkey_provider.py",
+        "lang": "python",
+        "loc": 118,
+        "code_lines": 92,
+        "comment_lines": 4,
+        "blank_lines": 22,
+        "funcs": [
+          {
+            "name": "build",
+            "lineno": 113,
+            "loc": 3,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "__init__",
+            "lineno": 51,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 6,
+            "nesting": 0
+          },
+          {
+            "name": "_pad",
+            "lineno": 56,
+            "loc": 6,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "generate",
+            "lineno": 63,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "max_plaintext",
+            "lineno": 68,
+            "loc": 10,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "encrypt",
+            "lineno": 79,
+            "loc": 12,
+            "cc": 5,
+            "cognitive": 3,
+            "params": 3,
+            "nesting": 1
+          },
+          {
+            "name": "decrypt",
+            "lineno": 92,
+            "loc": 19,
+            "cc": 7,
+            "cognitive": 6,
+            "params": 3,
+            "nesting": 2
+          }
+        ],
+        "fanout": 4,
+        "halstead_volume": 3963.0949965479526,
+        "mi": 31.565009427016467,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 6,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 7,
+        "clone_hits": 2,
+        "clone_partners": [
+          "cryptodome_pubkey_provider.py:92 (decrypt, dice 0.81)",
+          "cryptodome_pubkey_provider.py:79 (encrypt, dice 0.81)"
+        ],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 7,
+        "max_cognitive": 6,
+        "max_nesting": 2
+      },
+      "result": {
+        "parts": {
+          "complexity": 97.9,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 85.6,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 78.9
+        },
+        "score": 97.3,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\providers\\digest_provider.py",
+        "lang": "python",
+        "loc": 88,
+        "code_lines": 64,
+        "comment_lines": 5,
+        "blank_lines": 19,
+        "funcs": [
+          {
+            "name": "build",
+            "lineno": 72,
+            "loc": 11,
+            "cc": 5,
+            "cognitive": 6,
+            "params": 0,
+            "nesting": 2
+          },
+          {
+            "name": "__init__",
+            "lineno": 43,
+            "loc": 6,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 5,
+            "nesting": 0
+          },
+          {
+            "name": "digest",
+            "lineno": 50,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "__init__",
+            "lineno": 57,
+            "loc": 5,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "compute",
+            "lineno": 63,
+            "loc": 7,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 4,
+            "nesting": 1
+          }
+        ],
+        "fanout": 5,
+        "halstead_volume": 2778.563306560781,
+        "mi": 36.19047357292511,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "a",
+          "data"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 3,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 5,
+        "clone_hits": 1,
+        "clone_partners": [
+          "cryptodome_provider.py:164 (build, dice 0.88)"
+        ],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 5,
+        "max_cognitive": 6,
+        "max_nesting": 2
+      },
+      "result": {
+        "parts": {
+          "complexity": 97.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 88.1,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 86.0
+        },
+        "score": 97.5,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\providers\\gmssl_provider.py",
+        "lang": "python",
+        "loc": 89,
+        "code_lines": 66,
+        "comment_lines": 0,
+        "blank_lines": 23,
+        "funcs": [
+          {
+            "name": "build",
+            "lineno": 82,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "digest",
+            "lineno": 31,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "encrypt",
+            "lineno": 42,
+            "loc": 5,
+            "cc": 3,
+            "cognitive": 1,
+            "params": 4,
+            "nesting": 1
+          },
+          {
+            "name": "decrypt",
+            "lineno": 48,
+            "loc": 6,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 4,
+            "nesting": 1
+          },
+          {
+            "name": "generate",
+            "lineno": 61,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "encrypt",
+            "lineno": 66,
+            "loc": 5,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 3,
+            "nesting": 1
+          },
+          {
+            "name": "decrypt",
+            "lineno": 72,
+            "loc": 8,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 3,
+            "nesting": 1
+          }
+        ],
+        "fanout": 3,
+        "halstead_volume": 3082.751916514081,
+        "mi": 35.62914909271346,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "data"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 7,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 10,
+        "clone_hits": 0,
+        "clone_partners": [],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 3,
+        "max_cognitive": 2,
+        "max_nesting": 1
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 80.1,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 100.0
+        },
+        "score": 97.0,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\providers\\optional_provider.py",
+        "lang": "python",
+        "loc": 52,
+        "code_lines": 39,
+        "comment_lines": 0,
+        "blank_lines": 13,
+        "funcs": [
+          {
+            "name": "build",
+            "lineno": 44,
+            "loc": 6,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 0,
+            "nesting": 1
+          },
+          {
+            "name": "memory_hard",
+            "lineno": 24,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "derive",
+            "lineno": 27,
+            "loc": 15,
+            "cc": 4,
+            "cognitive": 2,
+            "params": 6,
+            "nesting": 1
+          }
+        ],
+        "fanout": 4,
+        "halstead_volume": 1778.6511966213843,
+        "mi": 42.22155528600956,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "info"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 3,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 4,
+        "clone_hits": 0,
+        "clone_partners": [],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 4,
+        "max_cognitive": 2,
+        "max_nesting": 1
+      },
+      "result": {
+        "parts": {
+          "complexity": 95.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 82.1,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 100.0
+        },
+        "score": 96.1,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\providers\\__init__.py",
+        "lang": "python",
+        "loc": 80,
+        "code_lines": 57,
+        "comment_lines": 1,
+        "blank_lines": 22,
+        "funcs": [
+          {
+            "name": "_modules",
+            "lineno": 30,
+            "loc": 3,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "_key",
+            "lineno": 35,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "_require",
+            "lineno": 40,
+            "loc": 4,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "load_all",
+            "lineno": 46,
+            "loc": 9,
+            "cc": 4,
+            "cognitive": 5,
+            "params": 1,
+            "nesting": 2
+          },
+          {
+            "name": "catalog",
+            "lineno": 57,
+            "loc": 3,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "manifest_gaps",
+            "lineno": 62,
+            "loc": 11,
+            "cc": 6,
+            "cognitive": 8,
+            "params": 1,
+            "nesting": 3
+          },
+          {
+            "name": "provider_names",
+            "lineno": 75,
+            "loc": 3,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 0,
+            "nesting": 0
+          }
+        ],
+        "fanout": 4,
+        "halstead_volume": 2346.542808900594,
+        "mi": 37.732545132790015,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "a"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 7,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 7,
+        "clone_hits": 0,
+        "clone_partners": [],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 6,
+        "max_cognitive": 8,
+        "max_nesting": 3
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 82.8,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 100.0
+        },
+        "score": 97.4,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\vault\\file_ops.py",
+        "lang": "python",
+        "loc": 62,
+        "code_lines": 49,
+        "comment_lines": 0,
+        "blank_lines": 13,
+        "funcs": [
+          {
+            "name": "_safe_path",
+            "lineno": 11,
+            "loc": 9,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "_safe_output",
+            "lineno": 22,
+            "loc": 6,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "encrypt_file",
+            "lineno": 30,
+            "loc": 7,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "decrypt_file",
+            "lineno": 39,
+            "loc": 15,
+            "cc": 3,
+            "cognitive": 3,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "_read_file",
+            "lineno": 56,
+            "loc": 7,
+            "cc": 3,
+            "cognitive": 1,
+            "params": 1,
+            "nesting": 1
+          }
+        ],
+        "fanout": 4,
+        "halstead_volume": 1877.6126441815468,
+        "mi": 39.885484211206105,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 5,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 5,
+        "clone_hits": 2,
+        "clone_partners": [
+          "file_ops.py:22 (_safe_output, dice 0.90)",
+          "file_ops.py:11 (_safe_path, dice 0.90)"
+        ],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 3,
+        "max_cognitive": 3,
+        "max_nesting": 1
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 82.9,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 72.0
+        },
+        "score": 97.4,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\vault\\fingerprint.py",
+        "lang": "python",
+        "loc": 123,
+        "code_lines": 98,
+        "comment_lines": 0,
+        "blank_lines": 25,
+        "funcs": [
+          {
+            "name": "fingerprint_strength",
+            "lineno": 35,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "fingerprint_sources",
+            "lineno": 40,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "_win_reg",
+            "lineno": 45,
+            "loc": 8,
+            "cc": 5,
+            "cognitive": 3,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "_windows_candidates",
+            "lineno": 55,
+            "loc": 13,
+            "cc": 5,
+            "cognitive": 3,
+            "params": 0,
+            "nesting": 1
+          },
+          {
+            "name": "_linux_candidates",
+            "lineno": 70,
+            "loc": 29,
+            "cc": 10,
+            "cognitive": 9,
+            "params": 0,
+            "nesting": 2
+          },
+          {
+            "name": "_collect",
+            "lineno": 101,
+            "loc": 2,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "get_machine_fingerprint",
+            "lineno": 105,
+            "loc": 16,
+            "cc": 6,
+            "cognitive": 5,
+            "params": 0,
+            "nesting": 1
+          }
+        ],
+        "fanout": 6,
+        "halstead_volume": 4264.245702561381,
+        "mi": 30.570821934963476,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "c",
+          "fh",
+          "value"
+        ],
+        "efficiency_hits": [
+          [
+            77,
+            "io-in-loop",
+            "with open(path) as fh:"
+          ]
+        ],
+        "unused_imports": [
+          [
+            21,
+            "os"
+          ]
+        ],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 7,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 7,
+        "clone_hits": 0,
+        "clone_partners": [],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 10,
+        "max_cognitive": 9,
+        "max_nesting": 2
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 75.6,
+          "efficiency": 88,
+          "dead_code": 93,
+          "naming": 100.0,
+          "clones": 100.0
+        },
+        "score": 94.5,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\vault\\keystore.py",
+        "lang": "python",
+        "loc": 175,
+        "code_lines": 128,
+        "comment_lines": 7,
+        "blank_lines": 40,
+        "funcs": [
+          {
+            "name": "_keystore_path",
+            "lineno": 35,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "_enabled_path",
+            "lineno": 40,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "_read_keystore",
+            "lineno": 50,
+            "loc": 7,
+            "cc": 3,
+            "cognitive": 1,
+            "params": 0,
+            "nesting": 1
+          },
+          {
+            "name": "_write_keystore",
+            "lineno": 59,
+            "loc": 9,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "_load_or_create_keystore",
+            "lineno": 70,
+            "loc": 18,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 0,
+            "nesting": 1
+          },
+          {
+            "name": "_load_enabled",
+            "lineno": 90,
+            "loc": 8,
+            "cc": 3,
+            "cognitive": 1,
+            "params": 0,
+            "nesting": 1
+          },
+          {
+            "name": "_set_enabled",
+            "lineno": 100,
+            "loc": 9,
+            "cc": 3,
+            "cognitive": 1,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "_harden_paths",
+            "lineno": 114,
+            "loc": 18,
+            "cc": 5,
+            "cognitive": 4,
+            "params": 0,
+            "nesting": 1
+          },
+          {
+            "name": "is_bound",
+            "lineno": 134,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "is_locked",
+            "lineno": 138,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "is_enabled",
+            "lineno": 142,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "set_enabled",
+            "lineno": 146,
+            "loc": 2,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "fingerprint_prefix",
+            "lineno": 150,
+            "loc": 2,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "boot",
+            "lineno": 154,
+            "loc": 22,
+            "cc": 4,
+            "cognitive": 3,
+            "params": 0,
+            "nesting": 1
+          }
+        ],
+        "fanout": 5,
+        "halstead_volume": 4626.429276354418,
+        "mi": 28.081076771932,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "d",
+          "ok",
+          "tmp",
+          "value"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 14,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 14,
+        "clone_hits": 0,
+        "clone_partners": [],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 5,
+        "max_cognitive": 4,
+        "max_nesting": 1
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 79.9,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 100.0
+        },
+        "score": 97.0,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\vault\\operations.py",
+        "lang": "python",
+        "loc": 210,
+        "code_lines": 151,
+        "comment_lines": 8,
+        "blank_lines": 51,
+        "funcs": [
+          {
+            "name": "set_data_dir",
+            "lineno": 36,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "get_data_dir",
+            "lineno": 42,
+            "loc": 7,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 0,
+            "nesting": 1
+          },
+          {
+            "name": "is_gmssl_available",
+            "lineno": 51,
+            "loc": 7,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 0,
+            "nesting": 1
+          },
+          {
+            "name": "backend_name",
+            "lineno": 60,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "set_master_key",
+            "lineno": 65,
+            "loc": 15,
+            "cc": 4,
+            "cognitive": 2,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "get_master_key",
+            "lineno": 82,
+            "loc": 6,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "derive_key",
+            "lineno": 90,
+            "loc": 5,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 3,
+            "nesting": 0
+          },
+          {
+            "name": "_checksum_path",
+            "lineno": 97,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "_read_checksum",
+            "lineno": 102,
+            "loc": 9,
+            "cc": 6,
+            "cognitive": 2,
+            "params": 0,
+            "nesting": 1
+          },
+          {
+            "name": "_write_checksum",
+            "lineno": 113,
+            "loc": 4,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "ensure_checksum",
+            "lineno": 119,
+            "loc": 8,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 0,
+            "nesting": 1
+          },
+          {
+            "name": "recovery_checksum",
+            "lineno": 129,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 0,
+            "nesting": 0
+          },
+          {
+            "name": "_hmac_sm3",
+            "lineno": 134,
+            "loc": 3,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "encrypt_data",
+            "lineno": 139,
+            "loc": 10,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 1,
+            "nesting": 0
+          },
+          {
+            "name": "decrypt_data",
+            "lineno": 151,
+            "loc": 13,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 1,
+            "nesting": 1
+          },
+          {
+            "name": "seal_keystore",
+            "lineno": 166,
+            "loc": 16,
+            "cc": 1,
+            "cognitive": 0,
+            "params": 2,
+            "nesting": 0
+          },
+          {
+            "name": "unseal_keystore",
+            "lineno": 184,
+            "loc": 14,
+            "cc": 3,
+            "cognitive": 2,
+            "params": 2,
+            "nesting": 1
+          },
+          {
+            "name": "_require_backend",
+            "lineno": 200,
+            "loc": 4,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 0,
+            "nesting": 1
+          },
+          {
+            "name": "_require_ready",
+            "lineno": 206,
+            "loc": 5,
+            "cc": 2,
+            "cognitive": 1,
+            "params": 0,
+            "nesting": 1
+          }
+        ],
+        "fanout": 6,
+        "halstead_volume": 5952.410531095567,
+        "mi": 25.775499332361377,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [
+          "c",
+          "cs",
+          "iv"
+        ],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 19,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 19,
+        "clone_hits": 0,
+        "clone_partners": [],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 6,
+        "max_cognitive": 2,
+        "max_nesting": 1
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 80.5,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 100.0
+        },
+        "score": 97.1,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    },
+    {
+      "metrics": {
+        "path": "palm_cryptokernel\\vault\\__init__.py",
+        "lang": "python",
+        "loc": 49,
+        "code_lines": 41,
+        "comment_lines": 4,
+        "blank_lines": 4,
+        "funcs": [],
+        "fanout": 2,
+        "halstead_volume": 652.9733784791645,
+        "mi": 44.97435289193464,
+        "dup_lines": 0,
+        "long_lines": 0,
+        "vague_names": [],
+        "efficiency_hits": [],
+        "unused_imports": [],
+        "dead_private": [],
+        "naming_violations": [],
+        "naming_fn_snake": 0,
+        "naming_fn_camel": 0,
+        "naming_fn_other": 0,
+        "naming_idents": 0,
+        "clone_hits": 0,
+        "clone_partners": [],
+        "error": null,
+        "th": {
+          "func_loc": 50,
+          "func_cc": 10,
+          "func_cognitive": 15,
+          "func_params": 4,
+          "max_nesting": 3,
+          "file_loc": 500,
+          "duplication_pct": 2.0,
+          "comment_min": 0.08,
+          "comment_max": 0.35,
+          "line_width": 120,
+          "fanout": 15,
+          "clone_min_lines": 6,
+          "clone_min_tokens": 8,
+          "clone_sim": 0.8
+        },
+        "max_cc": 0,
+        "max_cognitive": 0,
+        "max_nesting": 0
+      },
+      "result": {
+        "parts": {
+          "complexity": 100.0,
+          "unit_size": 100.0,
+          "duplication": 100.0,
+          "coupling": 100.0,
+          "readability": 94.0,
+          "efficiency": 100.0,
+          "dead_code": 100.0,
+          "naming": 100.0,
+          "clones": 100.0
+        },
+        "score": 99.1,
+        "grade": "A",
+        "stars": "★★★★★"
+      }
+    }
+  ]
+}
